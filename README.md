@@ -2,6 +2,10 @@
 Calculates Median robust extended local binary pattern (MRELBP) or local binary pattern (LBP) from images.
 Repository contains 3 projects: A demo software (LBP), unit test project (LBP.UnitTests) and class library to make LBP calculations (LBPLibrary).
 
+Current build status:  
+
+[![Build status](https://ci.appveyor.com/api/projects/status/d0c6874wheduojbe?svg=true)](https://ci.appveyor.com/project/sarytky/localbinarypattern-g7kbi)
+
 ## Prerequisites
 Demo software can be run using windows without additional installations.
 Unit tests and class library are recommended to use through MS Visual Studio.
