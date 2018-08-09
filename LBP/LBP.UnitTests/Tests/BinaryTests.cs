@@ -2,6 +2,7 @@
 using LBP.Components;
 using NUnit.Framework;
 using Accord.Math;
+using System.IO;
 
 namespace LBPTesting.Tests
 {
@@ -9,7 +10,7 @@ namespace LBPTesting.Tests
     class BinaryTests
     {
         TestImage testImg = new TestImage(); // Initialize testimage function
-        BinaryWriterApp lbpreader = new BinaryWriterApp(@"C:\Users\sarytky\Desktop\trials\Test.dat");
+        BinaryWriterApp lbpreader = new BinaryWriterApp(Directory.GetCurrentDirectory() + @"\Test.dat");
 
         [TestCase("")]
         [TestCase("Quarters")]

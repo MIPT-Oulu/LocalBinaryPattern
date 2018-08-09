@@ -3,6 +3,7 @@ using System.Numerics;
 using LBP.Components;
 using NUnit.Framework;
 using Accord.Math;
+using System.IO;
 
 namespace LBPTesting.Tests
 {
@@ -10,7 +11,7 @@ namespace LBPTesting.Tests
     class BMPWriterTests
     {
         TestImage testImg = new TestImage(); // Initialize testimage function
-        string filename = @"C:\Users\sarytky\Desktop\trials\Test.png";
+        string filename = Directory.GetCurrentDirectory() + @"\Test.png";
 
         [Test]
         public void SaveAndRead_IntegerArray_EqualsInputArray()
