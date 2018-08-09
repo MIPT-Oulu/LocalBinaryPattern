@@ -103,24 +103,34 @@ namespace LBP.Components
                 for (int k = 0; k < dir.Length; k++)
                 {
                     // Load images
-                    double[,] imagemean, imagestd;
-                    if (param.ImageType == ".dat")
+                    double[,] imagemean, imagestd, image = null;
+                    if (param.ImageType == ".dat" && param.Meanstd)
                     {
                         lbpreader.ReadLBPFeatures(param.Type, dir[k]); // Read binary mean image
                         imagemean = lbpreader.image_double;
                         k++;
                         lbpreader.ReadLBPFeatures(param.Type, dir[k]); // Read binary std image
                         imagestd = lbpreader.image_double;
+                        image = imagemean.Add(imagestd); // Combine mean and std images
                     }
-                    else
+                    else if (param.Meanstd)
                     {
                         imagemean = Functions.Load(dir[k]).ToDouble();
                         k++;
                         imagestd = Functions.Load(dir[k]).ToDouble();
+                        image = imagemean.Add(imagestd); // Combine mean and std images
+                    }
+                    else if (param.ImageType == ".dat" && !param.Meanstd)
+                    {
+                        lbpreader.ReadLBPFeatures(param.Type, dir[k]); // Read binary mean image
+                        image = lbpreader.image_double;
+                    }
+                    else if (!param.Meanstd)
+                    {
+                        image = Functions.Load(dir[k]).ToDouble();
                     }
 
                     // Combine mean and std images
-                    double[,] image = imagemean.Add(imagestd);
 
                     // Grayscale normalization
                     var standrd = new LocalStandardization(); // Initializes also default weights
@@ -141,7 +151,7 @@ namespace LBP.Components
                         Functions.Save(savepath + Path.GetFileName(dir[k]).Replace(param.ImageType, "") + "_radial.png", LBPIR, param.Scale);
                     }
 
-                    Console.WriteLine("Image: {0}, elapsed time: {1}ms", dir[k], time.ElapsedMilliseconds);
+                    Console.WriteLine("Image: {0}, elapsed time: {1}ms\n", dir[k], time.ElapsedMilliseconds);
                     time.Restart();
                 }
             }
@@ -154,12 +164,12 @@ namespace LBP.Components
                     double[,] image;
                     if (param.ImageType == ".dat")
                     {
-                        lbpreader.ReadLBPFeatures(param.Type, dir[k]); // Read binary mean image
+                        lbpreader.ReadLBPFeatures(param.Type, dir[k]); // Read binary image
                         image = lbpreader.image_double;
                     }
                     else
                     {
-                        image = Functions.Load(dir[k]).ToDouble();
+                        image = Functions.Load(dir[k]).ToDouble(); // Read png or bmp image
                     }
                     LBPApplication.PipelineLBP(image, param,
                         out double[,] LBPresult, out int[] LBPhistogram); // Get LBP for test image;
@@ -167,7 +177,7 @@ namespace LBP.Components
                     if (param.Save) // Save images
                         Functions.Save(savepath + "\\" + Path.GetFileName(dir[k]).Replace(param.ImageType, "") + "_LBP.png", LBPresult, param.Scale);
 
-                    Console.WriteLine("Image: {0}, elapsed time: {1}ms", dir[k], time.ElapsedMilliseconds);
+                    Console.WriteLine("Image: {0}, elapsed time: {1}ms\n", dir[k], time.ElapsedMilliseconds);
                     time.Restart();
                 }
             }

@@ -232,5 +232,69 @@ namespace LBPTesting.Tests
             CollectionAssert.AreEqual(refRHist, histR);
             CollectionAssert.AreEqual(refLHist, histL);
         }
+
+        [Test]
+        public void MRELBP_QuarterArray_EqualsPythonReference()
+        {
+            testImg.New("Quarters", new int[] { 16, 16 });
+            var param = new Parameters()
+            {
+                LargeRadius = 2,
+                Radius = 1
+            };
+
+            LBPApplication.PipelineMRELBP(testImg.Image.ToDouble(), param, // MRELBP pipeline
+            out double[,] LBPIL, out double[,] LBPIS, out double[,] LBPIR, out int[] histL, out int[] histS, out int[] histR, out int[] histCenter);
+
+            Console.WriteLine("Images");
+            Functions.DisplayArray(LBPIS);
+            Functions.DisplayArray(LBPIR);
+            Functions.DisplayArray(LBPIL);
+            Console.WriteLine("Histograms");
+            Functions.DisplayVector(histL);
+            Functions.DisplayVector(histS);
+            Functions.DisplayVector(histR);
+            Functions.DisplayVector(histCenter);
+            float[,] refLBP = new float[6, 6] // Here, actually columns are written out as rows
+                {{ 8, 8, 8, 5, 5, 5},
+                { 8, 8, 8, 5, 5, 6},
+                { 8, 8, 8, 5, 5, 6},
+                { 5, 6, 6, 3, 3, 3},
+                { 5, 6, 6, 3, 3, 3},
+                { 6, 6, 6, 3, 3, 3} };
+            float[,] refIS = new float[6, 6]
+                {{ 3, 4, 4, 5, 5, 6},
+                { 4, 3, 3, 5, 5, 2},
+                { 4, 3, 3, 5, 5, 2},
+                { 6, 3, 3, 5, 5, 4},
+                { 6, 3, 3, 5, 5, 4},
+                { 2, 3, 3, 4, 4, 5} };
+            float[,] refIR = new float[6, 6]
+                {{ 8, 8, 8, 8, 8, 9},
+                { 8, 8, 8, 8, 8, 5},
+                { 8, 8, 8, 8, 7, 5},
+                { 8, 8, 8, 8, 7, 9},
+                { 8, 8, 7, 7, 7, 9},
+                { 7, 6, 5, 9, 9, 9} };
+            float[,] refIL = new float[6, 6]
+                {{ 3, 3, 3, 5, 5, 5},
+                { 3, 3, 3, 5, 5, 5},
+                { 3, 3, 3, 5, 5, 5},
+                { 3, 3, 3, 5, 5, 5},
+                { 3, 3, 3, 5, 5, 5},
+                { 3, 3, 3, 5, 5, 5} };
+            int[] refLBPHist = new int[] { 0, 0, 0, 9, 0, 9, 9, 0, 9, 0 };
+            int[] refSHist = new int[] { 0, 0, 3, 11, 8, 11, 3, 0, 0, 0 };
+            int[] refRHist = new int[] { 0, 0, 0, 0, 0, 3, 1, 6, 20, 6 };
+            int[] refLHist = new int[] { 0, 0, 0, 18, 0, 18, 0, 0, 0, 0 };
+            //CollectionAssert.AreEqual(refLBP, LBPresult);
+            //CollectionAssert.AreEqual(refIS, LBPIS);
+            //CollectionAssert.AreEqual(refIR, LBPIR);
+            //CollectionAssert.AreEqual(refIL, LBPIL);
+            //CollectionAssert.AreEqual(refLBPHist, LBPhistogram);
+            //CollectionAssert.AreEqual(refSHist, histS);
+            //CollectionAssert.AreEqual(refRHist, histR);
+            //CollectionAssert.AreEqual(refLHist, histL);
+        }
     }
 }

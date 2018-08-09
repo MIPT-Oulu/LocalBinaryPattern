@@ -187,6 +187,8 @@ namespace LBP.Components
                 Console.WriteLine("Array was not cropped");
                 return matrix;
             }
+            if (xlim1 > xlim2 || ylim1 > ylim2)
+                throw new Exception("Limits not compatible!");
             try
             {
                 T[,] smallMatrix = new T[xlim2 - xlim1 + 1, ylim2 - ylim1 + 1];
@@ -799,6 +801,7 @@ namespace LBP.Components
         public bool Mre { get; set; }
         public bool Save { get; set; }
         public bool Scale { get; set; }
+        public bool Meanstd { get; set; }
 
         public Parameters()
         {
@@ -815,6 +818,7 @@ namespace LBP.Components
             Mre = true;
             Save = true;
             Scale = true;
+            Meanstd = false;
         }
     }
 }
