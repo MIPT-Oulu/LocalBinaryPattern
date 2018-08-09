@@ -93,7 +93,7 @@ namespace LBP
                 DropDownWidth = 200,
                 DropDownHeight = 40,
                 Items = { ".dat", ".png" },
-                Text = ".dat",
+                Text = ".png",
                 Anchor = neighbourLabel.Anchor | AnchorStyles.Right
             };
 

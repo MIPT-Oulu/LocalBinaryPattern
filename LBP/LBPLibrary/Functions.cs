@@ -812,7 +812,7 @@ namespace LBP.Components
             W_r = new int[] { 5, 5 };
             Type = "double";
             Method = "Reflect";
-            ImageType = ".dat";
+            ImageType = ".png";
             Eps1 = 1E-06;
             Eps2 = 1E-12;
             Mre = true;

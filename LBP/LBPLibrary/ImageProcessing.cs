@@ -30,13 +30,18 @@ namespace LBP.Components
 
             // Load image
             double[,] image;
-            if (param.ImageType == ".dat")
+            if (param.ImageType == ".dat" && path.EndsWith(".dat"))
             {
                 lbpreader.ReadLBPFeatures(param.Type, path); // Read binary image
                 image = lbpreader.image_double;
             }
-            else
+            else if (path.EndsWith(".png") || path.EndsWith(".bmp"))
                 image = Functions.Load(path).ToDouble();
+            else
+            {
+                Console.WriteLine("Image type not compatible.\n");
+                return;
+            }
 
             // LBP
             if (param.Mre)
@@ -48,9 +53,9 @@ namespace LBP.Components
 
                 if (param.Save) // Save images
                 {
-                    Functions.Save(savepath + "LBPIL_result.png", LBPIL, param.Scale);
-                    Functions.Save(savepath + "LBPIS_result.png", LBPIS, param.Scale);
-                    Functions.Save(savepath + "LBPIR_result.png", LBPIR, param.Scale);
+                    Functions.Save(savepath + "\\" + Path.GetFileName(path).Replace(Path.GetExtension(path), "") + "_LBPIL.png", LBPIL, param.Scale);
+                    Functions.Save(savepath + "\\" + Path.GetFileName(path).Replace(Path.GetExtension(path), "") + "_LBPIS.png", LBPIS, param.Scale);
+                    Functions.Save(savepath + "\\" + Path.GetFileName(path).Replace(Path.GetExtension(path), "") + "_LBPIR.png", LBPIR, param.Scale);
                 }
 
                 // Concatenate histograms
@@ -64,7 +69,7 @@ namespace LBP.Components
                     out double[,] LBPresult, out int[] LBPhistogram); // Get LBP for test image;
 
                 if (param.Save) // Save images
-                    Functions.Save(savepath + "LBP_result.png", LBPresult, param.Scale);
+                    Functions.Save(savepath + "\\" + Path.GetFileName(path).Replace(Path.GetExtension(path), "") + "_LBP.png", LBPresult, param.Scale);
 
                 f = LBPhistogram;
             }
@@ -73,10 +78,10 @@ namespace LBP.Components
             features = Matrix.Concatenate(features, f);
 
             // Write features to csv
-            Functions.WriteCSV(features.ToSingle(), path + "features.csv");
+            Functions.WriteCSV(features.ToSingle(), savepath + "\\features.csv");
 
             // Write features to binary file
-            var binwriter = new BinaryWriterApp() { filename = path + "features.dat" };
+            var binwriter = new BinaryWriterApp() { filename = savepath + "\\features.dat" };
             binwriter.SaveLBPFeatures(features);
 
             Console.WriteLine("LBP images calculated and results saved.\nElapsed time: {0}min {1}sec", time.Elapsed.Minutes, time.Elapsed.Seconds);
@@ -146,12 +151,12 @@ namespace LBP.Components
 
                     if (param.Save) // Save LBP image
                     {
-                        Functions.Save(savepath + Path.GetFileName(dir[k]).Replace(param.ImageType, "") + "_small.png", LBPIS, param.Scale);
-                        Functions.Save(savepath + Path.GetFileName(dir[k]).Replace(param.ImageType, "") + "_large.png", LBPIL, param.Scale);
-                        Functions.Save(savepath + Path.GetFileName(dir[k]).Replace(param.ImageType, "") + "_radial.png", LBPIR, param.Scale);
+                        Functions.Save(savepath + "\\" + Path.GetFileName(dir[k]).Replace(Path.GetExtension(dir[k]), "") + "_small.png", LBPIS, param.Scale);
+                        Functions.Save(savepath + "\\" + Path.GetFileName(dir[k]).Replace(Path.GetExtension(dir[k]), "") + "_large.png", LBPIL, param.Scale);
+                        Functions.Save(savepath + "\\" + Path.GetFileName(dir[k]).Replace(Path.GetExtension(dir[k]), "") + "_radial.png", LBPIR, param.Scale);
                     }
 
-                    Console.WriteLine("Image: {0}, elapsed time: {1}ms\n", dir[k], time.ElapsedMilliseconds);
+                    Console.WriteLine("Image: {0}, elapsed time: {1}ms", dir[k], time.ElapsedMilliseconds);
                     time.Restart();
                 }
             }
@@ -175,19 +180,19 @@ namespace LBP.Components
                         out double[,] LBPresult, out int[] LBPhistogram); // Get LBP for test image;
 
                     if (param.Save) // Save images
-                        Functions.Save(savepath + "\\" + Path.GetFileName(dir[k]).Replace(param.ImageType, "") + "_LBP.png", LBPresult, param.Scale);
+                        Functions.Save(savepath + "\\" + Path.GetFileName(dir[k]).Replace(Path.GetExtension(dir[k]), "") + "_LBP.png", LBPresult, param.Scale);
 
-                    Console.WriteLine("Image: {0}, elapsed time: {1}ms\n", dir[k], time.ElapsedMilliseconds);
+                    Console.WriteLine("Image: {0}, elapsed time: {1}ms", dir[k], time.ElapsedMilliseconds);
                     time.Restart();
                 }
             }
            
 
             // Write features to csv
-            Functions.WriteCSV(features.ToSingle(), path + "features.csv");
+            Functions.WriteCSV(features.ToSingle(), savepath + "\\features.csv");
 
             // Write features to binary file
-            var binwriter = new BinaryWriterApp() { filename = path + "features.dat" };
+            var binwriter = new BinaryWriterApp() { filename = savepath + "\\features.dat" };
             binwriter.SaveLBPFeatures(features);
 
             Console.WriteLine("All LBP images calculated and results saved.\nElapsed time: {0}min {1}sec", timeFull.Elapsed.Minutes, timeFull.Elapsed.Seconds);
