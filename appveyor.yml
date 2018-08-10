@@ -22,7 +22,7 @@ build:
   project: LBP/LBP.sln
 
 test_script:
- - LBP\packages\OpenCover.4.6.519\tools\OpenCover.Console.exe -register:user -target:"packages\xunit.runner.console.2.4.0\tools\net472\xunit.console.x86.exe" -targetargs:"LBP\LBP.UnitTests\bin\Debug\LBP.UnitTests.dll -noshadow" -output:"coverage.xml" -filter:"+[LBPLibrary*]* -[LBP.UnitTests*]*"
+ - LBP\packages\OpenCover.4.6.519\tools\OpenCover.Console.exe -register:user -target:"%xunit20%\xunit.console.x86.exe" -targetargs:"LBP\LBP.UnitTests\bin\Debug\LBP.UnitTests.dll -noshadow" -output:"coverage.xml" -filter:"+[LBPLibrary*]* -[LBP.UnitTests*]*"
 after_test:
   - ps: |
       $env:PATH = 'C:\msys64\usr\bin;' + $env:PATH
