@@ -11,14 +11,6 @@ namespace LBP.UnitTests
         string method;
         TestImage testImg = new TestImage(); // Initialize testimage function
 
-        [SetUp]
-        protected void SetUp()
-        {
-            // Arrange
-            method = "Zero";
-            testImg.New("Ones");
-        }
-
         [Xunit.Theory]
         [InlineData(10)]
         [InlineData(100)]
@@ -27,6 +19,8 @@ namespace LBP.UnitTests
         [InlineData(0)]
         public void Padding_ZeroPadArray_EqualsToZeropadded(int padLength)
         {
+            string method = "Zero";
+            testImg.New("Ones");
             // Act
             float[,] padImage = Functions.ArrayPadding(testImg.Image, padLength, method); // Call method and pad the test image
 
