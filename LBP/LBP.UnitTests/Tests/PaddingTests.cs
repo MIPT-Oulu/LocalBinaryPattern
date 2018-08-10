@@ -8,7 +8,6 @@ namespace LBP.UnitTests
 {
     public class PaddingTests
     {
-        string method;
         TestImage testImg = new TestImage(); // Initialize testimage function
 
         [Xunit.Theory]
