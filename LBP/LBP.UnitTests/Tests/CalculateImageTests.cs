@@ -36,10 +36,10 @@ namespace LBPTesting.Tests
             app.FilterImage();
             app.CalculateImage();
 
-            Functions.DisplayArray(mappedLBP);
-            Functions.DisplayArray(app.LBPISMapped);
-            Functions.DisplayArray(app.LBPIRMapped);
-            Functions.DisplayArray(app.LBPILMapped);
+            //Functions.DisplayArray(mappedLBP);
+            //Functions.DisplayArray(app.LBPISMapped);
+            //Functions.DisplayArray(app.LBPIRMapped);
+            //Functions.DisplayArray(app.LBPILMapped);
             double[,] refLBP = new double[6, 6] // Here, actually columns are written out as rows
                 {{ 8, 8, 8, 5, 5, 5},
                 { 8, 8, 8, 5, 5, 6},

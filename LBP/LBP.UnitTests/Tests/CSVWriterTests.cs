@@ -20,8 +20,8 @@ namespace LBPTesting.Tests
             Functions.WriteCSV(testImg.Image, filename);
             float[,] readedArray = Functions.ReadCSV(filename);
 
-            Functions.DisplayArray(testImg.Image);
-            Functions.DisplayArray(readedArray);
+            //Functions.DisplayArray(testImg.Image);
+            //Functions.DisplayArray(readedArray);
             CollectionAssert.AreEqual(testImg.Image, readedArray);
         }
 
@@ -33,8 +33,8 @@ namespace LBPTesting.Tests
             Functions.WriteCSV(testImg.Image, filename);
             float[,] readedArray = Functions.ReadCSV(filename);
 
-            Functions.DisplayArray(testImg.Image);
-            Functions.DisplayArray(readedArray);
+            //Functions.DisplayArray(testImg.Image);
+            //Functions.DisplayArray(readedArray);
             CollectionAssert.AreEqual(testImg.Image, readedArray);
         }
     }

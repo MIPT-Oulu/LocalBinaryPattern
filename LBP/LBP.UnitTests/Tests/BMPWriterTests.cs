@@ -22,8 +22,8 @@ namespace LBPTesting.Tests
             Functions.Save(filename, testImg.Image.ToDouble(), false);
             float[,] readedArray = Functions.Load(filename);
 
-            Functions.DisplayArray(testImg.Image);
-            Functions.DisplayArray(readedArray);
+            //Functions.DisplayArray(testImg.Image);
+            //Functions.DisplayArray(readedArray);
             CollectionAssert.AreEqual(testImg.Image, readedArray);
         }
 
@@ -36,8 +36,8 @@ namespace LBPTesting.Tests
             float[,] readedArray = Functions.Load(filename);
 
             testImg.Image = testImg.Image.Round().ToSingle(); // Round
-            Functions.DisplayArray(testImg.Image);
-            Functions.DisplayArray(readedArray);
+            //Functions.DisplayArray(testImg.Image);
+            //Functions.DisplayArray(readedArray);
             CollectionAssert.AreEqual(testImg.Image, readedArray);
         }
 
@@ -50,8 +50,8 @@ namespace LBPTesting.Tests
             float[,] readedArray = Functions.Load(filename);
 
             testImg.Image = Functions.Normalize(testImg.Image.ToDouble()).Multiply(255).Round().ToSingle(); // Normalize array
-            Functions.DisplayArray(testImg.Image);
-            Functions.DisplayArray(readedArray);
+            //Functions.DisplayArray(testImg.Image);
+            //Functions.DisplayArray(readedArray);
             CollectionAssert.AreEqual(testImg.Image, readedArray);
         }
     }

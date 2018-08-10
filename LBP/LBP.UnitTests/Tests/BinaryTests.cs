@@ -24,7 +24,7 @@ namespace LBPTesting.Tests
             lbpreader.SaveLBPFeatures(testImg.Image.ToInt32());
             lbpreader.ReadLBPFeatures("Integer");
 
-            Functions.DisplayArray(lbpreader.features);
+            //Functions.DisplayArray(lbpreader.features);
             CollectionAssert.AreEqual(testImg.Image, lbpreader.features);
         }
 
@@ -41,7 +41,7 @@ namespace LBPTesting.Tests
             lbpreader.SaveLBPFeatures(testImg.Image);
             lbpreader.ReadLBPFeatures("float");
 
-            Functions.DisplayArray(lbpreader.image);
+            //Functions.DisplayArray(lbpreader.image);
             CollectionAssert.AreEqual(testImg.Image, lbpreader.image);
         }
 
@@ -59,8 +59,8 @@ namespace LBPTesting.Tests
             lbpreader.SaveLBPFeatures(img);
             lbpreader.ReadLBPFeatures("double");
 
-            Functions.DisplayArray(img);
-            Functions.DisplayArray(lbpreader.image_double);
+            //Functions.DisplayArray(img);
+            //Functions.DisplayArray(lbpreader.image_double);
             CollectionAssert.AreEqual(img, lbpreader.image_double);
         }
     }

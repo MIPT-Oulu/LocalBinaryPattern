@@ -104,7 +104,7 @@ namespace LBP.UnitTests
                 { 180, 180, 198, 216, 234, 234},
                 { 189, 189, 207, 225, 243, 243},
                 { 189, 189, 207, 225, 243, 243} };
-            Console.WriteLine("Reference:"); Functions.DisplayArray(refArray);
+            //Console.WriteLine("Reference:"); Functions.DisplayArray(refArray);
             CollectionAssert.AreEqual(refArray, convolution);
         }
 

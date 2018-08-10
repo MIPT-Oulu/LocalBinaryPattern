@@ -19,7 +19,7 @@ namespace LBPTesting.Tests
             // Filter
             MedianFilter mc = new MedianFilter(3);
             double[,] imageFiltered = mc.Filtering(testImg.Image.ToDouble());
-            Console.WriteLine("Median filtered:"); Functions.DisplayArray(imageFiltered);
+            //Console.WriteLine("Median filtered:"); Functions.DisplayArray(imageFiltered);
 
             double[,] refArray = new double[6, 6] // Here, actually columns are written out
                 {{ 0, 1, 1, 1, 3, 0},
@@ -28,7 +28,7 @@ namespace LBPTesting.Tests
                 { 1, 2, 2, 3, 4, 3},
                 { 2, 2, 2, 4, 4, 4},
                 { 0, 2, 2, 2, 4, 0} };
-            Console.WriteLine("Reference:"); Functions.DisplayArray(refArray);
+            //Console.WriteLine("Reference:"); Functions.DisplayArray(refArray);
             CollectionAssert.AreEqual(refArray, imageFiltered);
         }
 

@@ -24,11 +24,11 @@ namespace LBPTesting.Tests
             float[] vector = Functions.ArrayToVector(testImg.Image);
             float[,] array = Functions.VectorToArray(vector, testImg.Image.GetLength(0));
 
-            Functions.DisplayArray(testImg.Image);
-            Console.WriteLine("Vector\n");
-            Functions.DisplayVector(vector);
-            Console.WriteLine("Result\n");
-            Functions.DisplayArray(array);
+            //Functions.DisplayArray(testImg.Image);
+            //Console.WriteLine("Vector\n");
+            //Functions.DisplayVector(vector);
+            //Console.WriteLine("Result\n");
+            //Functions.DisplayArray(array);
             CollectionAssert.AreEqual(testImg.Image, array);
         }
 
@@ -86,9 +86,9 @@ namespace LBPTesting.Tests
             { 2, 2, 2, 2, 4, 4, 4, 4, 4 },
             { 2, 2, 2, 2, 4, 4, 4, 4, 4 },
             { 2, 2, 2, 2, 4, 4, 4, 4, 4 }};
-            Console.WriteLine("Submatrix:"); Functions.DisplayArray(subMatrix);
-            Console.WriteLine("Small image:"); Functions.DisplayArray(testImg.Image);
-            Console.WriteLine("Reference:"); Functions.DisplayArray(refArray);
+            //Console.WriteLine("Submatrix:"); Functions.DisplayArray(subMatrix);
+            //Console.WriteLine("Small image:"); Functions.DisplayArray(testImg.Image);
+            //Console.WriteLine("Reference:"); Functions.DisplayArray(refArray);
             NUnit.Framework.Assert.That(ww, Is.EqualTo(6));
             NUnit.Framework.Assert.That(ll, Is.EqualTo(9));
             CollectionAssert.AreEqual(refArray, subMatrix);

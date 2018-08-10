@@ -45,7 +45,7 @@ namespace LBP.UnitTests.Tests
                 .Subtract(
                 Functions.Mean(
                     Functions.GetSubMatrix(refArray, app.d, w - app.d - 1, app.d, l - app.d - 1)));
-            Console.WriteLine("Reference:"); Functions.DisplayArray(refArray);
+            //Console.WriteLine("Reference:"); Functions.DisplayArray(refArray);
             CollectionAssert.AreEqual(refArray, app.imageCenter);
         }
 
@@ -85,7 +85,7 @@ namespace LBP.UnitTests.Tests
                     if (refArray[i, j] == 4) refArray[i, j] = 8;
                 }
             }
-            Functions.DisplayArray(mapped);
+            //Functions.DisplayArray(mapped);
             CollectionAssert.AreEqual(mapped, refArray);
         }
 
@@ -168,9 +168,9 @@ namespace LBP.UnitTests.Tests
             app.MRE = true;
             app.GetHistogram();
 
-            Functions.DisplayVector(app.histL);
-            Functions.DisplayVector(app.histR);
-            Functions.DisplayVector(app.histS);
+            //Functions.DisplayVector(app.histL);
+            //Functions.DisplayVector(app.histR);
+            //Functions.DisplayVector(app.histS);
             Xunit.Assert.Equal(150, histLBP[3]);
             Xunit.Assert.Equal(150, app.histL[1]);
             Xunit.Assert.Equal(150, app.histR[2]);
@@ -192,10 +192,10 @@ namespace LBP.UnitTests.Tests
             LBPApplication.PipelineLBP(testImg.Image.ToDouble(), param, // LBP pipeline
                 out double[,] LBPresult, out int[] LBPhistogram);
 
-            Functions.DisplayArray(LBPresult);
-            Functions.DisplayArray(LBPIS);
-            Functions.DisplayArray(LBPIR);
-            Functions.DisplayArray(LBPIL);
+            //Functions.DisplayArray(LBPresult);
+            //Functions.DisplayArray(LBPIS);
+            //Functions.DisplayArray(LBPIR);
+            //Functions.DisplayArray(LBPIL);
             float[,] refLBP = new float[6, 6] // Here, actually columns are written out as rows
                 {{ 8, 8, 8, 5, 5, 5},
             { 8, 8, 8, 5, 5, 6},
@@ -251,15 +251,15 @@ namespace LBP.UnitTests.Tests
             LBPApplication.PipelineMRELBP(testImg.Image.ToDouble(), param, // MRELBP pipeline
             out double[,] LBPIL, out double[,] LBPIS, out double[,] LBPIR, out int[] histL, out int[] histS, out int[] histR, out int[] histCenter);
 
-            Console.WriteLine("Images");
-            Functions.DisplayArray(LBPIS);
-            Functions.DisplayArray(LBPIR);
-            Functions.DisplayArray(LBPIL);
-            Console.WriteLine("Histograms");
-            Functions.DisplayVector(histL);
-            Functions.DisplayVector(histS);
-            Functions.DisplayVector(histR);
-            Functions.DisplayVector(histCenter);
+            //Console.WriteLine("Images");
+            //Functions.DisplayArray(LBPIS);
+            //Functions.DisplayArray(LBPIR);
+            //Functions.DisplayArray(LBPIL);
+            //Console.WriteLine("Histograms");
+            //Functions.DisplayVector(histL);
+            //Functions.DisplayVector(histS);
+            //Functions.DisplayVector(histR);
+            //Functions.DisplayVector(histCenter);
             float[,] refLBP = new float[6, 6] // Here, actually columns are written out as rows
                 {{ 8, 8, 8, 5, 5, 5},
             { 8, 8, 8, 5, 5, 6},
@@ -292,14 +292,12 @@ namespace LBP.UnitTests.Tests
             int[] refSHist = new int[] { 0, 0, 3, 11, 8, 11, 3, 0, 0, 0 };
             int[] refRHist = new int[] { 0, 0, 0, 0, 0, 3, 1, 6, 20, 6 };
             int[] refLHist = new int[] { 0, 0, 0, 18, 0, 18, 0, 0, 0, 0 };
-            //CollectionAssert.AreEqual(refLBP, LBPresult);
-            //CollectionAssert.AreEqual(refIS, LBPIS);
-            //CollectionAssert.AreEqual(refIR, LBPIR);
-            //CollectionAssert.AreEqual(refIL, LBPIL);
-            //CollectionAssert.AreEqual(refLBPHist, LBPhistogram);
-            //CollectionAssert.AreEqual(refSHist, histS);
-            //CollectionAssert.AreEqual(refRHist, histR);
-            //CollectionAssert.AreEqual(refLHist, histL);
+            CollectionAssert.AreEqual(refIS, LBPIS);
+            CollectionAssert.AreEqual(refIR, LBPIR);
+            CollectionAssert.AreEqual(refIL, LBPIL);
+            CollectionAssert.AreEqual(refSHist, histS);
+            CollectionAssert.AreEqual(refRHist, histR);
+            CollectionAssert.AreEqual(refLHist, histL);
         }
     }
 }

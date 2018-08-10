@@ -61,8 +61,8 @@ namespace LBPTesting.Tests
                 }
             }
 
-            Functions.DisplayArray(testImg.Image);
-            Functions.DisplayArray(interpolated);
+            //Functions.DisplayArray(testImg.Image);
+            //Functions.DisplayArray(interpolated);
             double[,] refArray = new double[6, 6] // Here, actually columns are written out
                 {{ 1, 1, 1, 1.5, 3, 3},
                 { 1, 1, 1, 1.5, 3, 3},
@@ -95,8 +95,8 @@ namespace LBPTesting.Tests
                 }
             }
 
-            Functions.DisplayArray(testImg.Image);
-            Functions.DisplayArray(interpolated);
+            //Functions.DisplayArray(testImg.Image);
+            //Functions.DisplayArray(interpolated);
             double[,] refArray = new double[6, 6] // Here, actually columns are written out
                 {{ 1, 1, 1, 1.5, 3, 3},
                 { 1, 1, 1, 1.5, 3, 3},
