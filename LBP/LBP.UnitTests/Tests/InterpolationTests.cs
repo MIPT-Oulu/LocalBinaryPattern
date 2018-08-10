@@ -27,8 +27,8 @@ namespace LBPTesting.Tests
                 }
             }
 
-            Functions.DisplayArray(testImg.Image);
-            Functions.DisplayArray(interpolated.ToSingle());
+            //Functions.DisplayArray(testImg.Image);
+            //Functions.DisplayArray(interpolated.ToSingle());
             double[,] refArray = new double[6, 6] // Here, actually columns are written out
                 {{ 1, 1, 1, 2, 3, 3},
                 { 1, 1, 1, 2, 3, 3},

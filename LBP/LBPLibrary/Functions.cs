@@ -171,10 +171,7 @@ namespace LBP.Components
                 }
             }
             else
-            {
-                Console.WriteLine("Array width not compatible");
-                array = new T[0, 0];
-            }
+                throw new Exception("Array width not compatible!");
             return array;
         }
 
@@ -623,8 +620,7 @@ namespace LBP.Components
                 }
                 catch (Exception)
                 {
-                    Console.WriteLine("Invalid file");
-                    throw;
+                    throw new Exception("Invalid file");
                 }
                
             }
@@ -669,8 +665,7 @@ namespace LBP.Components
                     }
                     catch (Exception)
                     {
-                        Console.WriteLine("Invalid file");
-                        throw;
+                        throw new Exception("Invalid file");
                     }
 
                 }

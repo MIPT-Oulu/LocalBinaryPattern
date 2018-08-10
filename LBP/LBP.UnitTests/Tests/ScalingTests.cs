@@ -36,8 +36,8 @@ namespace LBPTesting.Tests
                 .Divide(std)
                 .ToSingle();
 
-            Functions.DisplayArray(app.Image);
-            Functions.DisplayArray(refArray);
+            //Functions.DisplayArray(app.Image);
+            //Functions.DisplayArray(refArray);
             // Assert
             for (int i = 0; i < app.Image.GetLength(0); i++)
             {
