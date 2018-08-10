@@ -1,6 +1,8 @@
 # LocalBinaryPattern
-Calculates Median robust extended local binary pattern (MRELBP) or local binary pattern (LBP) from images.
-Repository contains 3 projects: A demo software (LBP), unit test project (LBP.UnitTests) and class library to make LBP calculations (LBPLibrary).
+## About
+This project contains a C# implementation of local binary patterns (LBP) and  median robust extended local binary patterns (MRELBP). We currently support only Windows.
+
+The repository has 3 projects: A demo software (LBP), unit test project (LBP.UnitTests) and class library to make LBP calculations (LBPLibrary).
 
 Current build status:  
 
@@ -29,8 +31,16 @@ MRELBP images for small radius, radial image and large radius: (8 neighbours, sm
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
+This software is distributed under the MIT License.
 
-## Acknowledgments
-
-MRELBP is based on method published in: *Liu et. al. Median Robust Extended Local Binary Pattern for Texture Classification (2016)*
+## Citation
+```
+@misc{Rytky2018,
+  author = {Rytky, Santeri and Tiulpin, Aleksei and Frondelius, Tuomas and Saarakkala Simo},
+  title = {Local Binary Pattern},
+  year = {2018},
+  publisher = {GitHub},
+  journal = {GitHub repository},
+  howpublished = {\url{https://github.com/MIPT-Oulu/LocalBinaryPattern}},
+}
+```
