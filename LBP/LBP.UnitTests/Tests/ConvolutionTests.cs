@@ -3,23 +3,24 @@ using LBP.Components;
 //using Microsoft.VisualStudio.TestTools.UnitTesting; // MSTest
 using NUnit.Framework;
 using Accord.Math;
+using Xunit;
 
 namespace LBP.UnitTests
 {
-    [TestFixture]
     public class ConvolutionTests
     {
         TestImage testImg = new TestImage(); // Initialize testimage function
         double[,] kernel;
 
-        [TestCase("Ones", "Nearest")] // Test different kernel widths, image patterns and paddings
-        [TestCase("Ones", "Reflect")]
-        [TestCase("", "Nearest")]
-        [TestCase("", "Reflect")]
-        [TestCase("Quarters", "Nearest")]
-        [TestCase("Quarters", "Reflect")]
-        [TestCase("Running numbers", "Nearest")]
-        [TestCase("Running numbers", "Reflect")]
+        [Xunit.Theory]
+        [InlineData("Ones", "Nearest")] // Test different kernel widths, image patterns and paddings
+        [InlineData("Ones", "Reflect")]
+        [InlineData("", "Nearest")]
+        [InlineData("", "Reflect")]
+        [InlineData("Quarters", "Nearest")]
+        [InlineData("Quarters", "Reflect")]
+        [InlineData("Running numbers", "Nearest")]
+        [InlineData("Running numbers", "Reflect")]
         public void Convolute_TestArrayOneKernel_EqualsInputArray(string pattern, string paddingMethod)
         {
             // Image
@@ -38,14 +39,15 @@ namespace LBP.UnitTests
             }
         }
 
-        [TestCase("Ones", "Nearest")] // Test different kernel widths, image patterns and paddings
-        [TestCase("Ones", "Reflect")]
-        [TestCase("", "Nearest")]
-        [TestCase("", "Reflect")]
-        [TestCase("Quarters", "Nearest")]
-        [TestCase("Quarters", "Reflect")]
-        [TestCase("Running numbers", "Nearest")]
-        [TestCase("Running numbers", "Reflect")]
+        [Xunit.Theory]
+        [InlineData("Ones", "Nearest")] // Test different kernel widths, image patterns and paddings
+        [InlineData("Ones", "Reflect")]
+        [InlineData("", "Nearest")]
+        [InlineData("", "Reflect")]
+        [InlineData("Quarters", "Nearest")]
+        [InlineData("Quarters", "Reflect")]
+        [InlineData("Running numbers", "Nearest")]
+        [InlineData("Running numbers", "Reflect")]
         public void Convolute_TestArrayWithModifiedKernel_EqualsInputArray(string pattern, string paddingMethod)
         {
             // Arrange
@@ -76,13 +78,14 @@ namespace LBP.UnitTests
                 {
                     for (int j = 0; j < convResult.GetLength(1); j++)
                     {
-                        Assert.AreEqual(convResult[i, j], convResult2[i, j], 0.0001);
+                        NUnit.Framework.Assert.AreEqual(convResult[i, j], convResult2[i, j], 0.0001);
                     }
                 }
             }
         }
 
-        [TestCase("Quarters", "Reflect")]
+        [Xunit.Theory]
+        [InlineData("Quarters", "Reflect")]
         public void Convolute_SmallQuarter_EqualsPythonArray(string pattern, string paddingMethod)
         {   /// Test whether convolution2D function equals to scipy.ndimage.convolve (default)
             testImg.New(pattern, new int[] { 6, 6 });
@@ -105,7 +108,7 @@ namespace LBP.UnitTests
             CollectionAssert.AreEqual(refArray, convolution);
         }
 
-        [Test]
+        [Fact]
         public void Convolute_LargeOrOddkernel_ThrowsCorrectException()
         {   /// Test whether Medianfilter class throws correct exceptions
             testImg.New("Quarters", new int[] { 6, 6 });
@@ -114,12 +117,12 @@ namespace LBP.UnitTests
             double[,] kernelLarge = new double[15, 15].Add(1); // Ones kernel
             double[,] kernelEven = new double[2, 2].Add(1); // Ones kernel
 
-            Exception ex = Assert.Throws<Exception>(
+            Exception ex = NUnit.Framework.Assert.Throws<Exception>(
                 delegate { Functions.Convolution2D(kernelLarge, testImg.Image.ToDouble(), "Nearest"); });
-            Assert.AreEqual(ex.Message, "Kernel radius is larger than input array!");
-            Exception ex2 = Assert.Throws<Exception>(
+            NUnit.Framework.Assert.AreEqual(ex.Message, "Kernel radius is larger than input array!");
+            Exception ex2 = NUnit.Framework.Assert.Throws<Exception>(
                 delegate { Functions.Convolution2D(kernelEven, testImg.Image.ToDouble(), "Nearest"); });
-            Assert.AreEqual(ex2.Message, "Kernel width is not odd!");
+            NUnit.Framework.Assert.AreEqual(ex2.Message, "Kernel width is not odd!");
         }
     }
 }

@@ -2,20 +2,21 @@
 using LBP.Components;
 using NUnit.Framework;
 using Accord.Math;
+using Xunit;
 
 namespace LBPTesting.Tests
 {
-    [TestFixture]
-    class ArrayTests
+    public class ArrayTests
     {
         TestImage testImg = new TestImage(); // Initialize testimage function
 
         // Array to vector conversions
 
-        [TestCase("")]
-        [TestCase("Quarters")]
-        [TestCase("Ones")]
-        [TestCase("Running numbers")]
+        [Xunit.Theory]
+        [InlineData("")]
+        [InlineData("Quarters")]
+        [InlineData("Ones")]
+        [InlineData("Running numbers")]
         public void ArrayToVector_ConvertBack_EqualsInputArray(string pattern)
         {   /// It's actually better to use default conversion functions from System namespace.
             testImg.New(pattern);
@@ -33,10 +34,11 @@ namespace LBPTesting.Tests
 
         // Submatrix tests
 
-        [TestCase("")]
-        [TestCase("Quarters")]
-        [TestCase("Ones")]
-        [TestCase("Running numbers")]
+        [Xunit.Theory]
+        [InlineData("")]
+        [InlineData("Quarters")]
+        [InlineData("Ones")]
+        [InlineData("Running numbers")]
         public void GetSubMatrix_GetFullArray_EqualsInputArray(string pattern)
         {
             testImg.New(pattern);
@@ -47,10 +49,11 @@ namespace LBPTesting.Tests
             CollectionAssert.AreEqual(testImg.Image, subMatrix);
         }
 
-        [TestCase("")]
-        [TestCase("Quarters")]
-        [TestCase("Ones")]
-        [TestCase("Running numbers")]
+        [Xunit.Theory]
+        [InlineData("")]
+        [InlineData("Quarters")]
+        [InlineData("Ones")]
+        [InlineData("Running numbers")]
         public void GetSubMatrix_GetFirstindex_EqualsInputArrayFirstIndex(string pattern)
         {
             testImg.New(pattern);
@@ -58,14 +61,15 @@ namespace LBPTesting.Tests
             float[,] subMatrix = Functions.GetSubMatrix(testImg.Image, 0, 0, 0, 0);
             int w = subMatrix.GetLength(0), l = subMatrix.GetLength(1);
 
-            Assert.That(w, Is.EqualTo(1));
-            Assert.That(l, Is.EqualTo(1));
-            Assert.AreEqual(testImg.Image[0, 0], subMatrix[w - 1, l - 1]);
+            NUnit.Framework.Assert.That(w, Is.EqualTo(1));
+            NUnit.Framework.Assert.That(l, Is.EqualTo(1));
+            NUnit.Framework.Assert.AreEqual(testImg.Image[0, 0], subMatrix[w - 1, l - 1]);
         }
 
-        [TestCase("Quarters")]
-        public void GetSubMatrix_MiddleArray_EqualsReference(string pattern)
+        [Fact]
+        public void GetSubMatrix_MiddleArray_EqualsReference()
         {
+            string pattern = "Quarters";
             testImg.New(pattern);
             int w = testImg.Image.GetLength(0), l = testImg.Image.GetLength(1);
 
@@ -85,8 +89,8 @@ namespace LBPTesting.Tests
             Console.WriteLine("Submatrix:"); Functions.DisplayArray(subMatrix);
             Console.WriteLine("Small image:"); Functions.DisplayArray(testImg.Image);
             Console.WriteLine("Reference:"); Functions.DisplayArray(refArray);
-            Assert.That(ww, Is.EqualTo(6));
-            Assert.That(ll, Is.EqualTo(9));
+            NUnit.Framework.Assert.That(ww, Is.EqualTo(6));
+            NUnit.Framework.Assert.That(ll, Is.EqualTo(9));
             CollectionAssert.AreEqual(refArray, subMatrix);
             CollectionAssert.AreEqual(subMatrix, testImg.Image);
         }

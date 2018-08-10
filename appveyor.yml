@@ -1,4 +1,4 @@
-configuration: release
+#configuration: release
 
 # version format
 version: 1.0.{build}
@@ -8,7 +8,6 @@ branches:
   # whitelist
   only:
     - master
-    - BugFixes
 
 # Restore nuget packages before running msbuild
 image: 
@@ -20,3 +19,12 @@ before_build:
 build:
   verbosity: minimal
   publish_wap: true
+  project: LBP/LBP.sln
+
+test_script:
+ - LBP\packages\OpenCover.4.6.519\tools\OpenCover.Console.exe -register:user -target:"%xunit20%\xunit.console.x86.exe" -targetargs:"LBP\LBP.UnitTests\bin\Debug\LBP.UnitTests.dll -noshadow" -output:"coverage.xml" -filter:"+[LBPLibrary*]* -[LBP.UnitTests*]*"
+after_test:
+  - ps: |
+      $env:PATH = 'C:\msys64\usr\bin;' + $env:PATH
+      Invoke-WebRequest -Uri 'https://codecov.io/bash' -OutFile codecov.sh
+      bash codecov.sh -f "coverage.xml" -t ff5c5428-546a-4ad2-bd4c-63ff792785c2

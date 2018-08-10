@@ -4,16 +4,17 @@ using LBP.Components;
 using NUnit.Framework;
 using Accord.Math;
 using System.IO;
+using Xunit;
 
 namespace LBPTesting.Tests
 {
-    [TestFixture]
-    class BMPWriterTests
+
+    public class BMPWriterTests
     {
         TestImage testImg = new TestImage(); // Initialize testimage function
         string filename = Directory.GetCurrentDirectory() + @"\Test.png";
 
-        [Test]
+        [Fact]
         public void SaveAndRead_IntegerArray_EqualsInputArray()
         {
             testImg.New();
@@ -26,7 +27,7 @@ namespace LBPTesting.Tests
             CollectionAssert.AreEqual(testImg.Image, readedArray);
         }
 
-        [Test]
+        [Fact]
         public void SaveAndRead_FloatArray_EqualsInputArray()
         {   // Float type's precision is only 7 digits!!
             testImg.New("Add residual");
@@ -40,7 +41,7 @@ namespace LBPTesting.Tests
             CollectionAssert.AreEqual(testImg.Image, readedArray);
         }
 
-        [Test]
+        [Fact]
         public void SaveAndRead_FloatArrayNormalized_EqualsNormalizedArray()
         {   // Float type's precision is only 7 digits!!
             testImg.New("Add residual");

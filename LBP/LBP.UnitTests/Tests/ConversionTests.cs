@@ -3,20 +3,21 @@ using LBP.Components;
 using NUnit.Framework;
 using Accord.Math;
 using System.Drawing;
+using Xunit;
 
 namespace LBPTesting.Tests
 {
-    [TestFixture]
-    class ConversionTests
+    public class ConversionTests
     {
         TestImage testImg = new TestImage(); // Initialize testimage function
 
         // Byte and Float
 
-        [TestCase("")]
-        [TestCase("Quarters")]
-        [TestCase("Ones")]
-        [TestCase("Running numbers")]
+        [Xunit.Theory]
+        [InlineData("")]
+        [InlineData("Quarters")]
+        [InlineData("Ones")]
+        [InlineData("Running numbers")]
         public void FloatArrayToByte_ExpectedInput_ResultEqualsReferenceMethod(string pattern)
         {   /// It's actually better to use default conversion functions from System namespace.
             testImg.New(pattern);
@@ -27,10 +28,11 @@ namespace LBPTesting.Tests
             CollectionAssert.AreEqual(byteImg, byteRef);
         }
 
-        [TestCase("")]
-        [TestCase("Quarters")]
-        [TestCase("Ones")]
-        [TestCase("Running numbers")]
+        [Xunit.Theory]
+        [InlineData("")]
+        [InlineData("Quarters")]
+        [InlineData("Ones")]
+        [InlineData("Running numbers")]
         public void FloatArrayToByte_ExpectedInput_ResultEqualsInput(string pattern)
         {   /// It's actually better to use default conversion functions from System namespace.
             testImg.New(pattern);
@@ -40,10 +42,11 @@ namespace LBPTesting.Tests
             CollectionAssert.AreEqual(byteImg, testImg.Image);
         }
 
-        [TestCase("")]
-        [TestCase("Quarters")]
-        [TestCase("Ones")]
-        [TestCase("Running numbers")]
+        [Xunit.Theory]
+        [InlineData("")]
+        [InlineData("Quarters")]
+        [InlineData("Ones")]
+        [InlineData("Running numbers")]
         public void ByteArrayToFloat_ExpectedInput_EqualsRefArray(string pattern)
         {   /// It's actually better to use default conversion functions from System namespace.
             testImg.New(pattern);
@@ -57,10 +60,11 @@ namespace LBPTesting.Tests
 
         // Bitmap conversions
 
-        [TestCase("")]
-        [TestCase("Quarters")]
-        [TestCase("Ones")]
-        [TestCase("Running numbers")]
+        [Xunit.Theory]
+        [InlineData("")]
+        [InlineData("Quarters")]
+        [InlineData("Ones")]
+        [InlineData("Running numbers")]
         public void BitmapToFloat_ConvertBack_EqualsInputArray(string pattern)
         {   /// Bitmap conversions can't be done straight using system namespace
             testImg.New(pattern);
@@ -72,7 +76,7 @@ namespace LBPTesting.Tests
             CollectionAssert.AreEqual(testImg.Image, floatRef);
         }
 
-        [Test]
+        [Fact]
         public void BitmapToFloat_ConvertSecondTime_EqualsInputArray()
         {   /// Check if first conversion deletes original bmp image
             testImg.New("Quarters");

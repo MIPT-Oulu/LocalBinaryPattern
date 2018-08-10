@@ -7,6 +7,7 @@ The repository has 3 projects: A demo software (LBP), unit test project (LBP.Uni
 Current build status:  
 
 [![Build status](https://ci.appveyor.com/api/projects/status/d0c6874wheduojbe?svg=true)](https://ci.appveyor.com/project/sarytky/localbinarypattern-g7kbi)
+[![codecov](https://codecov.io/gh/sarytky/LocalBinaryPattern/branch/master/graph/badge.svg)](https://codecov.io/gh/sarytky/LocalBinaryPattern)
 
 ## Prerequisites
 Demo software can be run using windows without additional installations.
@@ -15,10 +16,17 @@ Unit tests and class library are recommended to use through MS Visual Studio.
 ## Installation
 1. Download the repository to your computer.
 2. Extract folder.
-3. Navigate to LocalBinaryPattern/LBP/LBP/publish and run LBP.application
+3. Navigate to LocalBinaryPattern/LBP/LBP/bin/debug and run LBP.exe
 
 ## Application usage
 Application can be used to calculate LBP images or MRELBP images either for stack of images or single images. Parameters can be defined in the main menu, or calculation can be started instantly using default parameters. Before calculation, image, or path to image stack and path for saving results must be specified.
+
+## Outputs: 
+LBP calculation: LBP image and histogram of mapped LBP features
+
+MRELBP: 3 MRELBP images (small, radial, large) and histogram including center, large, small and radial features.
+
+Histograms are outputted as .csv file and binary .dat file
 
 ## Examples
 Original image and LBP image (8 neighbours, radius 2):

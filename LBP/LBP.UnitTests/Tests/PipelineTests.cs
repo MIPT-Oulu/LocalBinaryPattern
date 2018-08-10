@@ -1,22 +1,27 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using LBP.Components;
 using NUnit.Framework;
 using Accord.Math;
+using Xunit;
 
-namespace LBPTesting.Tests
+
+namespace LBP.UnitTests.Tests
 {
-    [TestFixture]
-    class PipelineTests
+    public class PipelineTests
     {
         TestImage testImg = new TestImage(); // Initialize testimage function
 
         // FilterImage test
-        [Test]
+        [Fact]
         public void FilteringPipelineSubtraction_SmallQuarter_EqualsModifiedPythonArray()
         {   /// Test subtraction of mean from filtering pipeline
             testImg.New("Quarters", new int[] { 6, 6 });
             int w = testImg.Image.GetLength(0), l = testImg.Image.GetLength(1);
-            var param = new Parameters(){ W_c = 3 };
+            var param = new Parameters() { W_c = 3 };
             LBPApplication app = new LBPApplication
             {
                 Image = testImg.Image.ToDouble(),
@@ -31,11 +36,11 @@ namespace LBPTesting.Tests
 
             double[,] refArray = new double[6, 6] // Here, actually columns are written out
                 {{ 0, 1, 1, 1, 3, 0},
-                { 1, 1, 1, 3, 3, 3},
-                { 1, 1, 2, 3, 3, 3},
-                { 1, 2, 2, 3, 4, 3},
-                { 2, 2, 2, 4, 4, 4},
-                { 0, 2, 2, 2, 4, 0} };
+            { 1, 1, 1, 3, 3, 3},
+            { 1, 1, 2, 3, 3, 3},
+            { 1, 2, 2, 3, 4, 3},
+            { 2, 2, 2, 4, 4, 4},
+            { 0, 2, 2, 2, 4, 0} };
             refArray = refArray // Subtraction is done only from center pixels not affected by edge artifacts
                 .Subtract(
                 Functions.Mean(
@@ -45,7 +50,7 @@ namespace LBPTesting.Tests
         }
 
         // GetMapping test
-        [Test]
+        [Fact]
         public void GetMapping_ScaledQuarterArray_EqualsReferenceArray()
         {
             testImg.New("Quarters");
@@ -84,12 +89,12 @@ namespace LBPTesting.Tests
             CollectionAssert.AreEqual(mapped, refArray);
         }
 
-        [Test]
+        [Fact]
         public void GetBinMapping_Testmap_EqualsReferenceMapping()
         {
-            for (int n = 8; n < 17; n+=4)
+            for (int n = 8; n < 17; n += 4)
             {
-                var param = new Parameters() { Neighbours = n};
+                var param = new Parameters() { Neighbours = n };
                 var app = new LBPApplication() { Param = param };
                 app.GetMapping(); // GetMapping function
 
@@ -134,11 +139,11 @@ namespace LBPTesting.Tests
 
                 CollectionAssert.AreEqual(mappingTable, app.mappingTable);
             }
-            
+
         }
 
         // GetHistogram test
-        [Test]
+        [Fact]
         public void GetHistogram_ScaledQuarterArray_FullHistogramBin()
         {
             testImg.New("Ones");
@@ -166,21 +171,21 @@ namespace LBPTesting.Tests
             Functions.DisplayVector(app.histL);
             Functions.DisplayVector(app.histR);
             Functions.DisplayVector(app.histS);
-            Assert.AreEqual(histLBP[3], 150);
-            Assert.AreEqual(app.histL[1], 150);
-            Assert.AreEqual(app.histR[2], 150);
-            Assert.AreEqual(app.histS[4], 150);
+            Xunit.Assert.Equal(150, histLBP[3]);
+            Xunit.Assert.Equal(150, app.histL[1]);
+            Xunit.Assert.Equal(150, app.histR[2]);
+            Xunit.Assert.Equal(150, app.histS[4]);
         }
 
         // Full pipeline test
-        [Test]
+        [Fact]
         public void CalculateImage_QuarterArray_EqualsReferenceMappedImages()
         {
             testImg.New("Quarters", new int[] { 28, 28 });
             int w = testImg.Image.GetLength(0), l = testImg.Image.GetLength(1);
             var param = new Parameters();
 
-            
+
             LBPApplication.PipelineMRELBP(testImg.Image.ToDouble(), param, // MRELBP pipeline
             out double[,] LBPIL, out double[,] LBPIS, out double[,] LBPIR, out int[] histL, out int[] histS, out int[] histR, out int[] histCenter);
             testImg.New("Quarters", new int[] { 12, 12 });
@@ -193,32 +198,32 @@ namespace LBPTesting.Tests
             Functions.DisplayArray(LBPIL);
             float[,] refLBP = new float[6, 6] // Here, actually columns are written out as rows
                 {{ 8, 8, 8, 5, 5, 5},
-                { 8, 8, 8, 5, 5, 6},
-                { 8, 8, 8, 5, 5, 6},
-                { 5, 6, 6, 3, 3, 3},
-                { 5, 6, 6, 3, 3, 3},
-                { 6, 6, 6, 3, 3, 3} };
+            { 8, 8, 8, 5, 5, 6},
+            { 8, 8, 8, 5, 5, 6},
+            { 5, 6, 6, 3, 3, 3},
+            { 5, 6, 6, 3, 3, 3},
+            { 6, 6, 6, 3, 3, 3} };
             float[,] refIS = new float[6, 6]
                 {{ 3, 4, 4, 5, 5, 6},
-                { 4, 3, 3, 5, 5, 2},
-                { 4, 3, 3, 5, 5, 2},
-                { 6, 3, 3, 5, 5, 4},
-                { 6, 3, 3, 5, 5, 4},
-                { 2, 3, 3, 4, 4, 5} };
+            { 4, 3, 3, 5, 5, 2},
+            { 4, 3, 3, 5, 5, 2},
+            { 6, 3, 3, 5, 5, 4},
+            { 6, 3, 3, 5, 5, 4},
+            { 2, 3, 3, 4, 4, 5} };
             float[,] refIR = new float[6, 6]
                 {{ 8, 8, 8, 8, 8, 9},
-                { 8, 8, 8, 8, 8, 5},
-                { 8, 8, 8, 8, 7, 5},
-                { 8, 8, 8, 8, 7, 9},
-                { 8, 8, 7, 7, 7, 9},
-                { 7, 6, 5, 9, 9, 9} };
+            { 8, 8, 8, 8, 8, 5},
+            { 8, 8, 8, 8, 7, 5},
+            { 8, 8, 8, 8, 7, 9},
+            { 8, 8, 7, 7, 7, 9},
+            { 7, 6, 5, 9, 9, 9} };
             float[,] refIL = new float[6, 6]
                 {{ 3, 3, 3, 5, 5, 5},
-                { 3, 3, 3, 5, 5, 5},
-                { 3, 3, 3, 5, 5, 5},
-                { 3, 3, 3, 5, 5, 5},
-                { 3, 3, 3, 5, 5, 5},
-                { 3, 3, 3, 5, 5, 5} };
+            { 3, 3, 3, 5, 5, 5},
+            { 3, 3, 3, 5, 5, 5},
+            { 3, 3, 3, 5, 5, 5},
+            { 3, 3, 3, 5, 5, 5},
+            { 3, 3, 3, 5, 5, 5} };
             int[] refLBPHist = new int[] { 0, 0, 0, 9, 0, 9, 9, 0, 9, 0 };
             int[] refSHist = new int[] { 0, 0, 3, 11, 8, 11, 3, 0, 0, 0 };
             int[] refRHist = new int[] { 0, 0, 0, 0, 0, 3, 1, 6, 20, 6 };
@@ -233,7 +238,7 @@ namespace LBPTesting.Tests
             CollectionAssert.AreEqual(refLHist, histL);
         }
 
-        [Test]
+        [Fact]
         public void MRELBP_QuarterArray_EqualsPythonReference()
         {
             testImg.New("Quarters", new int[] { 16, 16 });
@@ -257,32 +262,32 @@ namespace LBPTesting.Tests
             Functions.DisplayVector(histCenter);
             float[,] refLBP = new float[6, 6] // Here, actually columns are written out as rows
                 {{ 8, 8, 8, 5, 5, 5},
-                { 8, 8, 8, 5, 5, 6},
-                { 8, 8, 8, 5, 5, 6},
-                { 5, 6, 6, 3, 3, 3},
-                { 5, 6, 6, 3, 3, 3},
-                { 6, 6, 6, 3, 3, 3} };
+            { 8, 8, 8, 5, 5, 6},
+            { 8, 8, 8, 5, 5, 6},
+            { 5, 6, 6, 3, 3, 3},
+            { 5, 6, 6, 3, 3, 3},
+            { 6, 6, 6, 3, 3, 3} };
             float[,] refIS = new float[6, 6]
                 {{ 3, 4, 4, 5, 5, 6},
-                { 4, 3, 3, 5, 5, 2},
-                { 4, 3, 3, 5, 5, 2},
-                { 6, 3, 3, 5, 5, 4},
-                { 6, 3, 3, 5, 5, 4},
-                { 2, 3, 3, 4, 4, 5} };
+            { 4, 3, 3, 5, 5, 2},
+            { 4, 3, 3, 5, 5, 2},
+            { 6, 3, 3, 5, 5, 4},
+            { 6, 3, 3, 5, 5, 4},
+            { 2, 3, 3, 4, 4, 5} };
             float[,] refIR = new float[6, 6]
                 {{ 8, 8, 8, 8, 8, 9},
-                { 8, 8, 8, 8, 8, 5},
-                { 8, 8, 8, 8, 7, 5},
-                { 8, 8, 8, 8, 7, 9},
-                { 8, 8, 7, 7, 7, 9},
-                { 7, 6, 5, 9, 9, 9} };
+            { 8, 8, 8, 8, 8, 5},
+            { 8, 8, 8, 8, 7, 5},
+            { 8, 8, 8, 8, 7, 9},
+            { 8, 8, 7, 7, 7, 9},
+            { 7, 6, 5, 9, 9, 9} };
             float[,] refIL = new float[6, 6]
                 {{ 3, 3, 3, 5, 5, 5},
-                { 3, 3, 3, 5, 5, 5},
-                { 3, 3, 3, 5, 5, 5},
-                { 3, 3, 3, 5, 5, 5},
-                { 3, 3, 3, 5, 5, 5},
-                { 3, 3, 3, 5, 5, 5} };
+            { 3, 3, 3, 5, 5, 5},
+            { 3, 3, 3, 5, 5, 5},
+            { 3, 3, 3, 5, 5, 5},
+            { 3, 3, 3, 5, 5, 5},
+            { 3, 3, 3, 5, 5, 5} };
             int[] refLBPHist = new int[] { 0, 0, 0, 9, 0, 9, 9, 0, 9, 0 };
             int[] refSHist = new int[] { 0, 0, 3, 11, 8, 11, 3, 0, 0, 0 };
             int[] refRHist = new int[] { 0, 0, 0, 0, 0, 3, 1, 6, 20, 6 };
