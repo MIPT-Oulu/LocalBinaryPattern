@@ -1,8 +1,8 @@
 # LocalBinaryPattern
 ## About
-This project contains C# implementation of local binary patterns (LBP) and  median robust extended local binary patterns (MRELBP).
+This project contains a C# implementation of local binary patterns (LBP) and  median robust extended local binary patterns (MRELBP). We currently support only Windows.
 
-The repository contains 3 projects: A demo software (LBP), unit test project (LBP.UnitTests) and class library to make LBP calculations (LBPLibrary).
+The repository has 3 projects: A demo software (LBP), unit test project (LBP.UnitTests) and class library to make LBP calculations (LBPLibrary).
 
 Current build status:  
 
