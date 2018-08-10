@@ -1,0 +1,22 @@
+configuration: release
+
+# version format
+version: 1.0.{build}
+
+# branches to build
+branches:
+  # whitelist
+  only:
+    - master
+    - BugFixes
+
+# Restore nuget packages before running msbuild
+image: 
+  - Visual Studio 2017
+before_build:
+  - nuget restore LBP/LBP.sln
+  
+# package Web application project for Web deploy
+build:
+  verbosity: minimal
+  publish_wap: true

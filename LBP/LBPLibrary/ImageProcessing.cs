@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using System.Diagnostics;
 
 using Accord.Math;
-using Accord.Statistics;
 
 
 namespace LBP.Components
@@ -427,7 +426,7 @@ namespace LBP.Components
                     if (MRE)
                     {
                         // Calculate means
-                        double NLmean = NL.Mean(), NSmean = NS.Mean();
+                        double NLmean = Functions.Mean(NL.ToMatrix()), NSmean = Functions.Mean(NS.ToMatrix());
 
                         for (int k = 0; k < Param.Neighbours; k++)
                         {

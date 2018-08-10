@@ -2,6 +2,7 @@
 using LBP.Components;
 using NUnit.Framework;
 using Accord.Math;
+using System.IO;
 
 namespace LBPTesting.Tests
 {
@@ -9,7 +10,7 @@ namespace LBPTesting.Tests
     class CSVWriterTests
     {
         TestImage testImg = new TestImage(); // Initialize testimage function
-        string filename = @"C:\Users\sarytky\Desktop\trials\Test.csv";
+        string filename = Directory.GetCurrentDirectory() + @"\Test.csv";
 
         [Test]
         public void SaveAndRead_IntegerArray_EqualsInputArray()
