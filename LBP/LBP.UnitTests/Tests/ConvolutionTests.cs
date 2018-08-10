@@ -90,12 +90,10 @@ namespace LBP.UnitTests
         {   /// Test whether convolution2D function equals to scipy.ndimage.convolve (default)
             testImg.New(pattern, new int[] { 6, 6 });
             int w = testImg.Image.GetLength(0), l = testImg.Image.GetLength(1);
-            Console.WriteLine("Input array:"); Functions.DisplayArray(testImg.Image);
             
             // Convolute
             double[,] kernel = new double[9, 9].Add(1); // Ones kernel
             double[,] convolution = Functions.Convolution2D(kernel, testImg.Image.ToDouble(), paddingMethod);
-            Console.WriteLine("Convoluted array:"); Functions.DisplayArray(convolution);
 
             float[,] refArray = new float[6, 6] // Here, actually columns are written out
                 {{ 162, 162, 180, 198, 216, 216},
@@ -104,7 +102,6 @@ namespace LBP.UnitTests
                 { 180, 180, 198, 216, 234, 234},
                 { 189, 189, 207, 225, 243, 243},
                 { 189, 189, 207, 225, 243, 243} };
-            //Console.WriteLine("Reference:"); Functions.DisplayArray(refArray);
             CollectionAssert.AreEqual(refArray, convolution);
         }
 
