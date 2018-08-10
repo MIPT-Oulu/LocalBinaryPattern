@@ -1,4 +1,4 @@
-configuration: release
+#configuration: release
 
 # version format
 version: 1.0.{build}
