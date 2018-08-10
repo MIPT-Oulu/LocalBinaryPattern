@@ -93,10 +93,9 @@
     <Compile Include="Tests\InterpolationTests.cs" />
     <Compile Include="Tests\MedianFilterTests.cs" />
     <Compile Include="Tests\PaddingTests.cs" />
-    <Compile Include="Tests\PipelineTests.cs" />
     <Compile Include="Tests\ScalingTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Tests\XunitTests_Pipeline.cs" />
+    <Compile Include="Tests\Pipeline.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

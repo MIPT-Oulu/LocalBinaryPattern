@@ -2,15 +2,16 @@
 using LBP.Components;
 using NUnit.Framework;
 using Accord.Math;
+using Xunit;
 
 namespace LBPTesting.Tests
 {
-    [TestFixture]
-    class InterpolationTests
+
+    public class InterpolationTests
     {
         TestImage testImg = new TestImage(); // Initialize testimage function
 
-        [Test]
+        [Fact]
         public void BilinearInterpolation_QuarterArray_EqualsRefArray()
         {
             testImg.New("Quarters", new int[] { 8, 8 });
@@ -39,12 +40,12 @@ namespace LBPTesting.Tests
             {
                 for (int j = 0; j < l - 2; j++)
                 {
-                    Assert.AreEqual(refArray[i, j], interpolated[i, j], 1E-11);
+                    NUnit.Framework.Assert.AreEqual(refArray[i, j], interpolated[i, j], 1E-11);
                 }
             }
         }
 
-        [Test]
+        [Fact]
         public void BilinearInterpolation_QuarterArray_smalldifference_EqualsRefArray()
         {
             testImg.New("Quarters", new int[] { 8, 8 });
@@ -73,12 +74,12 @@ namespace LBPTesting.Tests
             {
                 for (int j = 0; j < l - 2; j++)
                 {
-                    Assert.AreEqual(refArray[i, j], interpolated[i, j], 1E-11);
+                    NUnit.Framework.Assert.AreEqual(refArray[i, j], interpolated[i, j], 1E-11);
                 }
             }
         }
 
-        [Test]
+        [Fact]
         public void BilinearInterpolation_QuarterArray_LargeResidual_GivesDifferentArray()
         {
             testImg.New("Quarters", new int[] { 8, 8 });

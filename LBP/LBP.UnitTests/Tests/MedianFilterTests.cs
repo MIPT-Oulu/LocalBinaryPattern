@@ -2,15 +2,15 @@
 using LBP.Components;
 using NUnit.Framework;
 using Accord.Math;
+using Xunit;
 
 namespace LBPTesting.Tests
 {
-    [TestFixture]
-    class MedianFilterTests
+    public class MedianFilterTests
     {
         TestImage testImg = new TestImage(); // Initialize testimage function
 
-        [Test]
+        [Fact]
         public void MedianFilter_SmallQuarter_EqualsPythonArray()
         {   /// Test whether Medianfilter class equals to scipy.signal.medfilt (default)
             testImg.New("Quarters", new int[] { 6, 6 });
@@ -32,7 +32,7 @@ namespace LBPTesting.Tests
             CollectionAssert.AreEqual(refArray, imageFiltered);
         }
 
-        [Test]
+        [Fact]
         public void MedianFilter_LargeOrOddkernel_ThrowsCorrectException()
         {   /// Test whether Medianfilter class throws correct exceptions
             testImg.New("Quarters", new int[] { 6, 6 });
@@ -41,12 +41,12 @@ namespace LBPTesting.Tests
             MedianFilter medianLarge = new MedianFilter(15);
             MedianFilter medianEven = new MedianFilter(4);
 
-            Exception ex = Assert.Throws<Exception>(
+            Exception ex = NUnit.Framework.Assert.Throws<Exception>(
                 delegate { medianLarge.Filtering(testImg.Image.ToDouble()); });
-            Assert.AreEqual(ex.Message, "Kernel radius is larger than input array!");
-            Exception ex2 = Assert.Throws<Exception>(
+            NUnit.Framework.Assert.AreEqual(ex.Message, "Kernel radius is larger than input array!");
+            Exception ex2 = NUnit.Framework.Assert.Throws<Exception>(
                 delegate { medianEven.Filtering(testImg.Image.ToDouble()); });
-            Assert.AreEqual(ex2.Message, "Kernel width is not odd!");
+            NUnit.Framework.Assert.AreEqual(ex2.Message, "Kernel width is not odd!");
         }
     }
 }

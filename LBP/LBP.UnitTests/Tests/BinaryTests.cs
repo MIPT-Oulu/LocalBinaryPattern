@@ -3,19 +3,20 @@ using LBP.Components;
 using NUnit.Framework;
 using Accord.Math;
 using System.IO;
+using Xunit;
 
 namespace LBPTesting.Tests
 {
-    [TestFixture]
-    class BinaryTests
+    public class BinaryTests
     {
         TestImage testImg = new TestImage(); // Initialize testimage function
         BinaryWriterApp lbpreader = new BinaryWriterApp(Directory.GetCurrentDirectory() + @"\Test.dat");
 
-        [TestCase("")]
-        [TestCase("Quarters")]
-        [TestCase("Ones")]
-        [TestCase("Running numbers")]
+        [Xunit.Theory]
+        [InlineData("")]
+        [InlineData("Quarters")]
+        [InlineData("Ones")]
+        [InlineData("Running numbers")]
         public void SaveAndRead_IntegerArray_EqualsInputArray(string pattern)
         {
             testImg.New(pattern);
@@ -27,11 +28,12 @@ namespace LBPTesting.Tests
             CollectionAssert.AreEqual(testImg.Image, lbpreader.features);
         }
 
-        [TestCase("")]
-        [TestCase("Quarters")]
-        [TestCase("Ones")]
-        [TestCase("Running numbers")]
-        [TestCase("Add residual")]
+        [Xunit.Theory]
+        [InlineData("")]
+        [InlineData("Quarters")]
+        [InlineData("Ones")]
+        [InlineData("Running numbers")]
+        [InlineData("Add residual")]
         public void SaveAndRead_FloatArray_EqualsInputArray(string pattern)
         {
             testImg.New(pattern);
@@ -43,11 +45,12 @@ namespace LBPTesting.Tests
             CollectionAssert.AreEqual(testImg.Image, lbpreader.image);
         }
 
-        [TestCase("")]
-        [TestCase("Quarters")]
-        [TestCase("Ones")]
-        [TestCase("Running numbers")]
-        [TestCase("Add residual")]
+        [Xunit.Theory]
+        [InlineData("")]
+        [InlineData("Quarters")]
+        [InlineData("Ones")]
+        [InlineData("Running numbers")]
+        [InlineData("Add residual")]
         public void SaveAndRead_DoubleArray_EqualsInputArray(string pattern)
         {
             testImg.New(pattern);

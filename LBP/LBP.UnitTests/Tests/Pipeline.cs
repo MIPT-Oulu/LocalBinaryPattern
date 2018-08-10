@@ -11,7 +11,7 @@ using Xunit;
 
 namespace LBP.UnitTests.Tests
 {
-    public class XunitTests_Pipeline
+    public class Pipeline
     {
         TestImage testImg = new TestImage(); // Initialize testimage function
 

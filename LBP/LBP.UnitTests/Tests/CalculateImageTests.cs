@@ -2,16 +2,17 @@
 using LBP.Components;
 using NUnit.Framework;
 using Accord.Math;
+using Xunit;
 
 namespace LBPTesting.Tests
 {
-    [TestFixture]
-    class CalculateImageTests
+
+    public class CalculateImageTests
     {
         TestImage testImg = new TestImage(); // Initialize testimage function
 
         // CalculateImage test
-        [Test]
+        [Fact]
         public void CalculateImage_QuarterArray_EqualsReferenceMappedImages()
         {
             testImg.New("Quarters", new int[] { 28, 28});

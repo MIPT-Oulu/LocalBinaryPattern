@@ -2,10 +2,10 @@
 using LBP.Components;
 using NUnit.Framework;
 using Accord.Math;
+using Xunit;
 
 namespace LBP.UnitTests
 {
-    [TestFixture]
     public class PaddingTests
     {
         string method;
@@ -19,11 +19,12 @@ namespace LBP.UnitTests
             testImg.New("Ones");
         }
 
-        [TestCase(10)]
-        [TestCase(100)]
-        [TestCase(1000)]
-        [TestCase(1)]
-        [TestCase(0)]
+        [Xunit.Theory]
+        [InlineData(10)]
+        [InlineData(100)]
+        [InlineData(1000)]
+        [InlineData(1)]
+        [InlineData(0)]
         public void Padding_ZeroPadArray_EqualsToZeropadded(int padLength)
         {
             // Act
@@ -43,17 +44,17 @@ namespace LBP.UnitTests
             CollectionAssert.AreEqual(refArray, padImage);
         }
 
-        [Test]
+        [Fact]
         public void Padding_ReflectOverArraySize_ThrowsCorrectException()
         {   /// Test whether Medianfilter class throws correct exceptions
             testImg.New("Quarters", new int[] { 6, 6 });
             int padding = 7;
 
             // Filter
-            Exception ex = Assert.Throws<Exception>(
+            Exception ex = NUnit.Framework.Assert.Throws<Exception>(
                 delegate { Functions.ArrayPadding(testImg.Image, padding, "Reflect"); });
 
-            Assert.AreEqual(ex.Message, "Cannot reflect over array size!");
+            NUnit.Framework.Assert.AreEqual(ex.Message, "Cannot reflect over array size!");
         }
     }
 }

@@ -3,16 +3,16 @@ using LBP.Components;
 using NUnit.Framework;
 using Accord.Math;
 using System.IO;
+using Xunit;
 
 namespace LBPTesting.Tests
 {
-    [TestFixture]
-    class CSVWriterTests
+    public class CSVWriterTests
     {
         TestImage testImg = new TestImage(); // Initialize testimage function
         string filename = Directory.GetCurrentDirectory() + @"\Test.csv";
 
-        [Test]
+        [Fact]
         public void SaveAndRead_IntegerArray_EqualsInputArray()
         {
             testImg.New();
@@ -25,7 +25,7 @@ namespace LBPTesting.Tests
             CollectionAssert.AreEqual(testImg.Image, readedArray);
         }
 
-        [Test]
+        [Fact]
         public void SaveAndRead_FloatArray_EqualsInputArray()
         {   // Float type's precision is only 7 digits!!
             testImg.New("Add residual");
