@@ -8,7 +8,6 @@ branches:
   # whitelist
   only:
     - master
-    - BugFixes
 
 # Restore nuget packages before running msbuild
 image: 
@@ -20,6 +19,7 @@ before_build:
 build:
   verbosity: minimal
   publish_wap: true
+  project: LBP.sln
 
 test_script:
  - .\packages\OpenCover.4.6.519\tools\OpenCover.Console.exe -register:user -target:"packages\xunit.runner.console.2.2.0\tools\xunit.console.x86.exe" -targetargs:"LBP\LBP.UnitTests\bin\Debug\LBP.UnitTests.dll -noshadow" -output:"coverage.xml" -filter:"+[LBPLibrary*]* -[LBP.UnitTests*]*"
