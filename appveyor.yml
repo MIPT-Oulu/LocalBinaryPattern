@@ -22,7 +22,7 @@ build:
   publish_wap: true
 
 test_script:
- - .\packages\OpenCover.4.6.519\tools\OpenCover.Console.exe -register:user -target:"packages\xunit.runner.console.2.2.0\tools\xunit.console.x86.exe" -targetargs:"LBP\LBP.UnitTests\bin\Debug\LBP.UnitTests.dll -noshadow" -output:"coverage.xml" -filter:"+[YourSUTNamepace*]* -[YourTestNamespace*]*"
+ - .\packages\OpenCover.4.6.519\tools\OpenCover.Console.exe -register:user -target:"packages\xunit.runner.console.2.2.0\tools\xunit.console.x86.exe" -targetargs:"LBP\LBP.UnitTests\bin\Debug\LBP.UnitTests.dll -noshadow" -output:"coverage.xml" -filter:"+[LBPLibrary*]* -[LBP.UnitTests*]*"
 after_test:
   - ps: |
       $env:PATH = 'C:\msys64\usr\bin;' + $env:PATH
