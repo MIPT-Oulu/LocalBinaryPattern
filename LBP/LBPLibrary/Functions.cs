@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 using Accord.Math;
 
-namespace LBP.Components
+namespace LBPLibrary
 {
     public class Functions
     {

@@ -1,5 +1,5 @@
 ﻿using System;
-using LBP.Components;
+using LBPLibrary;
 //using Microsoft.VisualStudio.TestTools.UnitTesting; // MSTest
 using NUnit.Framework;
 using Accord.Math;

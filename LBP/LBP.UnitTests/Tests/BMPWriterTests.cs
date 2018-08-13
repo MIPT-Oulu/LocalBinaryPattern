@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Numerics;
-using LBP.Components;
+using LBPLibrary;
 using NUnit.Framework;
 using Accord.Math;
 using System.IO;

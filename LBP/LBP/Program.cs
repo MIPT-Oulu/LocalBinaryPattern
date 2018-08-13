@@ -6,7 +6,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Drawing;
 using System.Windows.Forms;
-using LBP.Components;
+using LBPLibrary;
 using Microsoft.VisualBasic;
 
 namespace LBP

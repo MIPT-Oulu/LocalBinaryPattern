@@ -7,7 +7,7 @@ using System.Diagnostics;
 using Accord.Math;
 
 
-namespace LBP.Components
+namespace LBPLibrary
 {
     public class RunLBP
     {
