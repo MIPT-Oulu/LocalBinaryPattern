@@ -84,9 +84,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\LBPLibrary\LBPLibrary.csproj">
+    <ProjectReference Include="..\LBPLibrary\LBP.Library.csproj">
       <Project>{449dc7ab-7d1a-4e46-822c-a9430298f4e0}</Project>
-      <Name>LBPLibrary</Name>
+      <Name>LBP.Library</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LBP", "LBP\LBP.csproj", "{8
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LBP.UnitTests", "LBP.UnitTests\LBP.UnitTests.csproj", "{71F16543-3AA7-44D5-A1EC-248EBE366EE1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LBPLibrary", "LBPLibrary\LBPLibrary.csproj", "{449DC7AB-7D1A-4E46-822C-A9430298F4E0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LBP.Library", "LBPLibrary\LBP.Library.csproj", "{449DC7AB-7D1A-4E46-822C-A9430298F4E0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
