@@ -1,6 +1,6 @@
 ﻿using System;
 using LBPLibrary;
-using NUnit.Framework;
+using LBP.UnitTests;
 using Accord.Math;
 using Xunit;
 
@@ -34,7 +34,7 @@ namespace LBP.UnitTests
                 }
             }
 
-            CollectionAssert.AreEqual(refArray, padImage);
+            Assert.Equal(refArray, padImage);
         }
 
         [Fact]
@@ -44,10 +44,10 @@ namespace LBP.UnitTests
             int padding = 7;
 
             // Filter
-            Exception ex = NUnit.Framework.Assert.Throws<Exception>(
+            Exception ex = Assert.Throws<Exception>(
                 delegate { Functions.ArrayPadding(testImg.Image, padding, "Reflect"); });
 
-            NUnit.Framework.Assert.AreEqual(ex.Message, "Cannot reflect over array size!");
+            Assert.Equal("Cannot reflect over array size!", ex.Message);
         }
     }
 }

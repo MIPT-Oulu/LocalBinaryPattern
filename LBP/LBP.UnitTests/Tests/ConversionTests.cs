@@ -1,62 +1,15 @@
 ﻿using System;
 using LBPLibrary;
-using NUnit.Framework;
+using LBP.UnitTests;
 using Accord.Math;
 using System.Drawing;
 using Xunit;
 
-namespace LBPTesting.Tests
+namespace LBP.UnitTests
 {
     public class ConversionTests
     {
         TestImage testImg = new TestImage(); // Initialize testimage function
-
-        // Byte and Float
-
-        [Xunit.Theory]
-        [InlineData("")]
-        [InlineData("Quarters")]
-        [InlineData("Ones")]
-        [InlineData("Running numbers")]
-        public void FloatArrayToByte_ExpectedInput_ResultEqualsReferenceMethod(string pattern)
-        {   /// It's actually better to use default conversion functions from System namespace.
-            testImg.New(pattern);
-
-            byte[,] byteImg = Functions.FloatToByteMatrix(testImg.Image);
-            byte[,] byteRef = testImg.Image.ToByte();
-
-            CollectionAssert.AreEqual(byteImg, byteRef);
-        }
-
-        [Xunit.Theory]
-        [InlineData("")]
-        [InlineData("Quarters")]
-        [InlineData("Ones")]
-        [InlineData("Running numbers")]
-        public void FloatArrayToByte_ExpectedInput_ResultEqualsInput(string pattern)
-        {   /// It's actually better to use default conversion functions from System namespace.
-            testImg.New(pattern);
-
-            byte[,] byteImg = Functions.FloatToByteMatrix(testImg.Image);
-
-            CollectionAssert.AreEqual(byteImg, testImg.Image);
-        }
-
-        [Xunit.Theory]
-        [InlineData("")]
-        [InlineData("Quarters")]
-        [InlineData("Ones")]
-        [InlineData("Running numbers")]
-        public void ByteArrayToFloat_ExpectedInput_EqualsRefArray(string pattern)
-        {   /// It's actually better to use default conversion functions from System namespace.
-            testImg.New(pattern);
-
-            byte[,] byteImg = testImg.Image.ToByte();
-            float[,] floatImg = Functions.ByteToFloatMatrix(byteImg);
-            float[,] floatRef = byteImg.ToSingle();
-
-            CollectionAssert.AreEqual(floatImg, floatRef);
-        }
 
         // Bitmap conversions
 
@@ -73,7 +26,7 @@ namespace LBPTesting.Tests
             Bitmap bmp = Functions.ByteMatrixToBitmap(byteImg);
             float[,] floatRef = Functions.BitmapToFloatMatrix(bmp);
 
-            CollectionAssert.AreEqual(testImg.Image, floatRef);
+            Assert.Equal(testImg.Image, floatRef);
         }
 
         [Fact]
@@ -86,8 +39,8 @@ namespace LBPTesting.Tests
             float[,] floatRef = Functions.BitmapToFloatMatrix(bmp);
             float[,] floatRef2 = Functions.BitmapToFloatMatrix(bmp);
 
-            CollectionAssert.AreEqual(testImg.Image, floatRef);
-            CollectionAssert.AreEqual(floatRef2, floatRef);
+            Assert.Equal(testImg.Image, floatRef);
+            Assert.Equal(floatRef2, floatRef);
         }
     }
 }

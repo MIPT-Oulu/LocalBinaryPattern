@@ -1,11 +1,11 @@
 ﻿using System;
 using LBPLibrary;
-using NUnit.Framework;
+using LBP.UnitTests;
 using Accord.Math;
 using System.IO;
 using Xunit;
 
-namespace LBPTesting.Tests
+namespace LBP.UnitTests
 {
     public class CSVWriterTests
     {
@@ -20,9 +20,7 @@ namespace LBPTesting.Tests
             Functions.WriteCSV(testImg.Image, filename);
             float[,] readedArray = Functions.ReadCSV(filename);
 
-            //Functions.DisplayArray(testImg.Image);
-            //Functions.DisplayArray(readedArray);
-            CollectionAssert.AreEqual(testImg.Image, readedArray);
+            Assert.Equal(testImg.Image, readedArray);
         }
 
         [Fact]
@@ -33,9 +31,7 @@ namespace LBPTesting.Tests
             Functions.WriteCSV(testImg.Image, filename);
             float[,] readedArray = Functions.ReadCSV(filename);
 
-            //Functions.DisplayArray(testImg.Image);
-            //Functions.DisplayArray(readedArray);
-            CollectionAssert.AreEqual(testImg.Image, readedArray);
+            Assert.Equal(testImg.Image, readedArray);
         }
     }
 }

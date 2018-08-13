@@ -1,18 +1,18 @@
 ﻿using System;
 using LBPLibrary;
-using NUnit.Framework;
+using LBP.UnitTests;
 using Accord.Math;
 using System.IO;
 using Xunit;
 
-namespace LBPTesting.Tests
+namespace LBP.UnitTests
 {
     public class BinaryTests
     {
         TestImage testImg = new TestImage(); // Initialize testimage function
         BinaryWriterApp lbpreader = new BinaryWriterApp(Directory.GetCurrentDirectory() + @"\Test.dat");
 
-        [Xunit.Theory]
+        [Theory]
         [InlineData("")]
         [InlineData("Quarters")]
         [InlineData("Ones")]
@@ -24,11 +24,10 @@ namespace LBPTesting.Tests
             lbpreader.SaveLBPFeatures(testImg.Image.ToInt32());
             lbpreader.ReadLBPFeatures("Integer");
 
-            //Functions.DisplayArray(lbpreader.features);
-            CollectionAssert.AreEqual(testImg.Image, lbpreader.features);
+            Assert.Equal(testImg.Image.ToInt32(), lbpreader.features);
         }
 
-        [Xunit.Theory]
+        [Theory]
         [InlineData("")]
         [InlineData("Quarters")]
         [InlineData("Ones")]
@@ -41,11 +40,10 @@ namespace LBPTesting.Tests
             lbpreader.SaveLBPFeatures(testImg.Image);
             lbpreader.ReadLBPFeatures("float");
 
-            //Functions.DisplayArray(lbpreader.image);
-            CollectionAssert.AreEqual(testImg.Image, lbpreader.image);
+            Assert.Equal(testImg.Image, lbpreader.image);
         }
 
-        [Xunit.Theory]
+        [Theory]
         [InlineData("")]
         [InlineData("Quarters")]
         [InlineData("Ones")]
@@ -59,9 +57,7 @@ namespace LBPTesting.Tests
             lbpreader.SaveLBPFeatures(img);
             lbpreader.ReadLBPFeatures("double");
 
-            //Functions.DisplayArray(img);
-            //Functions.DisplayArray(lbpreader.image_double);
-            CollectionAssert.AreEqual(img, lbpreader.image_double);
+            Assert.Equal(img, lbpreader.image_double);
         }
     }
 }

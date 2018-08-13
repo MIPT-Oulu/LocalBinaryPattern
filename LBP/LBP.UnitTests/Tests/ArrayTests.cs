@@ -1,10 +1,10 @@
 ﻿using System;
 using LBPLibrary;
-using NUnit.Framework;
+using LBP.UnitTests;
 using Accord.Math;
 using Xunit;
 
-namespace LBPTesting.Tests
+namespace LBP.UnitTests
 {
     public class ArrayTests
     {
@@ -12,7 +12,7 @@ namespace LBPTesting.Tests
 
         // Array to vector conversions
 
-        [Xunit.Theory]
+        [Theory]
         [InlineData("")]
         [InlineData("Quarters")]
         [InlineData("Ones")]
@@ -29,7 +29,7 @@ namespace LBPTesting.Tests
             //Functions.DisplayVector(vector);
             //Console.WriteLine("Result\n");
             //Functions.DisplayArray(array);
-            CollectionAssert.AreEqual(testImg.Image, array);
+            Assert.Equal(testImg.Image, array);
         }
 
         // Submatrix tests
@@ -46,10 +46,10 @@ namespace LBPTesting.Tests
 
             float[,] subMatrix = Functions.GetSubMatrix(testImg.Image, 0, w - 1, 0, l - 1);
 
-            CollectionAssert.AreEqual(testImg.Image, subMatrix);
+           Assert.Equal(testImg.Image, subMatrix);
         }
 
-        [Xunit.Theory]
+        [Theory]
         [InlineData("")]
         [InlineData("Quarters")]
         [InlineData("Ones")]
@@ -61,9 +61,9 @@ namespace LBPTesting.Tests
             float[,] subMatrix = Functions.GetSubMatrix(testImg.Image, 0, 0, 0, 0);
             int w = subMatrix.GetLength(0), l = subMatrix.GetLength(1);
 
-            NUnit.Framework.Assert.That(w, Is.EqualTo(1));
-            NUnit.Framework.Assert.That(l, Is.EqualTo(1));
-            NUnit.Framework.Assert.AreEqual(testImg.Image[0, 0], subMatrix[w - 1, l - 1]);
+            Assert.Equal(1, w);
+            Assert.Equal(1, l);
+            Assert.Equal(testImg.Image[0, 0], subMatrix[w - 1, l - 1]);
         }
 
         [Fact]
@@ -86,13 +86,11 @@ namespace LBPTesting.Tests
             { 2, 2, 2, 2, 4, 4, 4, 4, 4 },
             { 2, 2, 2, 2, 4, 4, 4, 4, 4 },
             { 2, 2, 2, 2, 4, 4, 4, 4, 4 }};
-            //Console.WriteLine("Submatrix:"); Functions.DisplayArray(subMatrix);
-            //Console.WriteLine("Small image:"); Functions.DisplayArray(testImg.Image);
-            //Console.WriteLine("Reference:"); Functions.DisplayArray(refArray);
-            NUnit.Framework.Assert.That(ww, Is.EqualTo(6));
-            NUnit.Framework.Assert.That(ll, Is.EqualTo(9));
-            CollectionAssert.AreEqual(refArray, subMatrix);
-            CollectionAssert.AreEqual(subMatrix, testImg.Image);
+
+            Assert.Equal(6, ww);
+            Assert.Equal(9, ll);
+            Assert.Equal(refArray, subMatrix);
+            Assert.Equal(subMatrix, testImg.Image);
         }
     }
 }

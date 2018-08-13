@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Numerics;
 using LBPLibrary;
-using NUnit.Framework;
+using LBP.UnitTests;
 using Accord.Math;
 using System.IO;
 using Xunit;
 
-namespace LBPTesting.Tests
+namespace LBP.UnitTests
 {
 
     public class BMPWriterTests
@@ -22,9 +22,7 @@ namespace LBPTesting.Tests
             Functions.Save(filename, testImg.Image.ToDouble(), false);
             float[,] readedArray = Functions.Load(filename);
 
-            //Functions.DisplayArray(testImg.Image);
-            //Functions.DisplayArray(readedArray);
-            CollectionAssert.AreEqual(testImg.Image, readedArray);
+            Assert.Equal(testImg.Image, readedArray);
         }
 
         [Fact]
@@ -36,9 +34,7 @@ namespace LBPTesting.Tests
             float[,] readedArray = Functions.Load(filename);
 
             testImg.Image = testImg.Image.Round().ToSingle(); // Round
-            //Functions.DisplayArray(testImg.Image);
-            //Functions.DisplayArray(readedArray);
-            CollectionAssert.AreEqual(testImg.Image, readedArray);
+            Assert.Equal(testImg.Image, readedArray);
         }
 
         [Fact]
@@ -50,9 +46,7 @@ namespace LBPTesting.Tests
             float[,] readedArray = Functions.Load(filename);
 
             testImg.Image = Functions.Normalize(testImg.Image.ToDouble()).Multiply(255).Round().ToSingle(); // Normalize array
-            //Functions.DisplayArray(testImg.Image);
-            //Functions.DisplayArray(readedArray);
-            CollectionAssert.AreEqual(testImg.Image, readedArray);
+            Assert.Equal(testImg.Image, readedArray);
         }
     }
 }

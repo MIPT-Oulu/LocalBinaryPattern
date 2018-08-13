@@ -1,10 +1,10 @@
 ﻿using System;
 using LBPLibrary;
-using NUnit.Framework;
+using LBP.UnitTests;
 using Accord.Math;
 using Xunit;
 
-namespace LBPTesting.Tests
+namespace LBP.UnitTests
 {
 
     public class CalculateImageTests
@@ -36,10 +36,6 @@ namespace LBPTesting.Tests
             app.FilterImage();
             app.CalculateImage();
 
-            //Functions.DisplayArray(mappedLBP);
-            //Functions.DisplayArray(app.LBPISMapped);
-            //Functions.DisplayArray(app.LBPIRMapped);
-            //Functions.DisplayArray(app.LBPILMapped);
             double[,] refLBP = new double[6, 6] // Here, actually columns are written out as rows
                 {{ 8, 8, 8, 5, 5, 5},
                 { 8, 8, 8, 5, 5, 6},
@@ -68,10 +64,10 @@ namespace LBPTesting.Tests
                 { 3, 3, 3, 5, 5, 5},
                 { 3, 3, 3, 5, 5, 5},
                 { 3, 3, 3, 5, 5, 5} };
-            CollectionAssert.AreEqual(refLBP, mappedLBP);
-            CollectionAssert.AreEqual(refIS, app.LBPISMapped);
-            CollectionAssert.AreEqual(refIR, app.LBPIRMapped);
-            CollectionAssert.AreEqual(refIL, app.LBPILMapped);
+            Assert.Equal(refLBP, mappedLBP);
+            Assert.Equal(refIS, app.LBPISMapped);
+            Assert.Equal(refIR, app.LBPIRMapped);
+            Assert.Equal(refIL, app.LBPILMapped);
         }
     }
 }

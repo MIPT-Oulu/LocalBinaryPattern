@@ -11,59 +11,9 @@ using Accord.Math;
 namespace LBPLibrary
 {
     public class Functions
-    {
-        // Display array
-        public static void DisplayArray<T>(T[,] array)
-        {   /// display a float 2D array on command line
-
-            for (int k = 0; k < array.GetLength(1); k++)
-            {
-                for (int kk = 0; kk < array.GetLength(0); kk++)
-                {
-                    Console.Write("{0:####.##}:", array[kk, k].ToString());
-                }
-                Console.WriteLine("");
-            }
-            Console.WriteLine("");
-        }
-
-        // Display vector
-        public static void DisplayVector<T>(T[] vector)
-        {   /// display a float 2D array on command line
-            for (int k = 0; k < vector.Length; k++)
-            {
-                Console.Write("{0:####.##}:", vector[k].ToString());
-            }
-            Console.WriteLine("");
-        }
-
-        // Convert array from byte to float
-        public static float[,] ByteToFloatMatrix(byte[,] matrix)
-        {   /// Makes conversion from byte to float for 2D arrays.
-            float[,] convMatrix = new float[matrix.GetLength(0), matrix.GetLength(1)];
-            for (int i = 0; i < matrix.GetLength(0); i++)
-            {
-                for (int j = 0; j < matrix.GetLength(1); j++)
-                {
-                    convMatrix[i, j] = matrix[i, j];
-                }
-            }
-            return convMatrix;
-        }
-
-        // Convert array from float to byte
-        public static byte[,] FloatToByteMatrix(float[,] matrix)
-        {   /// Makes conversion from byte to float for 2D arrays.
-            byte[,] convMatrix = new byte[matrix.GetLength(0), matrix.GetLength(1)];
-            for (int i = 0; i < matrix.GetLength(0); i++)
-            {
-                for (int j = 0; j < matrix.GetLength(1); j++)
-                {
-                    convMatrix[i, j] = (byte)matrix[i, j];
-                }
-            }
-            return convMatrix;
-        }
+    {   /// 
+        /// Contains utility functions that are used in calculating LBP images.
+        /// 
 
         // Convert bitmap to float[,]
         public static float[,] BitmapToFloatMatrix(Bitmap image)
@@ -204,23 +154,6 @@ namespace LBPLibrary
             }
         }
 
-        // Multiply array with scalar
-        public static double[,] MultiplyArray(double[,] matrix1, double scalar)
-        {   /// Multiply array with a scalar
-            /// 
-
-            double[,] result = new double[matrix1.GetLength(0), matrix1.GetLength(1)];
-
-            for (int i = 0; i < matrix1.GetLength(0); i++)
-            {
-                for (int j = 0; j < matrix1.GetLength(1); j++)
-                {
-                    result[i, j] = matrix1[i, j] * scalar;
-                }
-            }
-            return result;
-        }
-
         // Normalize array
         public static double[,] Normalize(double[,] array)
         {
@@ -351,8 +284,6 @@ namespace LBPLibrary
                     }
                 }
             }
-            //DisplayArray(array);
-            //DisplayArray(paddedImage);
             return paddedImage;
         }
 
@@ -405,7 +336,6 @@ namespace LBPLibrary
             Bitmap bmp = new Bitmap(ByteMatrixToBitmap(bytearray));
             bmp.Save(filename, ImageFormat.Png);
             bmp.Dispose(); // Delete bitmap object
-
         }
 
         // Load bitmap image
@@ -471,7 +401,6 @@ namespace LBPLibrary
             int w = image.GetLength(0), l = image.GetLength(1);
             int d = (block - 1) / 2;
             double[,] im_pad = ArrayPadding(image, d, method);
-            //DisplayArray(im_pad);
             double[,] result = new double[w, l];
 
             if (block % 2 == 0) // Check for odd kernel
@@ -490,330 +419,6 @@ namespace LBPLibrary
                 });
             });
             return result;
-        }
-    }
-
-    // Read and write binary files
-    public class BinaryWriterApp
-    {
-        public string filename;
-        public int[,] features;
-        public float[,] image, eigenVectors;
-        public double[,] image_double;
-        public int w, l, ncomp;
-        public float[] singularValues;
-        public double[] weights;
-
-        public BinaryWriterApp()
-        { // Working path as default
-            filename = Directory.GetCurrentDirectory();
-        }
-
-        public BinaryWriterApp(string filename)
-        {
-            this.filename = filename;
-        }
-
-        // Save LBP features
-        public void SaveLBPFeatures(int[,] array)
-        {   // Save int array to binary file, width written as Int32
-            w = array.GetLength(0); l = array.GetLength(1);
-            using (var writer = new BinaryWriter(File.Open(filename, FileMode.Create))) // BinaryWriter is little endian
-            {
-                writer.Write(w); // write array width
-                // Loop to write values one by one
-                for (int i = 0; i < w; i++)
-                {
-                    for (int j = 0; j < l; j++)
-                    {
-                        writer.Write(array[i, j]);
-                    }
-                }
-            }
-        }
-
-        public void SaveLBPFeatures(float[,] array)
-        {   // Float overload for SaveLBPFeatures
-            w = array.GetLength(0); l = array.GetLength(1);
-            using (var writer = new BinaryWriter(File.Open(filename, FileMode.Create))) // BinaryWriter is little endian
-            {
-                writer.Write(w); // write array width
-                // Loop to write values one by one
-                for (int i = 0; i < w; i++)
-                {
-                    for (int j = 0; j < l; j++)
-                    {
-                        writer.Write(array[i, j]);
-                    }
-                }
-            }
-        }
-
-        public void SaveLBPFeatures(double[,] array)
-        {   // Double overload for SaveLBPFeatures
-            w = array.GetLength(0); l = array.GetLength(1);
-            using (var writer = new BinaryWriter(File.Open(filename, FileMode.Create))) // BinaryWriter is little endian
-            {
-                writer.Write(w); // write array width
-                // Loop to write values one by one
-                for (int i = 0; i < w; i++)
-                {
-                    for (int j = 0; j < l; j++)
-                    {
-                        writer.Write(array[i, j]);
-                    }
-                }
-            }
-        }
-
-        // Load LBP features
-        public void ReadLBPFeatures(string type)
-        {
-            if (File.Exists(filename))
-            {
-                try
-                {
-                    byte[] bytes = File.ReadAllBytes(filename);
-                    using (BinaryReader reader = new BinaryReader(File.Open(filename, FileMode.Open)))
-                    {
-                        w = reader.ReadInt32();
-                        l = (bytes.Length * 8 / 32 - 1) / w;
-                        if (type == "float")
-                        {
-                            image = new float[w, l];
-                            // Loop to read values one by one
-                            for (int i = 0; i < w; i++)
-                            {
-                                for (int j = 0; j < l; j++)
-                                {
-                                    image[i, j] = reader.ReadSingle();
-                                }
-                            }
-                        }
-                        else if (type == "double")
-                        {
-                            l = (bytes.Length * 8 / 64 - 1 / 2) / w;
-                            image_double = new double[w, l];
-                            // Loop to read values one by one
-                            for (int i = 0; i < w; i++)
-                            {
-                                for (int j = 0; j < l; j++)
-                                {
-                                    image_double[i, j] = reader.ReadDouble();
-                                }
-                            }
-                            image = image_double.ToSingle(); // Convert to single
-                        }
-                        else // integer type as default
-                        {
-                            features = new int[w, l];
-                            // Loop to read values one by one
-                            for (int i = 0; i < w; i++)
-                            {
-                                for (int j = 0; j < l; j++)
-                                {
-                                    features[i, j] = reader.ReadInt32();
-                                }
-                            }
-                        }
-                    }
-                }
-                catch (Exception)
-                {
-                    throw new Exception("Invalid file");
-                }
-               
-            }
-        }
-
-        public void ReadLBPFeatures(string type, string fname)
-        {
-            filename = fname;
-            ReadLBPFeatures(type);
-        }
-
-        public void ReadWeights()
-        {
-            if (File.Exists(filename))
-            {
-                byte[] bytes = File.ReadAllBytes(filename);
-                using (BinaryReader reader = new BinaryReader(File.Open(filename, FileMode.Open)))
-                {
-                    try
-                    {
-                        w = reader.ReadInt32();
-                        ncomp = reader.ReadInt32();
-                        // Loop to read values one by one
-                        eigenVectors = new float[w, ncomp];
-                        for (int i = 0; i < w; i++)
-                        {
-                            for (int j = 0; j < ncomp; j++)
-                            {
-                                eigenVectors[i, j] = reader.ReadSingle();
-                            }
-                        }
-                        singularValues = new float[ncomp];
-                        for (int i = 0; i < ncomp; i++)
-                        {
-                            singularValues[i] = reader.ReadSingle();
-                        }
-                        weights = new double[ncomp];
-                        for (int i = 0; i < ncomp; i++)
-                        {
-                            weights[i] = reader.ReadDouble();
-                        }
-                    }
-                    catch (Exception)
-                    {
-                        throw new Exception("Invalid file");
-                    }
-
-                }
-            }
-        }
-
-        public void ReadWeights(string fname)
-        {
-            filename = fname;
-            ReadWeights();
-        }
-    }
-
-    public class TestImage
-    {
-        // Class properties
-        public float[,] Image { get; set; }
-        public string Method { get; set; }
-        public int[] Size { get; set; }
-        public Bitmap Bmp { get; set; }
-
-        // Create test image
-        public void New()
-        {   /// Default image type: "Running numbers".
-            /// Other types are "Quarters" and "Ones"
-
-            Method = "Running numbers";
-            Size = new int[] { 10, 15 };
-            Image = CreateImage(Method, Size);
-            Bmp = Functions.ByteMatrixToBitmap(Image.ToByte());
-        }
-
-        public void New(string method) // Image type input
-        {
-            Method = method;
-            Size = new int[] { 10, 15 };
-            Image = CreateImage(Method, Size);
-            if (Image.Max() < 256)
-                Bmp = Functions.ByteMatrixToBitmap(Image.ToByte());
-        }
-
-        public void New(int[] size) // Size input
-        {
-            Method = "Running numbers";
-            Size = size;
-            Image = CreateImage(Method, Size);
-            if (Image.Max() < 256)
-                Bmp = Functions.ByteMatrixToBitmap(Image.ToByte());
-        }
-
-        public void New(string method, int[] size) // Type and size input
-        {
-            Method = method; Size = size;
-            Image = CreateImage(Method, Size);
-            if (Image.Max() < 256)
-                Bmp = Functions.ByteMatrixToBitmap(Image.ToByte());
-        }
-
-        public float[,] CreateImage(string method, int[] size) // Create float image using given properties
-        {
-            float[,] image = new float[size[0], size[1]];
-
-            if (method == "Quarters")
-            {
-                for (int i = 0; i < Math.Floor((double)size[0] / 2); i++) // 1st quarter
-                {
-                    for (int j = 0; j < Math.Floor((double)size[1] / 2); j++)
-                    { image[i, j] = 1; }
-                }
-                for (int i = (int)Math.Floor((double)size[0] / 2); i < size[0]; i++) // 2nd quarter
-                {
-                    for (int j = 0; j < Math.Floor((double)size[1] / 2); j++)
-                    { image[i, j] = 2; }
-                }
-                for (int i = 0; i < Math.Floor((double)size[0] / 2); i++) // 3rd quarter
-                {
-                    for (int j = (int)Math.Floor((double)size[1] / 2); j < size[1]; j++)
-                    { image[i, j] = 3; }
-                }
-                for (int i = (int)Math.Floor((double)size[0] / 2); i < size[0]; i++) // 4th quarter
-                {
-                    for (int j = (int)Math.Floor((double)size[1] / 2); j < size[1]; j++)
-                    { image[i, j] = 4; }
-                }
-            }
-
-            if (method == "Running numbers" || method == "Add residual")
-            {
-                for (int i = 0; i < size[0]; i++)
-                {
-                    for (int j = 0; j < size[1]; j++)
-                    {
-                        image[i, j] = (i + j);
-                    }
-                }
-            }
-
-            if (method == "Add residual")
-                image = image.Add(0.00001).ToSingle();
-
-            if (method == "Ones")
-            {
-                for (int i = 0; i < size[0]; i++)
-                {
-                    for (int j = 0; j < size[1]; j++)
-                    {
-                        image[i, j] = 1;
-                    }
-                }
-            }
-            return image;
-        }
-    }
-
-    public class Parameters
-    {
-        // Class properties
-        public int Radius { get; set; }
-        public int LargeRadius { get; set; }
-        public int Neighbours { get; set; }
-        public int W_c { get; set; }
-        public int[] W_r { get; set; }
-        public string Type { get; set; }
-        public string Method { get; set; }
-        public string ImageType { get; set; }
-        public double Eps1 { get; set; }
-        public double Eps2 { get; set; }
-        public bool Mre { get; set; }
-        public bool Save { get; set; }
-        public bool Scale { get; set; }
-        public bool Meanstd { get; set; }
-
-        public Parameters()
-        {
-            Radius = 3;
-            LargeRadius = 9;
-            Neighbours = 8;
-            W_c = 5;
-            W_r = new int[] { 5, 5 };
-            Type = "double";
-            Method = "Reflect";
-            ImageType = ".png";
-            Eps1 = 1E-06;
-            Eps2 = 1E-12;
-            Mre = true;
-            Save = true;
-            Scale = true;
-            Meanstd = false;
         }
     }
 }

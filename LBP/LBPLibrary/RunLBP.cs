@@ -1,0 +1,203 @@
+﻿using System;
+using System.IO;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Diagnostics;
+using Accord.Math;
+
+namespace LBPLibrary
+{
+    public class RunLBP
+    {   ///
+        /// Class that is used to call different LBP pipelines for single image
+        /// or image batches. Takes in the Parameters class variable.
+        ///
+
+        public string path, savepath;
+        public Parameters param;
+
+        int[] f; int[,] features = new int[0, 0];
+        BinaryWriterApp lbpreader = new BinaryWriterApp();
+
+        public RunLBP()
+        {
+            param = new Parameters();
+        }
+
+        public void CalculateSingle()
+        {
+            // Timer
+            var time = Stopwatch.StartNew();
+
+            // Load image
+            double[,] image;
+            if (param.ImageType == ".dat" && path.EndsWith(".dat"))
+            {
+                lbpreader.ReadLBPFeatures(param.Type, path); // Read binary image
+                image = lbpreader.image_double;
+            }
+            else if (path.EndsWith(".png") || path.EndsWith(".bmp"))
+                image = Functions.Load(path).ToDouble();
+            else
+            {
+                Console.WriteLine("Image type not compatible.\n");
+                return;
+            }
+
+            // LBP
+            if (param.Mre)
+            {
+                // Run MRELBP
+                Console.WriteLine("\nRunning MRELBP:\n");
+                LBPApplication.PipelineMRELBP(image, param,
+                    out double[,] LBPIL, out double[,] LBPIS, out double[,] LBPIR, out int[] histL, out int[] histS, out int[] histR, out int[] histCenter);
+
+                if (param.Save) // Save images
+                {
+                    Functions.Save(savepath + "\\" + Path.GetFileName(path).Replace(Path.GetExtension(path), "") + "_LBPIL.png", LBPIL, param.Scale);
+                    Functions.Save(savepath + "\\" + Path.GetFileName(path).Replace(Path.GetExtension(path), "") + "_LBPIS.png", LBPIS, param.Scale);
+                    Functions.Save(savepath + "\\" + Path.GetFileName(path).Replace(Path.GetExtension(path), "") + "_LBPIR.png", LBPIR, param.Scale);
+                }
+
+                // Concatenate histograms
+                f = Matrix.Concatenate(histCenter, Matrix.Concatenate(histL, Matrix.Concatenate(histS, histR)));
+            }
+            else
+            {
+                // Run LBP
+                Console.WriteLine("\nRunning LBP:\n");
+                LBPApplication.PipelineLBP(image, param,
+                    out double[,] LBPresult, out int[] LBPhistogram); // Get LBP for test image;
+
+                if (param.Save) // Save images
+                    Functions.Save(savepath + "\\" + Path.GetFileName(path).Replace(Path.GetExtension(path), "") + "_LBP.png", LBPresult, param.Scale);
+
+                f = LBPhistogram;
+            }
+
+            // Results
+            features = Matrix.Concatenate(features, f);
+
+            // Write features to csv
+            Functions.WriteCSV(features.ToSingle(), savepath + "\\features.csv");
+
+            // Write features to binary file
+            var binwriter = new BinaryWriterApp() { filename = savepath + "\\features.dat" };
+            binwriter.SaveLBPFeatures(features);
+
+            Console.WriteLine("LBP images calculated and results saved.\nElapsed time: {0}min {1}sec", time.Elapsed.Minutes, time.Elapsed.Seconds);
+            time.Stop();
+        }
+
+        public void CalculateBatch()
+        {
+            // Timer
+            var time = Stopwatch.StartNew();
+            var timeFull = Stopwatch.StartNew();
+
+            // Get files from sample directory
+            string[] dir;
+            if (param.ImageType == ".dat")
+                dir = Directory.GetFiles(path, "*.dat");
+            else
+                dir = Directory.GetFiles(path, "*.png");
+            Array.Sort(dir);
+
+            if (param.Mre)
+            {
+                // Loop for calculating MRELBP for whole dataset
+                for (int k = 0; k < dir.Length; k++)
+                {
+                    // Load images
+                    double[,] imagemean, imagestd, image = null;
+                    if (param.ImageType == ".dat" && param.Meanstd)
+                    {
+                        lbpreader.ReadLBPFeatures(param.Type, dir[k]); // Read binary mean image
+                        imagemean = lbpreader.image_double;
+                        k++;
+                        lbpreader.ReadLBPFeatures(param.Type, dir[k]); // Read binary std image
+                        imagestd = lbpreader.image_double;
+                        image = imagemean.Add(imagestd); // Combine mean and std images
+                    }
+                    else if (param.Meanstd) // Check whether to sum two adjacent images
+                    {
+                        imagemean = Functions.Load(dir[k]).ToDouble();
+                        k++;
+                        imagestd = Functions.Load(dir[k]).ToDouble();
+                        image = imagemean.Add(imagestd); // Combine mean and std images
+                    }
+                    else if (param.ImageType == ".dat" && !param.Meanstd) // Don't combine images
+                    {
+                        lbpreader.ReadLBPFeatures(param.Type, dir[k]); // Read binary mean image
+                        image = lbpreader.image_double;
+                    }
+                    else if (!param.Meanstd)
+                    {
+                        image = Functions.Load(dir[k]).ToDouble();
+                    }
+
+                    // Grayscale normalization
+                    var standrd = new LocalStandardization(); // Initializes also default weights
+                    standrd.Standardize(ref image, "Reflect"); // standardize given image
+
+                    // Calculate MRELBP
+                    LBPApplication.PipelineMRELBP(image, param,
+                    out double[,] LBPIL, out double[,] LBPIS, out double[,] LBPIR, out int[] histL, out int[] histS, out int[] histR, out int[] histCenter);
+
+                    // Concatenate histograms
+                    f = Matrix.Concatenate(histCenter, Matrix.Concatenate(histL, Matrix.Concatenate(histS, histR)));
+                    features = Matrix.Concatenate(features, f);
+
+                    if (param.Save) // Save LBP image
+                    {
+                        Functions.Save(savepath + "\\" + Path.GetFileName(dir[k]).Replace(Path.GetExtension(dir[k]), "") + "_small.png", LBPIS, param.Scale);
+                        Functions.Save(savepath + "\\" + Path.GetFileName(dir[k]).Replace(Path.GetExtension(dir[k]), "") + "_large.png", LBPIL, param.Scale);
+                        Functions.Save(savepath + "\\" + Path.GetFileName(dir[k]).Replace(Path.GetExtension(dir[k]), "") + "_radial.png", LBPIR, param.Scale);
+                    }
+
+                    Console.WriteLine("Image: {0}, elapsed time: {1}ms", dir[k], time.ElapsedMilliseconds);
+                    time.Restart();
+                }
+            }
+            else
+            {
+                // Loop for calculating LBP for whole dataset
+                for (int k = 0; k < dir.Length; k++)
+                {
+                    // Load images
+                    double[,] image;
+                    if (param.ImageType == ".dat")
+                    {
+                        lbpreader.ReadLBPFeatures(param.Type, dir[k]); // Read binary image
+                        image = lbpreader.image_double;
+                    }
+                    else
+                    {
+                        image = Functions.Load(dir[k]).ToDouble(); // Read png or bmp image
+                    }
+                    LBPApplication.PipelineLBP(image, param,
+                        out double[,] LBPresult, out int[] LBPhistogram); // Get LBP for test image;
+
+                    if (param.Save) // Save images
+                        Functions.Save(savepath + "\\" + Path.GetFileName(dir[k]).Replace(Path.GetExtension(dir[k]), "") + "_LBP.png", LBPresult, param.Scale);
+
+                    Console.WriteLine("Image: {0}, elapsed time: {1}ms", dir[k], time.ElapsedMilliseconds);
+                    time.Restart();
+                }
+            }
+
+
+            // Write features to csv
+            Functions.WriteCSV(features.ToSingle(), savepath + "\\features.csv");
+
+            // Write features to binary file
+            var binwriter = new BinaryWriterApp() { filename = savepath + "\\features.dat" };
+            binwriter.SaveLBPFeatures(features);
+
+            Console.WriteLine("All LBP images calculated and results saved.\nElapsed time: {0}min {1}sec", timeFull.Elapsed.Minutes, timeFull.Elapsed.Seconds);
+            time.Stop(); timeFull.Stop();
+        }
+    }
+}

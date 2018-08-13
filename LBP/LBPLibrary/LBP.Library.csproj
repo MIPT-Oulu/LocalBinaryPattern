@@ -57,9 +57,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BinaryWriter.cs" />
     <Compile Include="Functions.cs" />
     <Compile Include="ImageProcessing.cs" />
+    <Compile Include="Parameters.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RunLBP.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -1,10 +1,10 @@
 ﻿using System;
 using LBPLibrary;
-using NUnit.Framework;
+using LBP.UnitTests;
 using Accord.Math;
 using Xunit;
 
-namespace LBPTesting.Tests
+namespace LBP.UnitTests
 {
 
     public class InterpolationTests
@@ -27,8 +27,6 @@ namespace LBPTesting.Tests
                 }
             }
 
-            //Functions.DisplayArray(testImg.Image);
-            //Functions.DisplayArray(interpolated.ToSingle());
             double[,] refArray = new double[6, 6] // Here, actually columns are written out
                 {{ 1, 1, 1, 2, 3, 3},
                 { 1, 1, 1, 2, 3, 3},
@@ -40,7 +38,7 @@ namespace LBPTesting.Tests
             {
                 for (int j = 0; j < l - 2; j++)
                 {
-                    NUnit.Framework.Assert.AreEqual(refArray[i, j], interpolated[i, j], 1E-11);
+                    Assert.Equal(refArray[i, j], interpolated[i, j], 9);
                 }
             }
         }
@@ -74,7 +72,7 @@ namespace LBPTesting.Tests
             {
                 for (int j = 0; j < l - 2; j++)
                 {
-                    NUnit.Framework.Assert.AreEqual(refArray[i, j], interpolated[i, j], 1E-11);
+                    Assert.Equal(refArray[i, j], interpolated[i, j], 10);
                 }
             }
         }
@@ -104,7 +102,7 @@ namespace LBPTesting.Tests
                 { 1.25, 1.25, 1.25, 1.75, 3.25, 3.25},
                 { 2, 2, 2, 2.5, 4, 4},
                 { 2, 2, 2, 2.5, 4, 4} };
-            CollectionAssert.AreNotEqual(refArray, interpolated);
+            Assert.NotEqual(refArray, interpolated);
         }
     }
 }
