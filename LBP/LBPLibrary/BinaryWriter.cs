@@ -78,7 +78,7 @@ namespace LBPLibrary
         }
 
         // Load LBP features
-        public void ReadLBPFeatures(string type)
+        public void ReadLBPFeatures(string precision)
         {
             if (File.Exists(filename))
             {
@@ -89,7 +89,7 @@ namespace LBPLibrary
                     {
                         w = reader.ReadInt32();
                         l = (bytes.Length * 8 / 32 - 1) / w;
-                        if (type == "float")
+                        if (precision == "float")
                         {
                             image = new float[w, l];
                             // Loop to read values one by one
@@ -101,7 +101,7 @@ namespace LBPLibrary
                                 }
                             }
                         }
-                        else if (type == "double")
+                        else if (precision == "double")
                         {
                             l = (bytes.Length * 8 / 64 - 1 / 2) / w;
                             image_double = new double[w, l];
@@ -137,10 +137,10 @@ namespace LBPLibrary
             }
         }
 
-        public void ReadLBPFeatures(string type, string fname)
+        public void ReadLBPFeatures(string precision, string fname)
         {
             filename = fname;
-            ReadLBPFeatures(type);
+            ReadLBPFeatures(precision);
         }
 
         public void ReadWeights()

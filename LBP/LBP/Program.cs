@@ -96,7 +96,7 @@ namespace LBP
             Console.WriteLine("Filter size (center image): {0}", param.W_c);
             Console.WriteLine("Filter size (Large image): {0}", param.W_r[0]);
             Console.WriteLine("Filter size (Small image): {0}", param.W_r[1]);
-            Console.WriteLine("Image type: {0}", param.Type);
+            Console.WriteLine("Image type: {0}", param.Precision);
             Console.WriteLine("Loaded image type: {0}", param.ImageType);
             Console.WriteLine("Padding method: {0}", param.Method);
         }

@@ -24,6 +24,15 @@ namespace LBPLibrary
         public RunLBP()
         {
             param = new Parameters();
+            path = Directory.GetCurrentDirectory();
+            savepath = Directory.GetCurrentDirectory();
+        }
+
+        public RunLBP(string dir, string savedir)
+        {
+            param = new Parameters();
+            path = dir;
+            savepath = savedir;
         }
 
         public void CalculateSingle()
@@ -35,7 +44,7 @@ namespace LBPLibrary
             double[,] image;
             if (param.ImageType == ".dat" && path.EndsWith(".dat"))
             {
-                lbpreader.ReadLBPFeatures(param.Type, path); // Read binary image
+                lbpreader.ReadLBPFeatures(param.Precision, path); // Read binary image
                 image = lbpreader.image_double;
             }
             else if (path.EndsWith(".png") || path.EndsWith(".bmp"))
@@ -114,10 +123,10 @@ namespace LBPLibrary
                     double[,] imagemean, imagestd, image = null;
                     if (param.ImageType == ".dat" && param.Meanstd)
                     {
-                        lbpreader.ReadLBPFeatures(param.Type, dir[k]); // Read binary mean image
+                        lbpreader.ReadLBPFeatures(param.Precision, dir[k]); // Read binary mean image
                         imagemean = lbpreader.image_double;
                         k++;
-                        lbpreader.ReadLBPFeatures(param.Type, dir[k]); // Read binary std image
+                        lbpreader.ReadLBPFeatures(param.Precision, dir[k]); // Read binary std image
                         imagestd = lbpreader.image_double;
                         image = imagemean.Add(imagestd); // Combine mean and std images
                     }
@@ -130,7 +139,7 @@ namespace LBPLibrary
                     }
                     else if (param.ImageType == ".dat" && !param.Meanstd) // Don't combine images
                     {
-                        lbpreader.ReadLBPFeatures(param.Type, dir[k]); // Read binary mean image
+                        lbpreader.ReadLBPFeatures(param.Precision, dir[k]); // Read binary mean image
                         image = lbpreader.image_double;
                     }
                     else if (!param.Meanstd)
@@ -170,7 +179,7 @@ namespace LBPLibrary
                     double[,] image;
                     if (param.ImageType == ".dat")
                     {
-                        lbpreader.ReadLBPFeatures(param.Type, dir[k]); // Read binary image
+                        lbpreader.ReadLBPFeatures(param.Precision, dir[k]); // Read binary image
                         image = lbpreader.image_double;
                     }
                     else

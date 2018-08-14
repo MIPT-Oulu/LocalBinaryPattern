@@ -232,23 +232,18 @@ namespace LBP.UnitTests
         [Fact]
         public void MRELBP_QuarterArray_EqualsPythonReference()
         {
-            testImg.New("Quarters", new int[] { 16, 16 });
-            var param = new Parameters()
-            {
-                LargeRadius = 2,
-                Radius = 1
-            };
+            //testImg.New("Quarters", new int[] { 14, 14 });
+            //var param = new Parameters()
+            //{
+            //    LargeRadius = 2,
+            //    Radius = 1
+            //};
+            testImg.New("Quarters", new int[] { 28, 28 });
+            var param = new Parameters();
 
             LBPApplication.PipelineMRELBP(testImg.Image.ToDouble(), param, // MRELBP pipeline
             out double[,] LBPIL, out double[,] LBPIS, out double[,] LBPIR, out int[] histL, out int[] histS, out int[] histR, out int[] histCenter);
 
-            float[,] refLBP = new float[6, 6] // Here, actually columns are written out as rows
-                {{ 8, 8, 8, 5, 5, 5},
-            { 8, 8, 8, 5, 5, 6},
-            { 8, 8, 8, 5, 5, 6},
-            { 5, 6, 6, 3, 3, 3},
-            { 5, 6, 6, 3, 3, 3},
-            { 6, 6, 6, 3, 3, 3} };
             float[,] refIS = new float[6, 6]
                 {{ 3, 4, 4, 5, 5, 6},
             { 4, 3, 3, 5, 5, 2},
@@ -270,7 +265,6 @@ namespace LBP.UnitTests
             { 3, 3, 3, 5, 5, 5},
             { 3, 3, 3, 5, 5, 5},
             { 3, 3, 3, 5, 5, 5} };
-            int[] refLBPHist = new int[] { 0, 0, 0, 9, 0, 9, 9, 0, 9, 0 };
             int[] refSHist = new int[] { 0, 0, 3, 11, 8, 11, 3, 0, 0, 0 };
             int[] refRHist = new int[] { 0, 0, 0, 0, 0, 3, 1, 6, 20, 6 };
             int[] refLHist = new int[] { 0, 0, 0, 18, 0, 18, 0, 0, 0, 0 };

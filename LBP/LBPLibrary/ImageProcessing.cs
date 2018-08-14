@@ -409,7 +409,7 @@ namespace LBPLibrary
         }
     }
 
-    class LocalStandardization
+    public class LocalStandardization
     {   ///
         /// Performs grayscale standardization for images.
         /// Standardizes by gaussian mean with given gernels and std:s.

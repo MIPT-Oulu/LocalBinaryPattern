@@ -18,7 +18,7 @@ namespace LBPLibrary
         public int Neighbours { get; set; }
         public int W_c { get; set; }
         public int[] W_r { get; set; }
-        public string Type { get; set; }
+        public string Precision { get; set; }
         public string Method { get; set; }
         public string ImageType { get; set; }
         public double Eps1 { get; set; }
@@ -35,7 +35,7 @@ namespace LBPLibrary
             Neighbours = 8;
             W_c = 5;
             W_r = new int[] { 5, 5 };
-            Type = "double";
+            Precision = "double";
             Method = "Reflect";
             ImageType = ".png";
             Eps1 = 1E-06;
