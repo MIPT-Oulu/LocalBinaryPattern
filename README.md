@@ -7,6 +7,7 @@ The repository has 3 projects: A demo software (LBP), unit test project (LBP.Uni
 Current build status:  
 
 [![Build status](https://ci.appveyor.com/api/projects/status/d0c6874wheduojbe?svg=true)](https://ci.appveyor.com/project/sarytky/localbinarypattern-g7kbi)
+[![Tests status](https://appveyor-shields-badge.herokuapp.com/api/testResults/sarytky/localbinarypattern-g7kbi/badge.svg)](https://ci.appveyor.com/project/sarytky/localbinarypattern-g7kbi)
 [![codecov](https://codecov.io/gh/MIPT-Oulu/LocalBinaryPattern/branch/master/graph/badge.svg)](https://codecov.io/gh/MIPT-Oulu/LocalBinaryPattern)
 
 ## Prerequisites
