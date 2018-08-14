@@ -13,8 +13,15 @@ namespace LBP.UnitTests
 
     public class RunLBPTests
     {
-        string filename = Directory.GetCurrentDirectory() + @"\Test.png";
-        string save = Directory.GetCurrentDirectory();
+        string load = @"C:\temp\test\load";
+        string save = @"C:\temp\test\save";
+
+        public RunLBPTests()
+        {
+            Directory.CreateDirectory(@"C:\temp\test\load");
+            Directory.CreateDirectory(@"C:\temp\test\save");
+        }
+
         TestImage testImg = new TestImage(); // Initialize testimage function
 
         [Fact]
@@ -35,27 +42,29 @@ namespace LBP.UnitTests
         {
             var runlbp = new RunLBP()
             {
-                path = filename,
+                path = load + @"\Test1.png",
                 savepath = save
             };
             testImg.New("Quarters", new int[] { 28, 28 });
-            Functions.Save(filename, testImg.Image.ToDouble(), false);
+            Functions.Save(runlbp.path, testImg.Image.ToDouble(), false);
             runlbp.param.Mre = true;
+            runlbp.param.Scale = false;
+            runlbp.param.ImageType = ".png";
 
             runlbp.CalculateSingle();
-            float[,] result = Functions.Load(save + "\\" + Path.GetFileName(save).Replace(Path.GetExtension(save), "") + "_LBPIL.png");
-            int[,] features = Functions.ReadCSV(save + "\\features.csv").ToInt32();
+            float[,] result = Functions.Load(save + @"\Test1_LBPIS.png");
+            int[,] features = Functions.ReadCSV(save + @"\features.csv").ToInt32();
 
-            float[,] refIL = new float[6, 6]
-                {{ 3, 3, 3, 5, 5, 5},
-            { 3, 3, 3, 5, 5, 5},
-            { 3, 3, 3, 5, 5, 5},
-            { 3, 3, 3, 5, 5, 5},
-            { 3, 3, 3, 5, 5, 5},
-            { 3, 3, 3, 5, 5, 5} };
-            int[,] reffeat = new int[1, 32]
-                { { 18, 18, 0, 0, 0, 18, 0, 18, 0, 0, 0, 0, 0, 0, 3, 11, 8, 11, 3, 0, 0, 0, 0, 0, 0, 0, 0, 3, 1, 6, 20, 6} };
-            Assert.Equal(refIL, result);
+            float[,] refIS = new float[6, 6]
+                {{ 2, 3, 3, 5, 5, 9},
+            { 9, 3, 3, 5, 5, 9},
+            { 9, 3, 3, 5, 5, 9},
+            { 9, 3, 3, 5, 5, 9},
+            { 9, 3, 3, 5, 5, 9},
+            { 9, 3, 3, 5, 5, 6} };
+            int[,] reffeat = new int[32, 1]
+                { { 18 },{ 18 },{ 0},{ 0},{ 0},{ 0},{ 0},{ 0},{ 0 },{ 0 },{ 0 },{ 36 },{ 0 },{ 0 },{ 1 },{ 12 },{ 0 },{ 12 },{ 1 },{ 0 },{ 0 },{ 10 },{ 0 },{ 2 },{ 2 },{ 4 },{ 0 },{ 4 },{ 2 },{ 2 },{ 0 },{ 20 } };
+            Assert.Equal(refIS, result);
             Assert.Equal(reffeat, features);
         }
 
@@ -65,32 +74,32 @@ namespace LBP.UnitTests
         {
             var runlbp = new RunLBP()
             {
-                path = filename,
+                path = load + @"\Test1.dat",
                 savepath = save
             };
             testImg.New("Quarters", new int[] { 28, 28 });
-            var bin = new BinaryWriterApp();
-            bin.SaveLBPFeatures(testImg.Image);
+            var bin = new BinaryWriterApp() { filename = load + @"\Test1.dat" };
+            bin.SaveLBPFeatures(testImg.Image.ToDouble());
             runlbp.param.Mre = true;
+            runlbp.param.Scale = false;
             runlbp.param.ImageType = ".dat";
 
             runlbp.CalculateSingle();
-            bin.filename = save + "\\" + Path.GetFileName(save).Replace(Path.GetExtension(save), "") + "_LBPIL.png";
-            float[,] result = Functions.Load(save + "\\" + Path.GetFileName(save).Replace(Path.GetExtension(save), "") + "_LBPIL.png");
+            bin.filename = save + @"\features.dat";
+            float[,] result = Functions.Load(save + @"\Test1_LBPIS.png");
             bin.ReadLBPFeatures("uint32");
             int[,] features = bin.features;
 
-            float[,] refIL = new float[6, 6]
-                {{ 3, 3, 3, 5, 5, 5},
-            { 3, 3, 3, 5, 5, 5},
-            { 3, 3, 3, 5, 5, 5},
-            { 3, 3, 3, 5, 5, 5},
-            { 3, 3, 3, 5, 5, 5},
-            { 3, 3, 3, 5, 5, 5} };
-            int[,] reffeat = new int[1, 32]
-                { { 18, 18, 0, 0, 0, 18, 0, 18, 0, 0, 0, 0, 0, 0, 3, 11, 8, 11, 3, 0, 0, 0, 0, 0, 0, 0, 0, 3, 1, 6, 20, 6} };
-
-            Assert.Equal(refIL, result);
+            float[,] refIS = new float[6, 6]
+                {{ 2, 3, 3, 5, 5, 9},
+            { 9, 3, 3, 5, 5, 9},
+            { 9, 3, 3, 5, 5, 9},
+            { 9, 3, 3, 5, 5, 9},
+            { 9, 3, 3, 5, 5, 9},
+            { 9, 3, 3, 5, 5, 6} };
+            int[,] reffeat = new int[32, 1]
+                { { 18 },{ 18 },{ 0},{ 0},{ 0},{ 0},{ 0},{ 0},{ 0 },{ 0 },{ 0 },{ 36 },{ 0 },{ 0 },{ 1 },{ 12 },{ 0 },{ 12 },{ 1 },{ 0 },{ 0 },{ 10 },{ 0 },{ 2 },{ 2 },{ 4 },{ 0 },{ 4 },{ 2 },{ 2 },{ 0 },{ 20 } };
+            Assert.Equal(refIS, result);
             Assert.Equal(reffeat, features);
         }
 
@@ -99,30 +108,32 @@ namespace LBP.UnitTests
         {
             var runlbp = new RunLBP()
             {
-                path = filename,
+                path = load,
                 savepath = save
             };
             runlbp.param.Mre = true;
+            runlbp.param.Scale = false;
+            runlbp.param.W_stand = new int[] { 5, 3, 2, 1};
             testImg.New("Quarters", new int[] { 28, 28 });
-            Functions.Save(save + @"\Test1.png", testImg.Image.ToDouble(), false);
-            Functions.Save(save + @"\Test2.png", testImg.Image.ToDouble(), false);
-            Functions.Save(save + @"\Test3.png", testImg.Image.ToDouble(), false);
+            Functions.Save(load + @"\Test1.png", testImg.Image.ToDouble(), false);
+            Functions.Save(load + @"\Test2.png", testImg.Image.ToDouble(), false);
+            Functions.Save(load + @"\Test3.png", testImg.Image.ToDouble(), false);
 
             runlbp.CalculateBatch();
-            float[,] result1 = Functions.Load(save + @"\Test1_large.png");
-            float[,] result2 = Functions.Load(save + @"\Test2_large.png");
-            float[,] result3 = Functions.Load(save + @"\Test3_large.png");
+            float[,] result1 = Functions.Load(save + @"\\Test1_small.png");
+            float[,] result2 = Functions.Load(save + @"\\Test2_small.png");
+            float[,] result3 = Functions.Load(save + @"\\Test3_small.png");
 
-            float[,] refIL = new float[6, 6]
-                {{ 3, 3, 3, 5, 5, 5},
-            { 3, 3, 3, 5, 5, 5},
-            { 3, 3, 3, 5, 5, 5},
-            { 3, 3, 3, 5, 5, 5},
-            { 3, 3, 3, 5, 5, 5},
-            { 3, 3, 3, 5, 5, 5} };
-            Assert.Equal(refIL, result1);
-            Assert.Equal(refIL, result2);
-            Assert.Equal(refIL, result3);
+            float[,] refIS = new float[6, 6]
+                {{ 9, 7, 6, 6, 6, 1},
+            { 8, 1, 9, 6, 6, 1},
+            { 6, 2, 3, 6, 3, 1},
+            { 7, 5, 2, 5, 6, 2},
+            { 7, 2, 2, 9, 7, 8},
+            { 7, 2, 2, 2, 1, 9} };
+            Assert.Equal(refIS, result1);
+            Assert.Equal(refIS, result2);
+            Assert.Equal(refIS, result3);
         }
     }
 }
