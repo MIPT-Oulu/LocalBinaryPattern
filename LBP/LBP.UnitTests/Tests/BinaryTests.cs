@@ -59,5 +59,45 @@ namespace LBP.UnitTests
 
             Assert.Equal(img, lbpreader.image_double);
         }
+
+        [Fact]
+        public void SaveAndRead_Weights_EqualsInputArray()
+        {
+            testImg.New("Quarters", new int[] { 12, 12 });
+            string filename = @"C:\temp\test\load\Test1.dat";
+            // Write feature file
+            int w = 20, nComp = 10;
+            float[,] eigenVectors = new float[w, nComp].Add(1);
+            float[] singularValues = new float[nComp].Add(2);
+            double[] weights = new double[nComp];
+            using (var writer = new BinaryWriter(File.Open(filename, FileMode.Create))) // BinaryWriter is little endian
+            {
+                writer.Write(w); // write array width
+                writer.Write(10);
+                for (int i = 0; i < w; i++)
+                {
+                    for (int j = 0; j < nComp; j++)
+                    {
+                         writer.Write(eigenVectors[i, j]);
+                    }
+                }
+                for (int i = 0; i < nComp; i++)
+                {
+                    writer.Write(singularValues[i]);
+                }
+                for (int i = 0; i < nComp; i++)
+                {
+                    writer.Write(weights[i]);
+                }
+            }
+
+            lbpreader.ReadWeights(filename);
+
+            Assert.Equal(w, lbpreader.w);
+            Assert.Equal(nComp, lbpreader.ncomp);
+            Assert.Equal(eigenVectors, lbpreader.eigenVectors);
+            Assert.Equal(singularValues, lbpreader.singularValues);
+            Assert.Equal(weights, lbpreader.weights);
+        }
     }
 }

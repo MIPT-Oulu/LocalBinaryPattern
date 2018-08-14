@@ -23,6 +23,19 @@ namespace LBP.UnitTests
         }
 
         [Fact]
+        public void Stand_Evenkernel_OutputsError()
+        {
+            testImg.New("Quarters", new int[] { 6, 6 });
+            var stand = new LocalStandardization() { w1 = 2};
+
+            double[,] image = testImg.Image.ToDouble();
+
+            Exception ex = Assert.Throws<Exception>(
+                delegate { stand.Standardize(ref image, "Reflect"); });
+            Assert.Equal("Kernel width is not odd!", ex.Message);
+        }
+
+        [Fact]
         public void Stand_SmallKernels_Equalsreference()
         {   
             testImg.New("Quarters", new int[] { 6, 6 });

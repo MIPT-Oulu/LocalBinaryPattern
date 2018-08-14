@@ -135,5 +135,43 @@ namespace LBP.UnitTests
             Assert.Equal(refIS, result2);
             Assert.Equal(refIS, result3);
         }
+
+        [Fact]
+        public void RunLBPCalculateBatch_LBP_dat_EqualsReference()
+        {
+            var runlbp = new RunLBP()
+            {
+                path = load,
+                savepath = save
+            };
+            runlbp.param.Mre = false;
+            runlbp.param.Scale = false;
+            runlbp.param.W_stand = new int[] { 5, 3, 2, 1 };
+            runlbp.param.ImageType = ".dat";
+            // save images
+            testImg.New("Quarters", new int[] { 12, 12 });
+            var bin = new BinaryWriterApp() { filename = load + @"\Test1.dat" };
+            bin.SaveLBPFeatures(testImg.Image.ToDouble());
+            bin.filename = load + @"\Test2.dat";
+            bin.SaveLBPFeatures(testImg.Image.ToDouble());
+            bin.filename = load + @"\Test3.dat";
+            bin.SaveLBPFeatures(testImg.Image.ToDouble());
+
+            runlbp.CalculateBatch();
+            float[,] result1 = Functions.Load(save + @"\\Test1_LBP.png");
+            float[,] result2 = Functions.Load(save + @"\\Test2_LBP.png");
+            float[,] result3 = Functions.Load(save + @"\\Test3_LBP.png");
+
+            float[,] refIS = new float[6, 6]
+                {{ 8, 8, 8, 5, 5, 5},
+            { 8, 8, 8, 5, 5, 6},
+            { 8, 8, 8, 5, 5, 6},
+            { 5, 6, 6, 3, 3, 3},
+            { 5, 6, 6, 3, 3, 3},
+            { 6, 6, 6, 3, 3, 3} };
+            Assert.Equal(refIS, result1);
+            Assert.Equal(refIS, result2);
+            Assert.Equal(refIS, result3);
+        }
     }
 }
