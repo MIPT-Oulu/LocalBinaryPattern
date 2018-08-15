@@ -58,11 +58,6 @@ namespace LBPLibrary
             // LBP
             if (param.Mre)
             {
-                // Run MRELBP
-                Console.WriteLine("\nRunning MRELBP:\n");
-                LBPApplication.PipelineMRELBP(image, param,
-                    out double[,] LBPIL, out double[,] LBPIS, out double[,] LBPIR, out int[] histL, out int[] histS, out int[] histR, out int[] histCenter);
-
                 if (param.Stand)
                 {
                     // Grayscale normalization (weights and sigmas from parameters class)
@@ -70,6 +65,11 @@ namespace LBPLibrary
                     standrd.Standardize(ref image, "Reflect"); // standardize given image
                 }
 
+                // Run MRELBP
+                Console.WriteLine("\nRunning MRELBP:\n");
+                LBPApplication.PipelineMRELBP(image, param,
+                    out double[,] LBPIL, out double[,] LBPIS, out double[,] LBPIR, out int[] histL, out int[] histS, out int[] histR, out int[] histCenter);
+                
                 if (param.Save) // Save images
                 {
                     Functions.Save(savepath + "\\" + Path.GetFileName(path).Replace(Path.GetExtension(path), "") + "_LBPIL.png", LBPIL, param.Scale);
