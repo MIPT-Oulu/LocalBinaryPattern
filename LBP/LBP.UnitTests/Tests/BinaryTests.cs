@@ -64,7 +64,7 @@ namespace LBP.UnitTests
         public void SaveAndRead_WeightsOverride_EqualsInputArray()
         {
             testImg.New("Quarters", new int[] { 12, 12 });
-            string filename = @"C:\temp\test\load\Test1.dat";
+            string filename = @"C:\temp\test\load\TestWeight2.dat";
             // Write feature file
             int w = 20, nComp = 10;
             float[,] eigenVectors = new float[w, nComp].Add(1);
@@ -104,7 +104,7 @@ namespace LBP.UnitTests
         public void SaveAndRead_Weights_EqualsInputArray()
         {
             testImg.New("Quarters", new int[] { 12, 12 });
-            string filename = @"C:\temp\test\load\Test1.dat";
+            string filename = @"C:\temp\test\load\TestWeight.dat";
             // Write feature file
             int w = 20, nComp = 10;
             float[,] eigenVectors = new float[w, nComp].Add(1);
@@ -131,6 +131,7 @@ namespace LBP.UnitTests
                 }
             }
 
+            lbpreader.filename = filename;
             lbpreader.ReadWeights();
 
             Assert.Equal(w, lbpreader.w);

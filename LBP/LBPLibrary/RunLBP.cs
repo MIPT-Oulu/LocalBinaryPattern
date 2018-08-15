@@ -55,13 +55,6 @@ namespace LBPLibrary
                 return;
             }
 
-            if (param.Stand)
-            {
-                // Grayscale normalization (weights and sigmas from parameters class)
-                var standrd = new LocalStandardization(param.W_stand[0], param.W_stand[1], param.W_stand[2], param.W_stand[3]);
-                standrd.Standardize(ref image, "Reflect"); // standardize given image
-            }
-
             // LBP
             if (param.Mre)
             {
@@ -69,6 +62,13 @@ namespace LBPLibrary
                 Console.WriteLine("\nRunning MRELBP:\n");
                 LBPApplication.PipelineMRELBP(image, param,
                     out double[,] LBPIL, out double[,] LBPIS, out double[,] LBPIR, out int[] histL, out int[] histS, out int[] histR, out int[] histCenter);
+
+                if (param.Stand)
+                {
+                    // Grayscale normalization (weights and sigmas from parameters class)
+                    var standrd = new LocalStandardization(param.W_stand[0], param.W_stand[1], param.W_stand[2], param.W_stand[3]);
+                    standrd.Standardize(ref image, "Reflect"); // standardize given image
+                }
 
                 if (param.Save) // Save images
                 {
