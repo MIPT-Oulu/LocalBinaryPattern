@@ -13,7 +13,7 @@ namespace LBP.UnitTests
 
         // Bitmap conversions
 
-        [Xunit.Theory]
+        [Theory]
         [InlineData("")]
         [InlineData("Quarters")]
         [InlineData("Ones")]
@@ -41,6 +41,18 @@ namespace LBP.UnitTests
 
             Assert.Equal(testImg.Image, floatRef);
             Assert.Equal(floatRef2, floatRef);
+        }
+
+        [Fact]
+        public void ByteToBitmap_Convert_EqualsInputArray()
+        {   /// Check if first conversion deletes original bmp image
+            testImg.New("Quarters");
+
+            byte[,] byteImg = testImg.Image.ToByte();
+            Bitmap bmp = Functions.ByteMatrixToBitmap(byteImg);
+            byte[,] byteRef = Functions.BitmapToByteMatrix(bmp);
+
+            Assert.Equal(byteImg, byteRef);
         }
     }
 }

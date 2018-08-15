@@ -34,7 +34,7 @@ namespace LBP.UnitTests
 
         // Submatrix tests
 
-        [Xunit.Theory]
+        [Theory]
         [InlineData("")]
         [InlineData("Quarters")]
         [InlineData("Ones")]
@@ -91,6 +91,40 @@ namespace LBP.UnitTests
             Assert.Equal(9, ll);
             Assert.Equal(refArray, subMatrix);
             Assert.Equal(subMatrix, testImg.Image);
+        }
+
+        [Fact]
+        public void VectorToArray_WrongWidth_GivesException()
+        {
+            int[] vector = new int[10].Add(1);
+
+            Exception ex = Assert.Throws<Exception>(
+                delegate { int[,] array = Functions.VectorToArray(vector, 3); });
+            Assert.Equal("Array width not compatible!", ex.Message);
+        }
+
+        [Fact]
+        public void GetSubMatrix_WrongLimits_GivesException()
+        {
+            string pattern = "Quarters";
+            testImg.New(pattern);
+            float[,] array = testImg.Image;
+
+            Exception ex = Assert.Throws<Exception>(
+                delegate { array = Functions.GetSubMatrix(array, 3, 2, 3, 2); });
+            Assert.Equal("Limits not compatible!", ex.Message);
+        }
+
+        [Fact]
+        public void GetSubMatrix_IndexOutsideArray_GivesException()
+        {
+            string pattern = "Quarters";
+            testImg.New(pattern, new int[] {6, 6});
+            float[,] array = testImg.Image;
+
+            Exception ex = Assert.Throws<Exception>(
+                delegate { array = Functions.GetSubMatrix(array, 3, 7, 3, 7); });
+            Assert.Equal("Limits exceed the length of input array", ex.Message);
         }
     }
 }
