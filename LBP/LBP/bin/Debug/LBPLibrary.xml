@@ -1,0 +1,112 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>LBPLibrary</name>
+    </assembly>
+    <members>
+        <member name="T:LBPLibrary.BinaryWriterApp">
+            <summary>
+            Read and write binary .dat files 
+            </summary>
+        </member>
+        <member name="T:LBPLibrary.Functions">
+            <summary>
+            Contains utility functions that are used in calculating LBP images.
+            </summary>
+        </member>
+        <member name="M:LBPLibrary.Functions.GetSubMatrix``1(``0[0:,0:],System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Get submatrix from 2D matrix.
+            Gets smaller submatrix using given limit indices.
+            Equal to Matlab operation matrix(ylim1:ylim2, xlim1:xlim2)
+            </summary>
+        </member>
+        <member name="M:LBPLibrary.Functions.ArrayPadding``1(``0[0:,0:],System.Int32,System.String)">
+            <summary>
+            Pads image by extending border pixels.
+            Give "Reflect" as method string if you want to reflect array borders.
+            Nearest = extend edge values
+            </summary>
+        </member>
+        <member name="T:LBPLibrary.LBPApplication">
+            <summary>
+            LBP application class object.
+            Used to calculate Median Robust Extended Local Binary Pattern or LBP from images.
+            </summary>
+        </member>
+        <member name="M:LBPLibrary.LBPApplication.PipelineLBP(System.Double[0:,0:],LBPLibrary.Parameters,System.Double[0:,0:]@,System.Int32[]@)">
+            <summary>
+            Calculates LBP from 2D array
+            Enter array, radius and neighbours.
+            </summary>
+        </member>
+        <member name="M:LBPLibrary.LBPApplication.PipelineMRELBP(System.Double[0:,0:],LBPLibrary.Parameters,System.Double[0:,0:]@,System.Double[0:,0:]@,System.Double[0:,0:]@,System.Int32[]@,System.Int32[]@,System.Int32[]@,System.Int32[]@)">
+            <summary>
+            Calculates MRELBP from 2D array
+            Enter array and parameters class including small and large radius, neighbours and kernel weights.
+            Weights are for center pixels (w_c), small (w_r[0]) and large (w_r[1]) radius.
+            </summary>
+        </member>
+        <member name="M:LBPLibrary.LBPApplication.Scaling">
+            <summary>
+            Scales array by mean and standard deviation.
+            </summary>
+        </member>
+        <member name="M:LBPLibrary.LBPApplication.FilterImage">
+            <summary>
+            Performs median filtering for images and calculates center histogram.
+            </summary>
+        </member>
+        <member name="M:LBPLibrary.LBPApplication.CalculateImage">
+            <summary>
+            Calculates the actual LBP image
+            </summary>
+        </member>
+        <member name="M:LBPLibrary.LBPApplication.GetMapping">
+            <summary>
+            Gets rotation invariant uniform mapping for neighbours
+            </summary>
+        </member>
+        <member name="M:LBPLibrary.LBPApplication.GetHistogram">
+            <summary>
+            Gets histogram from mapped images
+            </summary>
+        </member>
+        <member name="T:LBPLibrary.MedianFilter">
+            <summary>
+            Performs median filtering on given arrays.
+            Kernel size has to be given.
+            </summary>
+        </member>
+        <member name="T:LBPLibrary.LocalStandardization">
+            <summary>
+            Performs grayscale standardization for images.
+            Standardizes by gaussian mean with given gernels and std:s.
+            </summary>
+        </member>
+        <member name="T:LBPLibrary.Parameters">
+            <summary>
+            Class variable that contains necessary parameters for running LBP calculations
+            and running the demo application. Initializes default values.
+            </summary>
+        </member>
+        <member name="T:LBPLibrary.RunLBP">
+            <summary>
+            Class that is used to call different LBP pipelines for single image
+            or image batches. Takes in the Parameters class variable.
+            </summary>
+        </member>
+        <member name="M:LBPLibrary.RunLBP.CalculateSingle">
+            <summary>
+            Calculate single LBP image. For LBP image, path and savepath should be defined first.
+            For MRELBP image meanpath, stdpath and savepath should be defined first.
+            </summary>
+        </member>
+        <member name="M:LBPLibrary.RunLBP.CalculateBatch">
+            <summary>
+            Calculate all images from given path directory with selected extension.
+            Savepath sould also be defined.
+            </summary>
+        </member>
+    </members>
+</doc>
