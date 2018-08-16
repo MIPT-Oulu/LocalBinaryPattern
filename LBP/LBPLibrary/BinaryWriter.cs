@@ -4,7 +4,9 @@ using Accord.Math;
 
 namespace LBPLibrary
 {
-    // Read and write binary files
+    /// <summary>
+    /// Read and write binary .dat files 
+    /// </summary>
     public class BinaryWriterApp
     {
         public string filename;

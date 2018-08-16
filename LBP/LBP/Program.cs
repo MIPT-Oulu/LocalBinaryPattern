@@ -139,16 +139,41 @@ namespace LBP
         public static void Single(Parameters param)
         {
             // Initialize paths
-            string path = "", savepath = "";
+            string path = "", savepath = "", meanpath = "", stdpath = "";
 
-            // Select load path
-            var openfile = new OpenFileDialog() { Title = "Select the image to be calculated" };
-            if (openfile.ShowDialog() == DialogResult.OK)
-                path = openfile.FileName;
-            else
+            if (param.Meanstd)
             {
-                Console.WriteLine("No directory selected.\n");
-                return;
+                // Select mean image path
+                var meanfile = new OpenFileDialog() { Title = "Select mean image to be calculated" };
+                if (meanfile.ShowDialog() == DialogResult.OK)
+                    meanpath = meanfile.FileName;
+                else
+                {
+                    Console.WriteLine("No directory selected.\n");
+                    return;
+                }
+
+                // Select std image path
+                var stdfile = new OpenFileDialog() { Title = "Select std image to be calculated" };
+                if (stdfile.ShowDialog() == DialogResult.OK)
+                    stdpath = stdfile.FileName;
+                else
+                {
+                    Console.WriteLine("No directory selected.\n");
+                    return;
+                }
+            }
+            else
+	        {
+                // Select load path
+                var openfile = new OpenFileDialog() { Title = "Select the image to be calculated" };
+                if (openfile.ShowDialog() == DialogResult.OK)
+                    path = openfile.FileName;
+                else
+                {
+                    Console.WriteLine("No directory selected.\n");
+                    return;
+                }
             }
 
             // Select save path
@@ -167,6 +192,8 @@ namespace LBP
                 path = path,
                 savepath = savepath,
                 param = param,
+                meanpath = meanpath,
+                stdpath = stdpath
             };
             run2.CalculateSingle();
         }

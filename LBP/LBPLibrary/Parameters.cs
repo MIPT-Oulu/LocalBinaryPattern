@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 
 namespace LBPLibrary
 {
+    /// <summary>
+    /// Class variable that contains necessary parameters for running LBP calculations
+    /// and running the demo application. Initializes default values.
+    /// </summary>
     public class Parameters
-    {   /// 
-        /// Class variable that contains necessary parameters for running LBP calculations
-        /// and running the demo application. Initializes default values.
-        /// 
+    {   
 
         // Class properties
         public int Radius { get; set; }

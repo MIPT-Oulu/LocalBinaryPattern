@@ -9,13 +9,14 @@ using Accord.Math;
 
 namespace LBPLibrary
 {
+    /// <summary>
+    /// Class that is used to call different LBP pipelines for single image
+    /// or image batches. Takes in the Parameters class variable.
+    /// </summary>
     public class RunLBP
-    {   ///
-        /// Class that is used to call different LBP pipelines for single image
-        /// or image batches. Takes in the Parameters class variable.
-        ///
+    {   
 
-        public string path, savepath;
+        public string path, savepath, meanpath, stdpath;
         public Parameters param;
 
         int[] f; int[,] features = new int[0, 0];
@@ -35,25 +36,55 @@ namespace LBPLibrary
             savepath = savedir;
         }
 
+        /// <summary>
+        /// Calculate single LBP image. For LBP image, path and savepath should be defined first.
+        /// For MRELBP image meanpath, stdpath and savepath should be defined first.
+        /// </summary>
         public void CalculateSingle()
         {
             // Timer
             var time = Stopwatch.StartNew();
 
             // Load image
-            double[,] image;
-            if (param.ImageType == ".dat" && path.EndsWith(".dat"))
+            double[,] image, imagemean, imagestd;
+            if (param.Meanstd)
             {
-                lbpreader.ReadLBPFeatures(param.Precision, path); // Read binary image
-                image = lbpreader.image_double;
+                if (param.ImageType == ".dat" && meanpath.EndsWith(".dat") && stdpath.EndsWith(".dat"))
+                {
+                    lbpreader.ReadLBPFeatures(param.Precision, meanpath); // Read binary image
+                    imagemean = lbpreader.image_double;
+                    lbpreader.ReadLBPFeatures(param.Precision, stdpath); // Read binary image
+                    imagestd = lbpreader.image_double;
+                    image = imagemean.Add(imagestd); // Combine mean and std images
+                }
+                else if ((meanpath.EndsWith(".png") && stdpath.EndsWith(".png")) || (meanpath.EndsWith(".bmp") && stdpath.EndsWith(".png")))
+                {
+                    imagemean = Functions.Load(meanpath).ToDouble();
+                    imagestd = Functions.Load(stdpath).ToDouble();
+                    image = imagemean.Add(imagestd); // Combine mean and std images
+                }
+                else
+                {
+                    Console.WriteLine("One of image types not compatible.\n");
+                    return;
+                }
             }
-            else if (path.EndsWith(".png") || path.EndsWith(".bmp"))
-                image = Functions.Load(path).ToDouble();
             else
             {
-                Console.WriteLine("Image type not compatible.\n");
-                return;
+                if (param.ImageType == ".dat" && path.EndsWith(".dat"))
+                {
+                    lbpreader.ReadLBPFeatures(param.Precision, path); // Read binary image
+                    image = lbpreader.image_double;
+                }
+                else if (path.EndsWith(".png") || path.EndsWith(".bmp"))
+                    image = Functions.Load(path).ToDouble();
+                else
+                {
+                    Console.WriteLine("Image type not compatible.\n");
+                    return;
+                }
             }
+            
 
             // LBP
             if (param.Mre)
@@ -69,7 +100,9 @@ namespace LBPLibrary
                 Console.WriteLine("\nRunning MRELBP:\n");
                 LBPApplication.PipelineMRELBP(image, param,
                     out double[,] LBPIL, out double[,] LBPIS, out double[,] LBPIR, out int[] histL, out int[] histS, out int[] histR, out int[] histCenter);
-                
+
+                if (param.Meanstd) // update save path for mean and std images
+                    path = meanpath;
                 if (param.Save) // Save images
                 {
                     Functions.Save(savepath + "\\" + Path.GetFileName(path).Replace(Path.GetExtension(path), "") + "_LBPIL.png", LBPIL, param.Scale);
@@ -107,6 +140,10 @@ namespace LBPLibrary
             time.Stop();
         }
 
+        /// <summary>
+        /// Calculate all images from given path directory with selected extension.
+        /// Savepath sould also be defined.
+        /// </summary>
         public void CalculateBatch()
         {
             // Timer

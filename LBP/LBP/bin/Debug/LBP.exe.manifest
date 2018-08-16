@@ -78,26 +78,26 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="LBP.exe" size="11776">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="LBP.exe" size="12288">
       <assemblyIdentity name="LBP" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>urJRqHws88LiRVfhDgsKK5R0ADDzYtpWL9zt82Mh2jg=</dsig:DigestValue>
+        <dsig:DigestValue>8/oiRrBGxlBcNdLclbI+KmWZUTLjZZ/HOFN6CAFbNcY=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="LBPLibrary.dll" size="29184">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="LBPLibrary.dll" size="30720">
       <assemblyIdentity name="LBPLibrary" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>2S1Drpon/pUBvv+vEJzjZ8HwE2qjmcuZNsHzE8L6I28=</dsig:DigestValue>
+        <dsig:DigestValue>duhb1tsjct3HXMbKyECUbp7SuxaJn2fF6NLa2rmAtc0=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

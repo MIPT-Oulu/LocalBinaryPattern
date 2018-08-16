@@ -10,10 +10,11 @@ using Accord.Math;
 
 namespace LBPLibrary
 {
+    /// <summary>
+    /// Contains utility functions that are used in calculating LBP images.
+    /// </summary>
     public class Functions
-    {   /// 
-        /// Contains utility functions that are used in calculating LBP images.
-        /// 
+    {   
 
         // Convert bitmap to float[,]
         public static float[,] BitmapToFloatMatrix(Bitmap image)
@@ -125,10 +126,13 @@ namespace LBPLibrary
             return array;
         }
 
-        // Get submatrix from 2D matrix
+        /// <summary>
+        /// Get submatrix from 2D matrix.
+        /// Gets smaller submatrix using given limit indices.
+        /// Equal to Matlab operation matrix(ylim1:ylim2, xlim1:xlim2)
+        /// </summary>
         public static T[,] GetSubMatrix<T>(T[,] matrix, int xlim1, int xlim2, int ylim1, int ylim2)
-        {   /// Gets smaller submatrix using given limit indices
-            /// Equal to Matlab operation matrix(ylim1:ylim2, xlim1:xlim2)
+        {   
             if (xlim2 - xlim1 + 1 == matrix.GetLength(0) && ylim2 - ylim1 + 1 == matrix.GetLength(1))
             {
                 Console.WriteLine("Array was not cropped");
@@ -161,11 +165,13 @@ namespace LBPLibrary
             return norm_array;
         }
 
-        // Image padding
+        /// <summary>
+        /// Pads image by extending border pixels.
+        /// Give "Reflect" as method string if you want to reflect array borders.
+        /// Nearest = extend edge values
+        /// </summary>
         public static T[,] ArrayPadding<T>(T[,] array, int padding, string method)
-        {   /// Pads image by extending border pixels
-            /// Give "Reflect" as method string if you want to reflect array borders.
-            /// Nearest = extend edge values
+        {   
 
             // Zero padding (default)
 

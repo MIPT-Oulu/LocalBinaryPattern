@@ -12,6 +12,12 @@ namespace LBP.UnitTests
         TestImage testImg = new TestImage(); // Initialize testimage function
         BinaryWriterApp lbpreader = new BinaryWriterApp(Directory.GetCurrentDirectory() + @"\Test.dat");
 
+        public BinaryTests()
+        {
+            Directory.CreateDirectory(@"C:\temp\test\load");
+            Directory.CreateDirectory(@"C:\temp\test\save");
+        }
+
         [Theory]
         [InlineData("")]
         [InlineData("Quarters")]

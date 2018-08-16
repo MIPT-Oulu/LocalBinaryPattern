@@ -9,13 +9,12 @@ using Accord.Math;
 
 namespace LBPLibrary
 {
-    
-
+    /// <summary>
+    /// LBP application class object.
+    /// Used to calculate Median Robust Extended Local Binary Pattern or LBP from images.
+    /// </summary>
     public class LBPApplication
-    {   ///
-        /// LBP application class object.
-        /// Used to calculate Median Robust Extended Local Binary Pattern or LBP from images.
-        ///
+    {   
 
         // Class properties
         public double[,] Image { get; set; }
@@ -29,11 +28,13 @@ namespace LBPLibrary
         public int xSize, ySize, d;
         public int[] mappingTable;
 
-        //LBP
+        /// <summary>
+        /// Calculates LBP from 2D array
+        /// Enter array, radius and neighbours.
+        /// </summary>
         public static void PipelineLBP(double[,] image, Parameters param, 
             out double[,] result, out int[] histogram)
-        {   /// Calculates LBP from 2D array
-            /// Enter array, radius and neighbours.
+        {   
 
             // Create instance of LBPApplication and set input variables
             LBPApplication LBPapp = new LBPApplication
@@ -60,11 +61,14 @@ namespace LBPLibrary
             histogram = LBPapp.histS;
         }
 
+        /// <summary>
+        /// Calculates MRELBP from 2D array
+        /// Enter array and parameters class including small and large radius, neighbours and kernel weights.
+        /// Weights are for center pixels (w_c), small (w_r[0]) and large (w_r[1]) radius.
+        /// </summary>
         public static void PipelineMRELBP(double[,] image, Parameters param,
             out double[,] LBPIL, out double[,] LBPIS, out double[,] LBPIR, out int[] histL, out int[] histS, out int[] histR, out int[] histCenter)
-        {   /// Calculates MRELBP from 2D array
-            /// Enter array and parameters class including small and large radius, neighbours and kernel weights.
-            /// Weights are for center pixels (w_c), small (w_r[0]) and large (w_r[1]) radius.
+        {   
 
             // Create instance of LBPApplication and set input variables
             LBPApplication MRELBPapp = new LBPApplication
@@ -105,6 +109,9 @@ namespace LBPLibrary
             histCenter = MRELBPapp.histCenter;
         }
 
+        /// <summary>
+        /// Scales array by mean and standard deviation.
+        /// </summary>
         public void Scaling()
         {
             // Calculate mean and standard deviation
@@ -116,6 +123,9 @@ namespace LBPLibrary
                 throw new Exception("Standard deviation of the image is 0! Cannot divide!");
         }
 
+        /// <summary>
+        /// Performs median filtering for images and calculates center histogram.
+        /// </summary>
         public void FilterImage()
         {
             // Median filter image using different kernels
@@ -146,10 +156,11 @@ namespace LBPLibrary
             }
         }
 
+        /// <summary>
+        /// Calculates the actual LBP image
+        /// </summary>
         public void CalculateImage()
-        {   /// Calculates the actual LBP image
-            ///
-
+        {   
             // Initialize result arrays
             LBPILMapped = new double[xSize, ySize];
             LBPIRMapped = new double[xSize, ySize];
@@ -283,10 +294,12 @@ namespace LBPLibrary
                 });
             });
         }
-       
-        public void GetMapping()
-        {   /// Get uniform rotation invariant mapping for LBP image
 
+        /// <summary>
+        /// Gets rotation invariant uniform mapping for neighbours
+        /// </summary>
+        public void GetMapping()
+        {   
             int n = Param.Neighbours, length = (int)Math.Pow(2, Param.Neighbours), newmax = n + 2;
             mappingTable = new int[length];
 
@@ -317,9 +330,11 @@ namespace LBPLibrary
         
         }
 
+        /// <summary>
+        /// Gets histogram from mapped images
+        /// </summary>
         public void GetHistogram()
-        {   /// Create histogram from mapped LBP image
-            ///
+        {   
             int length = mappingTable.Max() + 1;
             histS = new int[length];
 
@@ -362,11 +377,12 @@ namespace LBPLibrary
         }
     }
 
+    /// <summary>
+    /// Performs median filtering on given arrays.
+    /// Kernel size has to be given.
+    /// </summary>
     public class MedianFilter
-    {   ///
-        /// Performs median filtering on given arrays.
-        /// Kernel size has to be given.
-        ///
+    {   
         public int kernel, distance;
         public double[,] imageFiltered;
 
@@ -409,12 +425,12 @@ namespace LBPLibrary
         }
     }
 
+    /// <summary>
+    /// Performs grayscale standardization for images.
+    /// Standardizes by gaussian mean with given gernels and std:s.
+    /// </summary>
     public class LocalStandardization
-    {   ///
-        /// Performs grayscale standardization for images.
-        /// Standardizes by gaussian mean with given gernels and std:s.
-        /// 
-
+    {   
         public int w1, w2, s1, s2;
 
         public LocalStandardization()
