@@ -12,25 +12,75 @@ namespace LBPLibrary
     /// </summary>
     public class Parameters
     {   
-
-        // Class properties
+        /// <summary>
+        /// LBP radius or small radius on MRELBP.
+        /// </summary>
         public int Radius { get; set; }
+        /// <summary>
+        /// Large radius used in MRELBP.
+        /// </summary>
         public int LargeRadius { get; set; }
+        /// <summary>
+        /// Number of LBP neighbours.
+        /// </summary>
         public int Neighbours { get; set; }
+        /// <summary>
+        /// Kernel size for median filter on center image.
+        /// </summary>
         public int W_c { get; set; }
+        /// <summary>
+        /// Kernel size for median filter on small [0] and large [1] image.
+        /// </summary>
         public int[] W_r { get; set; }
+        /// <summary>
+        /// Parameters for grayscale standardization. See also class LocalStandardization.
+        /// </summary>
+        /// <seealso cref="LocalStandardization"/>
         public int[] W_stand { get; set; }
+        /// <summary>
+        /// Option to use "double" or "float" precision.
+        /// </summary>
         public string Precision { get; set; }
+        /// <summary>
+        /// Padding method. See method ArrayPadding.
+        /// </summary>
         public string Method { get; set; }
+        /// <summary>
+        /// Extension to be used when loading image files.
+        /// </summary>
         public string ImageType { get; set; }
+        /// <summary>
+        /// Error residual.
+        /// </summary>
         public double Eps1 { get; set; }
+        /// <summary>
+        /// Error residual.
+        /// </summary>
         public double Eps2 { get; set; }
+        /// <summary>
+        /// Option to use Median Robust Extended LBP.
+        /// </summary>
         public bool Mre { get; set; }
+        /// <summary>
+        /// Option to use Grayscale normalization. See also class LocalStandardization.
+        /// </summary>
         public bool Stand { get; set; }
+        /// <summary>
+        /// Option to save LBP images.
+        /// </summary>
         public bool Save { get; set; }
+        /// <summary>
+        /// Option to scale images from 0 to 255.
+        /// </summary>
         public bool Scale { get; set; }
+        /// <summary>
+        /// Option to use mean and standard deviation images in LBP calculation.
+        /// </summary>
         public bool Meanstd { get; set; }
 
+        /// <summary>
+        /// Initialize default parameters.
+        /// </summary>
         public Parameters()
         {
             // LBP
@@ -56,7 +106,7 @@ namespace LBPLibrary
             Save = true;
             Scale = true;
             // Load
-            Meanstd = false;
+            Meanstd = true;
         }
     }
 }

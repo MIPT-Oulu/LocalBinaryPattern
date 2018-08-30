@@ -9,29 +9,377 @@
             Read and write binary .dat files 
             </summary>
         </member>
+        <member name="F:LBPLibrary.BinaryWriterApp.filename">
+            <summary>
+            Path to the file to be loaded or writed.
+            </summary>
+        </member>
+        <member name="F:LBPLibrary.BinaryWriterApp.features">
+            <summary>
+            Loaded 2D integer array.
+            </summary>
+        </member>
+        <member name="F:LBPLibrary.BinaryWriterApp.image">
+            <summary>
+            Loaded 2D float array. Eigenvectors are used in pretrained PCA with ReadWeights method.
+            </summary>
+        </member>
+        <member name="F:LBPLibrary.BinaryWriterApp.eigenVectors">
+            <summary>
+            Loaded 2D float array. Eigenvectors are used in pretrained PCA with ReadWeights method.
+            </summary>
+        </member>
+        <member name="F:LBPLibrary.BinaryWriterApp.image_double">
+            <summary>
+            Loaded 2D double array.
+            </summary>
+        </member>
+        <member name="F:LBPLibrary.BinaryWriterApp.w">
+            <summary>
+            w = array width, l = length, ncomp = number of PCA components.
+            </summary>
+        </member>
+        <member name="F:LBPLibrary.BinaryWriterApp.l">
+            <summary>
+            w = array width, l = length, ncomp = number of PCA components.
+            </summary>
+        </member>
+        <member name="F:LBPLibrary.BinaryWriterApp.ncomp">
+            <summary>
+            w = array width, l = length, ncomp = number of PCA components.
+            </summary>
+        </member>
+        <member name="F:LBPLibrary.BinaryWriterApp.singularValues">
+            <summary>
+            Loaded 1D float vector. Sigularvalues are used in pretrained PCA with ReadWeights method.
+            </summary>
+        </member>
+        <member name="F:LBPLibrary.BinaryWriterApp.weights">
+            <summary>
+            Pretrained linear regression weights. Readed with ReadWeights method from .dat file.
+            </summary>
+        </member>
+        <member name="M:LBPLibrary.BinaryWriterApp.#ctor">
+            <summary>
+            Defult directory (current)
+            </summary>
+        </member>
+        <member name="M:LBPLibrary.BinaryWriterApp.#ctor(System.String)">
+            <summary>
+            Set directory.
+            </summary>
+            <param name="filename">Directory for reading/writing</param>
+        </member>
+        <member name="M:LBPLibrary.BinaryWriterApp.SaveLBPFeatures(System.Int32[0:,0:])">
+            <summary>
+            Save integer array.
+            </summary>
+            <param name="array">Array to be saved.</param>
+        </member>
+        <member name="M:LBPLibrary.BinaryWriterApp.SaveLBPFeatures(System.Single[0:,0:])">
+            <summary>
+            Save float array.
+            </summary>
+            <param name="array">Array to be saved.</param>
+        </member>
+        <member name="M:LBPLibrary.BinaryWriterApp.SaveLBPFeatures(System.Double[0:,0:])">
+            <summary>
+            Save double array.
+            </summary>
+            <param name="array">Array to be saved.</param>
+        </member>
+        <member name="M:LBPLibrary.BinaryWriterApp.ReadLBPFeatures(System.String)">
+            <summary>
+            Read array. Include precision argument string to read "float" or "double".
+            Pass any other string to read integer array.
+            </summary>
+            <param name="precision">Data type to be read. "float", "double" or "int".</param>
+        </member>
+        <member name="M:LBPLibrary.BinaryWriterApp.ReadLBPFeatures(System.String,System.String)">
+            <summary>
+            Read array. Include precision argument string to read "float" or "double".
+            Pass any other string to read integer array.
+            </summary>
+            <param name="precision">Data type to be read. "float", "double" or "int".</param>
+            <param name="fname">Path to file to be read.</param>
+        </member>
+        <member name="M:LBPLibrary.BinaryWriterApp.ReadWeights">
+            <summary>
+            Read pretrained model including number of components, eigenvectors,
+            singularvalues, and regression weights.
+            </summary>
+        </member>
+        <member name="M:LBPLibrary.BinaryWriterApp.ReadWeights(System.String)">
+            <summary>
+            Read pretrained model including number of components, eigenvectors,
+            singularvalues, and regression weights.
+            Include path to file.
+            </summary>
+            <param name="fname">Full path to .dat file.</param>
+        </member>
         <member name="T:LBPLibrary.Functions">
             <summary>
             Contains utility functions that are used in calculating LBP images.
             </summary>
         </member>
+        <member name="M:LBPLibrary.Functions.BitmapToFloatMatrix(System.Drawing.Bitmap)">
+            <summary>
+            Convert bitmap to float[,] 
+            </summary>
+            /// <param name="image">Bitmap to be converted to float array.</param>
+            <returns>Transformed array.</returns>
+        </member>
+        <member name="M:LBPLibrary.Functions.BitmapToByteMatrix(System.Drawing.Bitmap)">
+            <summary>
+            Convert bitmap to byte[,]
+            </summary>
+            /// <param name="image">Bitmap to be converted to byte array.</param>
+            <returns>Transformed array.</returns>
+        </member>
+        <member name="M:LBPLibrary.Functions.ByteMatrixToBitmap(System.Byte[0:,0:])">
+            <summary>
+            Convert byte[,] arrays to bitmap
+            </summary>
+            <param name="matrix">Byte array to be converted to bitmap.</param>
+            <returns>Transformed bitmap.</returns>
+        </member>
+        <member name="M:LBPLibrary.Functions.ArrayToVector``1(``0[0:,0:])">
+            <summary>
+            Convert 2D array to vector
+            </summary>
+            <typeparam name="T">Data type for array can be chosen by user.</typeparam>
+            <param name="array">2D Array to be transformed into vector.</param>
+            <returns>1D vector.</returns>
+        </member>
+        <member name="M:LBPLibrary.Functions.VectorToArray``1(``0[],System.Int32)">
+            <summary>
+            Convert vector to 2D array
+            </summary>
+            <typeparam name="T">Data type for array can be chosen by user.</typeparam>
+            <param name="vector">Vector to be transformed into 2D array.</param>
+            <param name="width">Width of the array.</param>
+            <returns>2D array.</returns>
+        </member>
         <member name="M:LBPLibrary.Functions.GetSubMatrix``1(``0[0:,0:],System.Int32,System.Int32,System.Int32,System.Int32)">
             <summary>
-            Get submatrix from 2D matrix.
-            Gets smaller submatrix using given limit indices.
-            Equal to Matlab operation matrix(ylim1:ylim2, xlim1:xlim2)
+            Get subarray from 2D array.
+            Gets smaller subarray using given limit indices.
+            Use indices 0 -> length - 1
+            Equal to operation array(ylim1:ylim2, xlim1:xlim2)
             </summary>
+            <typeparam name="T">Data type for array can be chosen by user.</typeparam>
+            <param name="array">Array to calculate subarray from.</param>
+            <param name="xlim1">Lower limit for first dimension.</param>
+            <param name="xlim2">Upper limit for first dimension.</param>
+            <param name="ylim1">Lower limit for second dimension.</param>
+            <param name="ylim2">Upper limit for second dimension.</param>
+            <returns>Subarray.</returns>
+        </member>
+        <member name="M:LBPLibrary.Functions.Normalize(System.Double[0:,0:])">
+            <summary>
+            Normalize array
+            </summary>
+            <param name="array">Array to be normalized.</param>
+            <returns>Normalized array.</returns>
         </member>
         <member name="M:LBPLibrary.Functions.ArrayPadding``1(``0[0:,0:],System.Int32,System.String)">
             <summary>
             Pads image by extending border pixels.
-            Give "Reflect" as method string if you want to reflect array borders.
-            Nearest = extend edge values
             </summary>
+            <param name="array">Array to be padded.</param>
+            <param name="padding">Length of padding edges.</param>
+            <param name="method">Padding method. "Nearest" = extend edge values,
+            "Reflect" = reflect values along array borders. 
+            Any other string results in zero padding.</param>
+        </member>
+        <member name="M:LBPLibrary.Functions.Bilinear(System.Double[0:,0:],System.Double,System.Double,System.Int32,System.Int32,System.Double)">
+            <summary>
+            Bilinear interpolation. Select pixel from array to be interpolated. 
+            Function is optimised for LBP calculation.
+            </summary>
+            <param name="array">Array from which the interpolation is calculated.</param>
+            <param name="x">Neighbour coordinate x (see LBP pipeline).</param>
+            <param name="y">Neighbour coordinate y (see LBP pipeline).</param>
+            <param name="i">Pixel to be calculated within loop. Give 0 to calculate just using array coordinates.</param>
+            <param name="j">Pixel to be calculated within loop. Give 0 to calculate just using array coordinates.</param>
+            <param name="e">Error residual to avoid division by 0. Give for example 1E-12.</param>
+            <returns></returns>
+        </member>
+        <member name="M:LBPLibrary.Functions.Mean(System.Double[0:,0:])">
+            <summary>
+            Calculates mean from array values
+            </summary>
+            <param name="array">Array to calculate mean/average from.</param>
+        </member>
+        <member name="M:LBPLibrary.Functions.Std(System.Double[0:,0:])">
+            <summary>
+            Calculates standard deviation from array values
+            </summary>
+            <param name="array">Array to calculate standard deviation from.</param>
+        </member>
+        <member name="M:LBPLibrary.Functions.Save(System.String,System.Double[0:,0:],System.Boolean)">
+            <summary>
+            Save bitmap images to .png using selected path.
+            Use arrays that are from 0 to 255 (byte) or use scaling parameter.
+            </summary>
+            <param name="filename">Path to save images.</param>
+            <param name="image">2D array to be saved.</param>
+            <param name="scale">Choose whether to scale grayscale values from 0 to 255.</param>
+        </member>
+        <member name="M:LBPLibrary.Functions.Load(System.String)">
+            <summary>
+            Load bitmap image (.bmp, .png)
+            </summary>
+            <param name="filename">Path to the array to be loaded.</param> 
+            <returns>Float array readed from file.</returns>
+        </member>
+        <member name="M:LBPLibrary.Functions.ReadCSV(System.String)">
+            <summary>
+            Read array from .csv file 
+            </summary>
+            <param name="filename">Path to the .csv file</param> 
+            <returns>Array readed from .csv file</returns>
+        </member>
+        <member name="M:LBPLibrary.Functions.WriteCSV(System.Single[0:,0:],System.String)">
+            <summary>
+            Write array to .csv file 
+            </summary>
+            <param name="array">2D array to be saved to .csv file.</param>
+            <param name="filename">Path to save the array.</param>
+        </member>
+        <member name="M:LBPLibrary.Functions.Convolution2D(System.Double[0:,0:],System.Double[0:,0:],System.String)">
+            <summary>
+            Calculate convolution from image using given kernel.
+            </summary>
+            <param name="kernel">Kernel for the convolution calculation.</param>
+            <param name="image">Array to be convoluted using kernel.</param>
+            <param name="method">Padding method. "Nearest" = extend edge values,
+            "Reflect" = reflect values along array borders. 
+            Any other string results in zero padding.</param>
+            <returns>Convoluted array.</returns>
         </member>
         <member name="T:LBPLibrary.LBPApplication">
             <summary>
             LBP application class object.
             Used to calculate Median Robust Extended Local Binary Pattern or LBP from images.
+            </summary>
+        </member>
+        <member name="P:LBPLibrary.LBPApplication.Image">
+            <summary>
+            Image to calculate LBP from
+            </summary>
+        </member>
+        <member name="P:LBPLibrary.LBPApplication.Param">
+            <summary>
+            LBP parameters. See Parameters class.
+            </summary>
+        </member>
+        <member name="P:LBPLibrary.LBPApplication.MRE">
+            <summary>
+            Option to use Median Robust Extended LBP.
+            </summary>
+        </member>
+        <member name="F:LBPLibrary.LBPApplication.imageCenter">
+            <summary>
+            image = array resulting from median filter.
+            LBP... = LBP image
+            LBP...Mapped = Rotation invariant uniform mapped LBP image.
+            </summary>
+        </member>
+        <member name="F:LBPLibrary.LBPApplication.imageLarge">
+            <summary>
+            image = array resulting from median filter.
+            LBP... = LBP image
+            LBP...Mapped = Rotation invariant uniform mapped LBP image.
+            </summary>
+        </member>
+        <member name="F:LBPLibrary.LBPApplication.imageSmall">
+            <summary>
+            image = array resulting from median filter.
+            LBP... = LBP image
+            LBP...Mapped = Rotation invariant uniform mapped LBP image.
+            </summary>
+        </member>
+        <member name="F:LBPLibrary.LBPApplication.LBPIL">
+            <summary>
+            image = array resulting from median filter.
+            LBP... = LBP image
+            LBP...Mapped = Rotation invariant uniform mapped LBP image.
+            </summary>
+        </member>
+        <member name="F:LBPLibrary.LBPApplication.LBPIS">
+            <summary>
+            image = array resulting from median filter.
+            LBP... = LBP image
+            LBP...Mapped = Rotation invariant uniform mapped LBP image.
+            </summary>
+        </member>
+        <member name="F:LBPLibrary.LBPApplication.LBPIR">
+            <summary>
+            image = array resulting from median filter.
+            LBP... = LBP image
+            LBP...Mapped = Rotation invariant uniform mapped LBP image.
+            </summary>
+        </member>
+        <member name="F:LBPLibrary.LBPApplication.LBPILMapped">
+            <summary>
+            image = array resulting from median filter.
+            LBP... = LBP image
+            LBP...Mapped = Rotation invariant uniform mapped LBP image.
+            </summary>
+        </member>
+        <member name="F:LBPLibrary.LBPApplication.LBPISMapped">
+            <summary>
+            image = array resulting from median filter.
+            LBP... = LBP image
+            LBP...Mapped = Rotation invariant uniform mapped LBP image.
+            </summary>
+        </member>
+        <member name="F:LBPLibrary.LBPApplication.LBPIRMapped">
+            <summary>
+            image = array resulting from median filter.
+            LBP... = LBP image
+            LBP...Mapped = Rotation invariant uniform mapped LBP image.
+            </summary>
+        </member>
+        <member name="F:LBPLibrary.LBPApplication.histL">
+            <summary>
+            Feature histograms from MRELBP
+            </summary>
+        </member>
+        <member name="F:LBPLibrary.LBPApplication.histS">
+            <summary>
+            Feature histograms from MRELBP
+            </summary>
+        </member>
+        <member name="F:LBPLibrary.LBPApplication.histR">
+            <summary>
+            Feature histograms from MRELBP
+            </summary>
+        </member>
+        <member name="F:LBPLibrary.LBPApplication.histCenter">
+            <summary>
+            Feature histograms from MRELBP
+            </summary>
+        </member>
+        <member name="F:LBPLibrary.LBPApplication.xSize">
+            <summary>
+            Image size and d = LBP radius.
+            </summary>
+        </member>
+        <member name="F:LBPLibrary.LBPApplication.ySize">
+            <summary>
+            Image size and d = LBP radius.
+            </summary>
+        </member>
+        <member name="F:LBPLibrary.LBPApplication.d">
+            <summary>
+            Image size and d = LBP radius.
+            </summary>
+        </member>
+        <member name="F:LBPLibrary.LBPApplication.mappingTable">
+            <summary>
+            Table for rotation invariant uniform mapping.
             </summary>
         </member>
         <member name="M:LBPLibrary.LBPApplication.PipelineLBP(System.Double[0:,0:],LBPLibrary.Parameters,System.Double[0:,0:]@,System.Int32[]@)">
@@ -78,10 +426,82 @@
             Kernel size has to be given.
             </summary>
         </member>
+        <member name="F:LBPLibrary.MedianFilter.kernel">
+            <summary>
+            Kernel width and distance (can be calculated from width)
+            </summary>
+        </member>
+        <member name="F:LBPLibrary.MedianFilter.distance">
+            <summary>
+            Kernel width and distance (can be calculated from width)
+            </summary>
+        </member>
+        <member name="M:LBPLibrary.MedianFilter.#ctor">
+            <summary>
+            Initializes default input values for median filter.
+            Kernel width = 5, distance = 2
+            </summary>
+        </member>
+        <member name="M:LBPLibrary.MedianFilter.#ctor(System.Int32)">
+            <summary>
+            Override for user defined kernel width.
+            </summary>
+        </member>
+        <member name="M:LBPLibrary.MedianFilter.Filtering(System.Double[0:,0:])">
+            <summary>
+            Calculate median filter from array 
+            </summary>
+        </member>
         <member name="T:LBPLibrary.LocalStandardization">
             <summary>
             Performs grayscale standardization for images.
             Standardizes by gaussian mean with given gernels and std:s.
+            </summary>
+        </member>
+        <member name="F:LBPLibrary.LocalStandardization.w1">
+            <summary>
+            Parameter for standardization.
+            w = kernel width, s = sigma (variance)
+            </summary>
+        </member>
+        <member name="F:LBPLibrary.LocalStandardization.w2">
+            <summary>
+            Parameter for standardization.
+            w = kernel width, s = sigma (variance)
+            </summary>
+        </member>
+        <member name="F:LBPLibrary.LocalStandardization.s1">
+            <summary>
+            Parameter for standardization.
+            w = kernel width, s = sigma (variance)
+            </summary>
+        </member>
+        <member name="F:LBPLibrary.LocalStandardization.s2">
+            <summary>
+            Parameter for standardization.
+            w = kernel width, s = sigma (variance)
+            </summary>
+        </member>
+        <member name="M:LBPLibrary.LocalStandardization.#ctor">
+            <summary>
+            Initializes default input values for Grayscale standardization.
+            w1 = 23, w2 = 5, s1 = 5, s2 = 1.
+            </summary>
+        </member>
+        <member name="M:LBPLibrary.LocalStandardization.#ctor(System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Override for user defined standardization parameters.
+            </summary>
+        </member>
+        <member name="M:LBPLibrary.LocalStandardization.Standardize(System.Double[0:,0:]@,System.String)">
+            <summary>
+            Method to standardize image grayscale values using previously defined inputs for gaussian kernels.
+            Method string defines padding method.
+            </summary>
+        </member>
+        <member name="M:LBPLibrary.LocalStandardization.GaussianKernel(System.Int32,System.Int32)">
+            <summary>
+            Give kernel width w and sigma s to calculate Gaussian kernel.
             </summary>
         </member>
         <member name="T:LBPLibrary.Parameters">
@@ -90,11 +510,139 @@
             and running the demo application. Initializes default values.
             </summary>
         </member>
+        <member name="P:LBPLibrary.Parameters.Radius">
+            <summary>
+            LBP radius or small radius on MRELBP.
+            </summary>
+        </member>
+        <member name="P:LBPLibrary.Parameters.LargeRadius">
+            <summary>
+            Large radius used in MRELBP.
+            </summary>
+        </member>
+        <member name="P:LBPLibrary.Parameters.Neighbours">
+            <summary>
+            Number of LBP neighbours.
+            </summary>
+        </member>
+        <member name="P:LBPLibrary.Parameters.W_c">
+            <summary>
+            Kernel size for median filter on center image.
+            </summary>
+        </member>
+        <member name="P:LBPLibrary.Parameters.W_r">
+            <summary>
+            Kernel size for median filter on small [0] and large [1] image.
+            </summary>
+        </member>
+        <member name="P:LBPLibrary.Parameters.W_stand">
+            <summary>
+            Parameters for grayscale standardization. See also class LocalStandardization.
+            </summary>
+            <seealso cref="T:LBPLibrary.LocalStandardization"/>
+        </member>
+        <member name="P:LBPLibrary.Parameters.Precision">
+            <summary>
+            Option to use "double" or "float" precision.
+            </summary>
+        </member>
+        <member name="P:LBPLibrary.Parameters.Method">
+            <summary>
+            Padding method. See method ArrayPadding.
+            </summary>
+        </member>
+        <member name="P:LBPLibrary.Parameters.ImageType">
+            <summary>
+            Extension to be used when loading image files.
+            </summary>
+        </member>
+        <member name="P:LBPLibrary.Parameters.Eps1">
+            <summary>
+            Error residual.
+            </summary>
+        </member>
+        <member name="P:LBPLibrary.Parameters.Eps2">
+            <summary>
+            Error residual.
+            </summary>
+        </member>
+        <member name="P:LBPLibrary.Parameters.Mre">
+            <summary>
+            Option to use Median Robust Extended LBP.
+            </summary>
+        </member>
+        <member name="P:LBPLibrary.Parameters.Stand">
+            <summary>
+            Option to use Grayscale normalization. See also class LocalStandardization.
+            </summary>
+        </member>
+        <member name="P:LBPLibrary.Parameters.Save">
+            <summary>
+            Option to save LBP images.
+            </summary>
+        </member>
+        <member name="P:LBPLibrary.Parameters.Scale">
+            <summary>
+            Option to scale images from 0 to 255.
+            </summary>
+        </member>
+        <member name="P:LBPLibrary.Parameters.Meanstd">
+            <summary>
+            Option to use mean and standard deviation images in LBP calculation.
+            </summary>
+        </member>
+        <member name="M:LBPLibrary.Parameters.#ctor">
+            <summary>
+            Initialize default parameters.
+            </summary>
+        </member>
         <member name="T:LBPLibrary.RunLBP">
             <summary>
             Class that is used to call different LBP pipelines for single image
             or image batches. Takes in the Parameters class variable.
             </summary>
+        </member>
+        <member name="F:LBPLibrary.RunLBP.path">
+            <summary>
+            Path for loading or saving LBP images
+            </summary>
+        </member>
+        <member name="F:LBPLibrary.RunLBP.savepath">
+            <summary>
+            Path for loading or saving LBP images
+            </summary>
+        </member>
+        <member name="F:LBPLibrary.RunLBP.meanpath">
+            <summary>
+            Path for loading or saving LBP images
+            </summary>
+        </member>
+        <member name="F:LBPLibrary.RunLBP.stdpath">
+            <summary>
+            Path for loading or saving LBP images
+            </summary>
+        </member>
+        <member name="F:LBPLibrary.RunLBP.param">
+            <summary>
+            Parameters for calculating LBP images
+            </summary>
+        </member>
+        <member name="F:LBPLibrary.RunLBP.features">
+            <summary>
+            Array containing calculated LBP features.
+            </summary>
+        </member>
+        <member name="M:LBPLibrary.RunLBP.#ctor">
+            <summary>
+            Initialize default parameters and use current directory to load and save LBP images
+            </summary>
+        </member>
+        <member name="M:LBPLibrary.RunLBP.#ctor(System.String,System.String)">
+            <summary>
+            Override for user defined load and save directories.
+            </summary>
+            <param name="dir">Load directory.</param>
+            <param name="savedir">Save directory.</param>
         </member>
         <member name="M:LBPLibrary.RunLBP.CalculateSingle">
             <summary>

@@ -9,25 +9,56 @@ namespace LBPLibrary
     /// </summary>
     public class BinaryWriterApp
     {
+        /// <summary>
+        /// Path to the file to be loaded or writed.
+        /// </summary>
         public string filename;
+        /// <summary>
+        /// Loaded 2D integer array.
+        /// </summary>
         public int[,] features;
+        /// <summary>
+        /// Loaded 2D float array. Eigenvectors are used in pretrained PCA with ReadWeights method.
+        /// </summary>
         public float[,] image, eigenVectors;
+        /// <summary>
+        /// Loaded 2D double array.
+        /// </summary>
         public double[,] image_double;
+        /// <summary>
+        /// w = array width, l = length, ncomp = number of PCA components.
+        /// </summary>
         public int w, l, ncomp;
+        /// <summary>
+        /// Loaded 1D float vector. Sigularvalues are used in pretrained PCA with ReadWeights method.
+        /// </summary>
         public float[] singularValues;
+        /// <summary>
+        /// Pretrained linear regression weights. Readed with ReadWeights method from .dat file.
+        /// </summary>
         public double[] weights;
 
+        /// <summary>
+        /// Defult directory (current)
+        /// </summary>
         public BinaryWriterApp()
         { // Working path as default
             filename = Directory.GetCurrentDirectory();
         }
 
+        /// <summary>
+        /// Set directory.
+        /// </summary>
+        /// <param name="filename">Directory for reading/writing</param>
         public BinaryWriterApp(string filename)
         {
             this.filename = filename;
         }
 
-        // Save LBP features
+        /// <summary>
+        /// Save integer array.
+        /// </summary>
+        /// <param name="array">Array to be saved.</param>
         public void SaveLBPFeatures(int[,] array)
         {   // Save int array to binary file, width written as Int32
             w = array.GetLength(0); l = array.GetLength(1);
@@ -45,6 +76,10 @@ namespace LBPLibrary
             }
         }
 
+        /// <summary>
+        /// Save float array.
+        /// </summary>
+        /// <param name="array">Array to be saved.</param>
         public void SaveLBPFeatures(float[,] array)
         {   // Float overload for SaveLBPFeatures
             w = array.GetLength(0); l = array.GetLength(1);
@@ -62,6 +97,10 @@ namespace LBPLibrary
             }
         }
 
+        /// <summary>
+        /// Save double array.
+        /// </summary>
+        /// <param name="array">Array to be saved.</param>
         public void SaveLBPFeatures(double[,] array)
         {   // Double overload for SaveLBPFeatures
             w = array.GetLength(0); l = array.GetLength(1);
@@ -79,7 +118,11 @@ namespace LBPLibrary
             }
         }
 
-        // Load LBP features
+        /// <summary>
+        /// Read array. Include precision argument string to read "float" or "double".
+        /// Pass any other string to read integer array.
+        /// </summary>
+        /// <param name="precision">Data type to be read. "float", "double" or "int".</param>
         public void ReadLBPFeatures(string precision)
         {
             if (File.Exists(filename))
@@ -139,12 +182,22 @@ namespace LBPLibrary
             }
         }
 
+        /// <summary>
+        /// Read array. Include precision argument string to read "float" or "double".
+        /// Pass any other string to read integer array.
+        /// </summary>
+        /// <param name="precision">Data type to be read. "float", "double" or "int".</param>
+        /// <param name="fname">Path to file to be read.</param>
         public void ReadLBPFeatures(string precision, string fname)
         {
             filename = fname;
             ReadLBPFeatures(precision);
         }
 
+        /// <summary>
+        /// Read pretrained model including number of components, eigenvectors,
+        /// singularvalues, and regression weights.
+        /// </summary>
         public void ReadWeights()
         {
             if (File.Exists(filename))
@@ -185,6 +238,12 @@ namespace LBPLibrary
             }
         }
 
+        /// <summary>
+        /// Read pretrained model including number of components, eigenvectors,
+        /// singularvalues, and regression weights.
+        /// Include path to file.
+        /// </summary>
+        /// <param name="fname">Full path to .dat file.</param>
         public void ReadWeights(string fname)
         {
             filename = fname;

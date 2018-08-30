@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>LBPLibrary</id>
-    <version>1.0.4</version>
+    <version>1.0.6</version>
     <title>LBP.Library</title>
     <authors>Rytky Santeri Juho Olavi, Tiulpin Aleksei, Frondelius Tuomas and Saarakkala Simo</authors>
     <owners>Rytky Santeri Juho Olavi, Tiulpin Aleksei, Frondelius Tuomas and Saarakkala Simo</owners>
@@ -11,7 +11,7 @@
     <iconUrl>https://raw.githubusercontent.com/MIPT-Oulu/LocalBinaryPattern/master/pictures/MRI_icon.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Class library to calculate Local Binary Pattern (LBP) or Median Robust Extended Local Binary Pattern (MRELBP) images. Uses Accord.Math Nuget package. Call "using LBPLibrary;" to include classes in your code.</description>
-    <releaseNotes>Fixed issue with documentation.</releaseNotes>
+    <releaseNotes>Added more documentations and fixed reading binary weights.</releaseNotes>
     <copyright>Copyright 2018</copyright>
     <tags>LBP MRELBP computervision visualdescriptor machinelearning</tags>
     <dependencies>

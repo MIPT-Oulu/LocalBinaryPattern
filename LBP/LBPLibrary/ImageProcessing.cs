@@ -1,8 +1,6 @@
 ﻿using System;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Diagnostics;
 
 using Accord.Math;
 
@@ -16,16 +14,37 @@ namespace LBPLibrary
     public class LBPApplication
     {   
 
-        // Class properties
+        /// <summary>
+        /// Image to calculate LBP from
+        /// </summary>
         public double[,] Image { get; set; }
+        /// <summary>
+        /// LBP parameters. See Parameters class.
+        /// </summary>
         public Parameters Param { get; set; }
+        /// <summary>
+        /// Option to use Median Robust Extended LBP.
+        /// </summary>
         public bool MRE { get; set; }
-        // Class member variables
+        /// <summary>
+        /// image = array resulting from median filter.
+        /// LBP... = LBP image
+        /// LBP...Mapped = Rotation invariant uniform mapped LBP image.
+        /// </summary>
         public double[,] imageCenter, imageLarge, imageSmall,
             LBPIL, LBPIS, LBPIR,
             LBPILMapped, LBPISMapped, LBPIRMapped;
+        /// <summary>
+        /// Feature histograms from MRELBP
+        /// </summary>
         public int[] histL, histS, histR, histCenter;
+        /// <summary>
+        /// Image size and d = LBP radius.
+        /// </summary>
         public int xSize, ySize, d;
+        /// <summary>
+        /// Table for rotation invariant uniform mapping.
+        /// </summary>
         public int[] mappingTable;
 
         /// <summary>
@@ -383,24 +402,35 @@ namespace LBPLibrary
     /// </summary>
     public class MedianFilter
     {   
+        /// <summary>
+        /// Kernel width and distance (can be calculated from width)
+        /// </summary>
         public int kernel, distance;
-        public double[,] imageFiltered;
 
+        /// <summary>
+        /// Initializes default input values for median filter.
+        /// Kernel width = 5, distance = 2
+        /// </summary>
         public MedianFilter()
-        {   /// Default parameters
+        {   // Default parameters
             kernel = 5;
             distance = (kernel - 1) / 2;
         }
 
+        /// <summary>
+        /// Override for user defined kernel width.
+        /// </summary>
         public MedianFilter(int kernel)
         {
             this.kernel = kernel;
             distance = (kernel - 1) / 2;
         }
 
-        // Calculate median filter from array
+        /// <summary>
+        /// Calculate median filter from array 
+        /// </summary>
         public double[,] Filtering(double[,] array)
-        {   /// Calculates median image using given (odd) kernel. 
+        {   // Calculates median image using given (odd) kernel. 
             int w = array.GetLength(0), l = array.GetLength(1);
 
             if (kernel % 2 == 0) // check for odd kernel
@@ -409,7 +439,7 @@ namespace LBPLibrary
                 throw new Exception("Kernel radius is larger than input array!");
 
             double[,] paddedArray = Functions.ArrayPadding(array, distance, ""); // Zero padding enough when image is cropped
-            imageFiltered = new double[w, l];
+            double[,] imageFiltered = new double[w, l];
 
             Parallel.For(0, w, i =>
             {
@@ -431,20 +461,35 @@ namespace LBPLibrary
     /// </summary>
     public class LocalStandardization
     {   
+        /// <summary>
+        /// Parameter for standardization.
+        /// w = kernel width, s = sigma (variance)
+        /// </summary>
         public int w1, w2, s1, s2;
 
+        /// <summary>
+        /// Initializes default input values for Grayscale standardization.
+        /// w1 = 23, w2 = 5, s1 = 5, s2 = 1.
+        /// </summary>
         public LocalStandardization()
-        {   /// Default parameters
+        {   // Default parameters
             w1 = 23; w2 = 5;
             s1 = 5; s2 = 1;
         }
 
+        /// <summary>
+        /// Override for user defined standardization parameters.
+        /// </summary>
         public LocalStandardization(int weight1, int weight2, int sigma1, int sigma2)
-        {   /// Input parameters
+        {   // Input parameters
             w1 = weight1; w2 = weight2;
             s1 = sigma1; s2 = sigma2;
         }
 
+        /// <summary>
+        /// Method to standardize image grayscale values using previously defined inputs for gaussian kernels.
+        /// Method string defines padding method.
+        /// </summary>
         public void Standardize(ref double[,] image, string method)
         {
             // Get Gaussian kernels
@@ -465,6 +510,9 @@ namespace LBPLibrary
                 std.Add(1E-09));
         }
 
+        /// <summary>
+        /// Give kernel width w and sigma s to calculate Gaussian kernel.
+        /// </summary>
         public double[,] GaussianKernel(int w, int s)
         {
             if (w % 2 == 0) // Check for odd kernel

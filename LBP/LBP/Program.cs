@@ -182,8 +182,8 @@ namespace LBP
                 savepath = fbd.SelectedPath;
             else
             {
-                Console.WriteLine("No directory selected.\n");
-                return;
+                Console.WriteLine("No save path selected.\n");
+                savepath = null;
             }
 
             // Calculate single LBP image

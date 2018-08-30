@@ -15,13 +15,25 @@ namespace LBPLibrary
     /// </summary>
     public class RunLBP
     {   
-
+        /// <summary>
+        /// Path for loading or saving LBP images
+        /// </summary>
         public string path, savepath, meanpath, stdpath;
+        /// <summary>
+        /// Parameters for calculating LBP images
+        /// </summary>
         public Parameters param;
 
-        int[] f; int[,] features = new int[0, 0];
+        int[] f;
+        /// <summary>
+        /// Array containing calculated LBP features.
+        /// </summary>
+        public int[,] features = new int[0, 0];
         BinaryWriterApp lbpreader = new BinaryWriterApp();
 
+        /// <summary>
+        /// Initialize default parameters and use current directory to load and save LBP images
+        /// </summary>
         public RunLBP()
         {
             param = new Parameters();
@@ -29,6 +41,11 @@ namespace LBPLibrary
             savepath = Directory.GetCurrentDirectory();
         }
 
+        /// <summary>
+        /// Override for user defined load and save directories.
+        /// </summary>
+        /// <param name="dir">Load directory.</param>
+        /// <param name="savedir">Save directory.</param>
         public RunLBP(string dir, string savedir)
         {
             param = new Parameters();
@@ -103,7 +120,7 @@ namespace LBPLibrary
 
                 if (param.Meanstd) // update save path for mean and std images
                     path = meanpath;
-                if (param.Save) // Save images
+                if (param.Save && savepath != null) // Save images
                 {
                     Functions.Save(savepath + "\\" + Path.GetFileName(path).Replace(Path.GetExtension(path), "") + "_LBPIL.png", LBPIL, param.Scale);
                     Functions.Save(savepath + "\\" + Path.GetFileName(path).Replace(Path.GetExtension(path), "") + "_LBPIS.png", LBPIS, param.Scale);
@@ -129,12 +146,15 @@ namespace LBPLibrary
             // Results
             features = Matrix.Concatenate(features, f);
 
-            // Write features to csv
-            Functions.WriteCSV(features.ToSingle(), savepath + "\\features.csv");
+            if (savepath != null)
+            {
+                // Write features to csv
+                Functions.WriteCSV(features.ToSingle(), savepath + "\\features.csv");
 
-            // Write features to binary file
-            var binwriter = new BinaryWriterApp() { filename = savepath + "\\features.dat" };
-            binwriter.SaveLBPFeatures(features);
+                // Write features to binary file
+                var binwriter = new BinaryWriterApp() { filename = savepath + "\\features.dat" };
+                binwriter.SaveLBPFeatures(features);
+            }
 
             Console.WriteLine("LBP images calculated and results saved.\nElapsed time: {0}min {1}sec", time.Elapsed.Minutes, time.Elapsed.Seconds);
             time.Stop();
@@ -206,7 +226,7 @@ namespace LBPLibrary
                     f = Matrix.Concatenate(histCenter, Matrix.Concatenate(histL, Matrix.Concatenate(histS, histR)));
                     features = Matrix.Concatenate(features, f);
 
-                    if (param.Save) // Save LBP image
+                    if (param.Save && savepath != null) // Save LBP image
                     {
                         Functions.Save(savepath + "\\" + Path.GetFileName(dir[k]).Replace(Path.GetExtension(dir[k]), "") + "_small.png", LBPIS, param.Scale);
                         Functions.Save(savepath + "\\" + Path.GetFileName(dir[k]).Replace(Path.GetExtension(dir[k]), "") + "_large.png", LBPIL, param.Scale);
@@ -236,7 +256,10 @@ namespace LBPLibrary
                     LBPApplication.PipelineLBP(image, param,
                         out double[,] LBPresult, out int[] LBPhistogram); // Get LBP for test image;
 
-                    if (param.Save) // Save images
+                    // Concatenate histograms
+                    features = Matrix.Concatenate(features, LBPhistogram);
+
+                    if (param.Save && savepath != null) // Save images
                         Functions.Save(savepath + "\\" + Path.GetFileName(dir[k]).Replace(Path.GetExtension(dir[k]), "") + "_LBP.png", LBPresult, param.Scale);
 
                     Console.WriteLine("Image: {0}, elapsed time: {1}ms", dir[k], time.ElapsedMilliseconds);
@@ -244,13 +267,15 @@ namespace LBPLibrary
                 }
             }
 
+            if (savepath != null)
+            {
+                // Write features to csv
+                Functions.WriteCSV(features.ToSingle(), savepath + "\\features.csv");
 
-            // Write features to csv
-            Functions.WriteCSV(features.ToSingle(), savepath + "\\features.csv");
-
-            // Write features to binary file
-            var binwriter = new BinaryWriterApp() { filename = savepath + "\\features.dat" };
-            binwriter.SaveLBPFeatures(features);
+                // Write features to binary file
+                var binwriter = new BinaryWriterApp() { filename = savepath + "\\features.dat" };
+                binwriter.SaveLBPFeatures(features);
+            }
 
             Console.WriteLine("All LBP images calculated and results saved.\nElapsed time: {0}min {1}sec", timeFull.Elapsed.Minutes, timeFull.Elapsed.Seconds);
             time.Stop(); timeFull.Stop();

@@ -123,8 +123,8 @@ namespace LBP.UnitTests
             float[,] array = testImg.Image;
 
             Exception ex = Assert.Throws<Exception>(
-                delegate { array = Functions.GetSubMatrix(array, 3, 7, 3, 7); });
-            Assert.Equal("Limits exceed the length of input array", ex.Message);
+                delegate { array = Functions.GetSubMatrix(array, 3, 6, 3, 6); });
+            Assert.Equal("Limit indices exceed array size!", ex.Message);
         }
     }
 }

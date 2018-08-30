@@ -14,9 +14,13 @@ namespace LBPLibrary
     /// Contains utility functions that are used in calculating LBP images.
     /// </summary>
     public class Functions
-    {   
+    {
 
-        // Convert bitmap to float[,]
+        /// <summary>
+        /// Convert bitmap to float[,] 
+        /// </summary>
+        /// /// <param name="image">Bitmap to be converted to float array.</param>
+        /// <returns>Transformed array.</returns>
         public static float[,] BitmapToFloatMatrix(Bitmap image)
         {
             float[,] convMatrix = new float[image.Width, image.Height];
@@ -33,7 +37,11 @@ namespace LBPLibrary
             return convMatrix;
         }
 
-        // Convert bitmap to byte[,]
+        /// <summary>
+        /// Convert bitmap to byte[,]
+        /// </summary>
+        /// /// <param name="image">Bitmap to be converted to byte array.</param>
+        /// <returns>Transformed array.</returns>
         public static byte[,] BitmapToByteMatrix(Bitmap image)
         {
             byte[,] convMatrix = new byte[image.Width, image.Height];
@@ -51,9 +59,13 @@ namespace LBPLibrary
             return convMatrix;
         }
 
-        //Convert byte[,] to bitmap
+        /// <summary>
+        /// Convert byte[,] arrays to bitmap
+        /// </summary>
+        /// <param name="matrix">Byte array to be converted to bitmap.</param>
+        /// <returns>Transformed bitmap.</returns>
         public static Bitmap ByteMatrixToBitmap(byte[,] matrix)
-        {   /// Converts byte arrays to bitmap images.
+        {   
 
             // Specify a pixel format.
             PixelFormat pxf = PixelFormat.Format8bppIndexed;
@@ -92,9 +104,14 @@ namespace LBPLibrary
             return img;
         }
 
-        // Convert 2D array to vector
+        /// <summary>
+        /// Convert 2D array to vector
+        /// </summary>
+        /// <typeparam name="T">Data type for array can be chosen by user.</typeparam>
+        /// <param name="array">2D Array to be transformed into vector.</param>
+        /// <returns>1D vector.</returns>
         public static T[] ArrayToVector<T>(T[,] array)
-        {   /// Transform image into vector
+        {   
             T[] vector = new T[array.GetLength(0) * array.GetLength(1)];
             for (int i = 0; i < array.GetLength(0); i++)
             {
@@ -106,9 +123,15 @@ namespace LBPLibrary
             return vector;
         }
 
-        // Convert vector to 2D array
+        /// <summary>
+        /// Convert vector to 2D array
+        /// </summary>
+        /// <typeparam name="T">Data type for array can be chosen by user.</typeparam>
+        /// <param name="vector">Vector to be transformed into 2D array.</param>
+        /// <param name="width">Width of the array.</param>
+        /// <returns>2D array.</returns>
         public static T[,] VectorToArray<T>(T[] vector, int width)
-        {   /// Transform image into vector
+        {  
             T[,] array;
             if (vector.Length % width == 0)
             {
@@ -127,38 +150,46 @@ namespace LBPLibrary
         }
 
         /// <summary>
-        /// Get submatrix from 2D matrix.
-        /// Gets smaller submatrix using given limit indices.
-        /// Equal to Matlab operation matrix(ylim1:ylim2, xlim1:xlim2)
+        /// Get subarray from 2D array.
+        /// Gets smaller subarray using given limit indices.
+        /// Use indices 0 -> length - 1
+        /// Equal to operation array(ylim1:ylim2, xlim1:xlim2)
         /// </summary>
-        public static T[,] GetSubMatrix<T>(T[,] matrix, int xlim1, int xlim2, int ylim1, int ylim2)
+        /// <typeparam name="T">Data type for array can be chosen by user.</typeparam>
+        /// <param name="array">Array to calculate subarray from.</param>
+        /// <param name="xlim1">Lower limit for first dimension.</param>
+        /// <param name="xlim2">Upper limit for first dimension.</param>
+        /// <param name="ylim1">Lower limit for second dimension.</param>
+        /// <param name="ylim2">Upper limit for second dimension.</param>
+        /// <returns>Subarray.</returns>
+        public static T[,] GetSubMatrix<T>(T[,] array, int xlim1, int xlim2, int ylim1, int ylim2)
         {   
-            if (xlim2 - xlim1 + 1 == matrix.GetLength(0) && ylim2 - ylim1 + 1 == matrix.GetLength(1))
+            if (xlim2 - xlim1 + 1 == array.GetLength(0) && ylim2 - ylim1 + 1 == array.GetLength(1))
             {
                 Console.WriteLine("Array was not cropped");
-                return matrix;
+                return array;
             }
             if (xlim1 > xlim2 || ylim1 > ylim2)
                 throw new Exception("Limits not compatible!");
-            try
+            if (xlim2 >= array.GetLength(0) || ylim2 >= array.GetLength(1))
+                throw new Exception("Limit indices exceed array size!");
+
+            T[,] smallarray = new T[xlim2 - xlim1 + 1, ylim2 - ylim1 + 1];
+            for (int i = xlim1; i <= xlim2; i++)
             {
-                T[,] smallMatrix = new T[xlim2 - xlim1 + 1, ylim2 - ylim1 + 1];
-                for (int i = xlim1; i <= xlim2; i++)
+                for (int j = ylim1; j <= ylim2; j++)
                 {
-                    for (int j = ylim1; j <= ylim2; j++)
-                    {
-                        smallMatrix[i - xlim1, j - ylim1] = matrix[i, j];
-                    }
+                    smallarray[i - xlim1, j - ylim1] = array[i, j];
                 }
-                return smallMatrix;
             }
-            catch (IndexOutOfRangeException)
-            {
-                throw new Exception("Limits exceed the length of input array");
-            }
+            return smallarray;
         }
 
-        // Normalize array
+        /// <summary>
+        /// Normalize array
+        /// </summary>
+        /// <param name="array">Array to be normalized.</param>
+        /// <returns>Normalized array.</returns>
         public static double[,] Normalize(double[,] array)
         {
             double[,] norm_array = array.Subtract(array.Min()).Multiply(1 / (array.Max() - array.Min())); ;
@@ -167,9 +198,12 @@ namespace LBPLibrary
 
         /// <summary>
         /// Pads image by extending border pixels.
-        /// Give "Reflect" as method string if you want to reflect array borders.
-        /// Nearest = extend edge values
         /// </summary>
+        /// <param name="array">Array to be padded.</param>
+        /// <param name="padding">Length of padding edges.</param>
+        /// <param name="method">Padding method. "Nearest" = extend edge values,
+        /// "Reflect" = reflect values along array borders. 
+        /// Any other string results in zero padding.</param>
         public static T[,] ArrayPadding<T>(T[,] array, int padding, string method)
         {   
 
@@ -293,7 +327,17 @@ namespace LBPLibrary
             return paddedImage;
         }
 
-        // Bilinear interpolation
+        /// <summary>
+        /// Bilinear interpolation. Select pixel from array to be interpolated. 
+        /// Function is optimised for LBP calculation.
+        /// </summary>
+        /// <param name="array">Array from which the interpolation is calculated.</param>
+        /// <param name="x">Neighbour coordinate x (see LBP pipeline).</param>
+        /// <param name="y">Neighbour coordinate y (see LBP pipeline).</param>
+        /// <param name="i">Pixel to be calculated within loop. Give 0 to calculate just using array coordinates.</param>
+        /// <param name="j">Pixel to be calculated within loop. Give 0 to calculate just using array coordinates.</param>
+        /// <param name="e">Error residual to avoid division by 0. Give for example 1E-12.</param>
+        /// <returns></returns>
         public static double Bilinear(double[,] array, double x, double y, int i, int j, double e)
         {
             double interpolated, R1, R2;
@@ -308,7 +352,10 @@ namespace LBPLibrary
             return interpolated = R1 * ((cy - y) / (cy - fy + e)) + R2 * ((y - fy) / (cy - fy + e));
         }
 
-        // Mean
+        /// <summary>
+        /// Calculates mean from array values
+        /// </summary>
+        /// <param name="array">Array to calculate mean/average from.</param>
         public static double Mean(double[,] array)
         {
             double mean = array
@@ -317,7 +364,10 @@ namespace LBPLibrary
             return mean;
         }
 
-        // Std
+        /// <summary>
+        /// Calculates standard deviation from array values
+        /// </summary>
+        /// <param name="array">Array to calculate standard deviation from.</param>
         public static double Std(double[,] array)
         {
             double mean = array
@@ -332,9 +382,15 @@ namespace LBPLibrary
             return std;
         }
 
-        // Save bitmap image
+        /// <summary>
+        /// Save bitmap images to .png using selected path.
+        /// Use arrays that are from 0 to 255 (byte) or use scaling parameter.
+        /// </summary>
+        /// <param name="filename">Path to save images.</param>
+        /// <param name="image">2D array to be saved.</param>
+        /// <param name="scale">Choose whether to scale grayscale values from 0 to 255.</param>
         public static void Save(string filename, double[,] image, bool scale)
-        {   /// Saves images to selected path
+        {   
             
             if (scale) // scale image from 0 to 255
                 image = Normalize(image).Multiply(255);
@@ -344,9 +400,13 @@ namespace LBPLibrary
             bmp.Dispose(); // Delete bitmap object
         }
 
-        // Load bitmap image
+        /// <summary>
+        /// Load bitmap image (.bmp, .png)
+        /// </summary>
+        /// <param name="filename">Path to the array to be loaded.</param> 
+        /// <returns>Float array readed from file.</returns>
         public static float[,] Load(string filename)
-        {   /// Saves images to selected path
+        {   
 
             Bitmap bmp;
             bmp = (Bitmap)Image.FromFile(filename, true); // Load image
@@ -356,7 +416,11 @@ namespace LBPLibrary
             return image;
         }
 
-        // Read CSV file
+        /// <summary>
+        /// Read array from .csv file 
+        /// </summary>
+        /// <param name="filename">Path to the .csv file</param> 
+        /// <returns>Array readed from .csv file</returns>
         public static float[,] ReadCSV(string filename)
         {
             float[,] array = new float[0, 0];
@@ -374,7 +438,11 @@ namespace LBPLibrary
             return array.Transpose();
         }
 
-        // Write array to CSV file
+        /// <summary>
+        /// Write array to .csv file 
+        /// </summary>
+        /// <param name="array">2D array to be saved to .csv file.</param>
+        /// <param name="filename">Path to save the array.</param>
         public static void WriteCSV(float[,] array, string filename)
         {
             using (StreamWriter file = new StreamWriter(filename))
@@ -400,7 +468,15 @@ namespace LBPLibrary
             }
         }
 
-        // Convolution
+        /// <summary>
+        /// Calculate convolution from image using given kernel.
+        /// </summary>
+        /// <param name="kernel">Kernel for the convolution calculation.</param>
+        /// <param name="image">Array to be convoluted using kernel.</param>
+        /// <param name="method">Padding method. "Nearest" = extend edge values,
+        /// "Reflect" = reflect values along array borders. 
+        /// Any other string results in zero padding.</param>
+        /// <returns>Convoluted array.</returns>
         public static double[,] Convolution2D(double[,] kernel, double[,] image, string method)
         {
             int block = kernel.GetLength(0);

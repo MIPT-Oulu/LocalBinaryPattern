@@ -116,7 +116,7 @@ namespace LBP
                 Anchor = neighbourLabel.Anchor | AnchorStyles.Right
             };
 
-            var save = new RadioButton()
+            var save = new CheckBox()
             {
                 Location = new Point(200, 90),
                 Size = new Size(100, 30),
@@ -124,7 +124,7 @@ namespace LBP
                 Checked = true
             };
 
-            var scale = new RadioButton()
+            var scale = new CheckBox()
             {
                 Location = new Point(200, 140),
                 Size = new Size(100, 30),
@@ -132,12 +132,12 @@ namespace LBP
                 Checked = true
             };
 
-            var meanstd = new RadioButton()
+            var meanstd = new CheckBox()
             {
                 Location = new Point(200, 190),
                 Size = new Size(100, 30),
                 Text = "Include mean/std images",
-                Checked = false
+                Checked = true
             };
 
             // Set size
