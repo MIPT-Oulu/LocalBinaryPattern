@@ -4,10 +4,12 @@ This project contains a C# implementation of local binary patterns (LBP) and  me
 
 The repository has 3 projects: A demo software (LBP), unit test project (LBP.UnitTests) and class library to make LBP calculations (LBPLibrary).
 
-Current build status:  
+Current build status and code coverage:  
 
-[![Build status](https://ci.appveyor.com/api/projects/status/d0c6874wheduojbe?svg=true)](https://ci.appveyor.com/project/sarytky/localbinarypattern-g7kbi)
-[![codecov](https://codecov.io/gh/MIPT-Oulu/LocalBinaryPattern/branch/master/graph/badge.svg)](https://codecov.io/gh/MIPT-Oulu/LocalBinaryPattern)
+[![Build status](https://ci.appveyor.com/api/projects/status/d0c6874wheduojbe?svg=true "Build status")](https://ci.appveyor.com/project/sarytky/localbinarypattern-g7kbi)
+[![codecov](https://codecov.io/gh/MIPT-Oulu/LocalBinaryPattern/branch/master/graph/badge.svg "Code coverage")](https://codecov.io/gh/MIPT-Oulu/LocalBinaryPattern)
+
+[![codecov](https://codecov.io/gh/MIPT-Oulu/LocalBinaryPattern/branch/master/graphs/icicle.svg "Code coverage graph. Top section represents entire project, middle section folders and bottom section individual files.")](https://codecov.io/gh/MIPT-Oulu/LocalBinaryPattern/tree/master/LBP/LBPLibrary)
 
 ## Prerequisites
 Demo software can be run using windows without additional installations.
