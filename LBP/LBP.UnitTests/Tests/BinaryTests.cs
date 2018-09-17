@@ -76,6 +76,7 @@ namespace LBP.UnitTests
             float[,] eigenVectors = new float[w, nComp].Add(1);
             float[] singularValues = new float[nComp].Add(2);
             double[] weights = new double[nComp];
+            double[] mean = new double[w];
             using (var writer = new BinaryWriter(File.Open(filename, FileMode.Create))) // BinaryWriter is little endian
             {
                 writer.Write(w); // write array width
@@ -94,6 +95,10 @@ namespace LBP.UnitTests
                 for (int i = 0; i < nComp; i++)
                 {
                     writer.Write(weights[i]);
+                }
+                for (int i = 0; i < w; i++)
+                {
+                    writer.Write(mean[i]);
                 }
             }
 
@@ -116,6 +121,7 @@ namespace LBP.UnitTests
             float[,] eigenVectors = new float[w, nComp].Add(1);
             float[] singularValues = new float[nComp].Add(2);
             double[] weights = new double[nComp];
+            double[] mean = new double[w];
             using (var writer = new BinaryWriter(File.Open(filename, FileMode.Create))) // BinaryWriter is little endian
             {
                 writer.Write(w); // write array width
@@ -134,6 +140,10 @@ namespace LBP.UnitTests
                 for (int i = 0; i < nComp; i++)
                 {
                     writer.Write(weights[i]);
+                }
+                for (int i = 0; i < w; i++)
+                {
+                    writer.Write(mean[i]);
                 }
             }
 

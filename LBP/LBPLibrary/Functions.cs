@@ -150,6 +150,89 @@ namespace LBPLibrary
         }
 
         /// <summary>
+        /// Converts 1D vector to 3D array.
+        /// </summary>
+        /// <typeparam name="T">Data type for array can be chosen by user.</typeparam>
+        /// <param name="vector">1D vector.</param>
+        /// <param name="dims">Dimensions of the 3D array. Order: z, y, x.</param>
+        /// <returns>3D volume.</returns>
+        public static T[,,] VectorToVolume<T>(T[] vector, int[] dims)
+        {
+            T[,,] volume = new T[dims[0], dims[1], dims[2]];
+            Parallel.For(0, dims[0], z =>
+            {
+                Parallel.For(0, dims[1], y =>
+                {
+                    Parallel.For(0, dims[2], x =>
+                    {
+                        volume[y, x, z] = vector[z * dims[1] + y * dims[2] + x];
+                    });
+                });
+            });
+
+            return volume;
+        }
+
+        /// <summary>
+        /// Extracts 2D array from 3D volume.
+        /// </summary>
+        /// <typeparam name="T">Data type for array can be chosen by user.</typeparam>
+        /// <param name="volume">3D volume.</param>
+        /// <param name="n">Number of slice on given axis.</param>
+        /// <param name="axis">Axis to obtain slice from.</param>
+        /// <returns>2D array.</returns>
+        public static T[,] VolumeToSlice<T>(T[,,] volume, int n, int axis)
+        {
+            T[,] slice;
+            int[] dims = new int[] { volume.GetLength(0), volume.GetLength(1), volume.GetLength(2) };
+
+            switch (axis) // Select axis to be sliced from.
+            {
+                case 0: // yz
+                    slice = new T[dims[1], dims[2]];
+                    dims[0] = dims[1]; dims[1] = dims[2];
+                    // Extract slice
+                    Parallel.For(0, dims[0], i =>
+                    {
+                        Parallel.For(0, dims[1], j =>
+                        {
+                            slice[i, j] = volume[n, i, j];
+                        });
+                    });
+                    break;
+
+                case 1: // xz
+                    slice = new T[dims[0], dims[2]];
+                    dims[1] = dims[2];
+                    // Extract slice
+                    Parallel.For(0, dims[0], i =>
+                    {
+                        Parallel.For(0, dims[1], j =>
+                        {
+                            slice[i, j] = volume[i, n, j];
+                        });
+                    });
+                    break;
+
+                case 2: // xy
+                    slice = new T[dims[0], dims[1]];
+                    // Extract slice
+                    Parallel.For(0, dims[0], i =>
+                    {
+                        Parallel.For(0, dims[1], j =>
+                        {
+                            slice[i, j] = volume[i, j, n];
+                        });
+                    });
+                    break;
+
+                default:
+                    throw new Exception("Invalid axis given. Give axis as an integer between 0 and 2.");
+            }
+            return slice;
+        }
+
+        /// <summary>
         /// Get subarray from 2D array.
         /// Gets smaller subarray using given limit indices.
         /// Use indices 0 -> length - 1

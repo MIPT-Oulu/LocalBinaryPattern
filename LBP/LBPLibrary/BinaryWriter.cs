@@ -37,6 +37,10 @@ namespace LBPLibrary
         /// Pretrained linear regression weights. Readed with ReadWeights method from .dat file.
         /// </summary>
         public double[] weights;
+        /// <summary>
+        /// Mean feature vector.
+        /// </summary>
+        public double[] mean;
 
         /// <summary>
         /// Defult directory (current)
@@ -227,6 +231,11 @@ namespace LBPLibrary
                         for (int i = 0; i < ncomp; i++)
                         {
                             weights[i] = reader.ReadDouble();
+                        }
+                        mean = new double[w];
+                        for (int i = 0; i < w; i++)
+                        {
+                            mean[i] = reader.ReadDouble();
                         }
                     }
                     catch (Exception)
