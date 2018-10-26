@@ -107,7 +107,8 @@ namespace LBPLibrary
         /// <param name="array">Array to be saved.</param>
         public void SaveLBPFeatures(double[,] array)
         {   // Double overload for SaveLBPFeatures
-            w = array.GetLength(0); l = array.GetLength(1);
+            long w = array.GetLength(0);
+            l = array.GetLength(1);
             using (var writer = new BinaryWriter(File.Open(filename, FileMode.Create))) // BinaryWriter is little endian
             {
                 writer.Write(w); // write array width
@@ -136,7 +137,10 @@ namespace LBPLibrary
                     byte[] bytes = File.ReadAllBytes(filename);
                     using (BinaryReader reader = new BinaryReader(File.Open(filename, FileMode.Open)))
                     {
-                        w = reader.ReadInt32();
+                        if (precision == "double")
+                            w = Convert.ToInt32(reader.ReadInt64());
+                        else
+                            w = reader.ReadInt32();
                         l = (bytes.Length * 8 / 32 - 1) / w;
                         if (precision == "float")
                         {

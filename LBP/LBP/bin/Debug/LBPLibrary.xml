@@ -59,6 +59,11 @@
             Pretrained linear regression weights. Readed with ReadWeights method from .dat file.
             </summary>
         </member>
+        <member name="F:LBPLibrary.BinaryWriterApp.mean">
+            <summary>
+            Mean feature vector.
+            </summary>
+        </member>
         <member name="M:LBPLibrary.BinaryWriterApp.#ctor">
             <summary>
             Defult directory (current)
@@ -158,6 +163,25 @@
             <typeparam name="T">Data type for array can be chosen by user.</typeparam>
             <param name="vector">Vector to be transformed into 2D array.</param>
             <param name="width">Width of the array.</param>
+            <returns>2D array.</returns>
+        </member>
+        <member name="M:LBPLibrary.Functions.VectorToVolume``1(``0[],System.Int32[])">
+            <summary>
+            Converts 1D vector to 3D array.
+            </summary>
+            <typeparam name="T">Data type for array can be chosen by user.</typeparam>
+            <param name="vector">1D vector.</param>
+            <param name="dims">Dimensions of the 3D array. Order: z, y, x.</param>
+            <returns>3D volume.</returns>
+        </member>
+        <member name="M:LBPLibrary.Functions.VolumeToSlice``1(``0[0:,0:,0:],System.Int32,System.Int32)">
+            <summary>
+            Extracts 2D array from 3D volume.
+            </summary>
+            <typeparam name="T">Data type for array can be chosen by user.</typeparam>
+            <param name="volume">3D volume.</param>
+            <param name="n">Number of slice on given axis.</param>
+            <param name="axis">Axis to obtain slice from.</param>
             <returns>2D array.</returns>
         </member>
         <member name="M:LBPLibrary.Functions.GetSubMatrix``1(``0[0:,0:],System.Int32,System.Int32,System.Int32,System.Int32)">

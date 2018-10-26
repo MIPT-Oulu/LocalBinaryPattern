@@ -66,7 +66,6 @@ namespace LBPLibrary
         /// <returns>Transformed bitmap.</returns>
         public static Bitmap ByteMatrixToBitmap(byte[,] matrix)
         {   
-
             // Specify a pixel format.
             PixelFormat pxf = PixelFormat.Format8bppIndexed;
 
@@ -474,7 +473,6 @@ namespace LBPLibrary
         /// <param name="scale">Choose whether to scale grayscale values from 0 to 255.</param>
         public static void Save(string filename, double[,] image, bool scale)
         {   
-            
             if (scale) // scale image from 0 to 255
                 image = Normalize(image).Multiply(255);
             byte[,] bytearray = image.Round().ToByte(); // Round and convert to byte

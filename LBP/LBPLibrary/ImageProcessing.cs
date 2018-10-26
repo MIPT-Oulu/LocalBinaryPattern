@@ -118,9 +118,13 @@ namespace LBPLibrary
             MRELBPapp.GetHistogram();
 
             // output variables
-            LBPIL = MRELBPapp.LBPILMapped; // Mapping
-            LBPIS = MRELBPapp.LBPISMapped;
-            LBPIR = MRELBPapp.LBPIRMapped;
+            //LBPIL = MRELBPapp.LBPILMapped; // Mapping
+            //LBPIS = MRELBPapp.LBPISMapped;
+            //LBPIR = MRELBPapp.LBPIRMapped;
+            LBPIL = MRELBPapp.LBPIL; // No mapping
+            LBPIS = MRELBPapp.LBPIS;
+            LBPIR = MRELBPapp.LBPIR;
+
 
             histL = MRELBPapp.histL;
             histS = MRELBPapp.histS;

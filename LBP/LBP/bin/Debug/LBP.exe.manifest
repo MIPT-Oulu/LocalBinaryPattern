@@ -85,19 +85,19 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>g6og5vsMqd94ooeaOrwCgPUZShrh/s0j1oW69isUlmQ=</dsig:DigestValue>
+        <dsig:DigestValue>a7PwdgVeDU7I9H7yQcgAwE5oo2zkUyCa7TjMWFzi6Kc=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="LBPLibrary.dll" size="30720">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="LBPLibrary.dll" size="33792">
       <assemblyIdentity name="LBPLibrary" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>WjbnqLwZXyS1o8kx9Js2KN5Cv8ydr6f+EcXvV4gyLHs=</dsig:DigestValue>
+        <dsig:DigestValue>+uVCIwqm90UhERxKmpr+LP0yeaCApP/q2wUaGJY813w=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
