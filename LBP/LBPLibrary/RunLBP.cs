@@ -153,7 +153,7 @@ namespace LBPLibrary
 
                 // Write features to binary file
                 var binwriter = new BinaryWriterApp() { filename = savepath + "\\features.dat" };
-                binwriter.SaveLBPFeatures(features);
+                binwriter.SaveBinary(features);
             }
 
             Console.WriteLine("LBP images calculated and results saved.\nElapsed time: {0}min {1}sec", time.Elapsed.Minutes, time.Elapsed.Seconds);
@@ -274,7 +274,7 @@ namespace LBPLibrary
 
                 // Write features to binary file
                 var binwriter = new BinaryWriterApp() { filename = savepath + "\\features.dat" };
-                binwriter.SaveLBPFeatures(features);
+                binwriter.SaveBinary(features);
             }
 
             Console.WriteLine("All LBP images calculated and results saved.\nElapsed time: {0}min {1}sec", timeFull.Elapsed.Minutes, timeFull.Elapsed.Seconds);

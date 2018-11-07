@@ -27,7 +27,7 @@ namespace LBP.UnitTests
         {
             testImg.New(pattern);
 
-            lbpreader.SaveLBPFeatures(testImg.Image.ToInt32());
+            lbpreader.SaveBinary(testImg.Image.ToInt32());
             lbpreader.ReadLBPFeatures("Integer");
 
             Assert.Equal(testImg.Image.ToInt32(), lbpreader.features);
@@ -43,7 +43,7 @@ namespace LBP.UnitTests
         {
             testImg.New(pattern);
 
-            lbpreader.SaveLBPFeatures(testImg.Image);
+            lbpreader.SaveBinary(testImg.Image);
             lbpreader.ReadLBPFeatures("float");
 
             Assert.Equal(testImg.Image, lbpreader.image);
@@ -60,7 +60,7 @@ namespace LBP.UnitTests
             testImg.New(pattern);
 
             double[,] img = testImg.Image.ToDouble();
-            lbpreader.SaveLBPFeatures(img);
+            lbpreader.SaveBinary(img);
             lbpreader.ReadLBPFeatures("double");
 
             Assert.Equal(img, lbpreader.image_double);

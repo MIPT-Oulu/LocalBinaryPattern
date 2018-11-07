@@ -104,7 +104,7 @@ namespace LBP.UnitTests
 
             testImg.New("Quarters", new int[] { 28, 28 });
             var bin = new BinaryWriterApp() { filename = load + @"\Test6\Test1.dat" };
-            bin.SaveLBPFeatures(testImg.Image.ToDouble());
+            bin.SaveBinary(testImg.Image.ToDouble());
             runlbp.param.Mre = true;
             runlbp.param.Scale = false;
             runlbp.param.W_stand = new int[] { 5, 3, 2, 1 };
@@ -173,11 +173,11 @@ namespace LBP.UnitTests
             // save images
             testImg.New("Quarters", new int[] { 12, 12 });
             var bin = new BinaryWriterApp() { filename = load + @"\Test1\Test4.dat" };
-            bin.SaveLBPFeatures(testImg.Image.ToDouble());
+            bin.SaveBinary(testImg.Image.ToDouble());
             bin.filename = load + @"\Test1\Test5.dat";
-            bin.SaveLBPFeatures(testImg.Image.ToDouble());
+            bin.SaveBinary(testImg.Image.ToDouble());
             bin.filename = load + @"\Test1\Test6.dat";
-            bin.SaveLBPFeatures(testImg.Image.ToDouble());
+            bin.SaveBinary(testImg.Image.ToDouble());
 
             runlbp.CalculateBatch();
             float[,] result1 = Functions.Load(save + @"\Test1\Test4_LBP.png");
@@ -248,9 +248,9 @@ namespace LBP.UnitTests
             // save images
             testImg.New("Quarters", new int[] { 12, 12 });
             var bin = new BinaryWriterApp() { filename = load + @"\Test2\Test4.dat" };
-            bin.SaveLBPFeatures(testImg.Image.ToDouble());
+            bin.SaveBinary(testImg.Image.ToDouble());
             bin.filename = load + @"\Test2\Test5.dat";
-            bin.SaveLBPFeatures(testImg.Image.ToDouble());
+            bin.SaveBinary(testImg.Image.ToDouble());
 
             runlbp.CalculateBatch();
             float[,] result1 = Functions.Load(save + @"\Test2\Test4_LBP.png");

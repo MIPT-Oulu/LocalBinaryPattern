@@ -63,7 +63,7 @@ namespace LBPLibrary
         /// Save integer array.
         /// </summary>
         /// <param name="array">Array to be saved.</param>
-        public void SaveLBPFeatures(int[,] array)
+        public void SaveBinary(int[,] array)
         {   // Save int array to binary file, width written as Int32
             w = array.GetLength(0); l = array.GetLength(1);
             using (var writer = new BinaryWriter(File.Open(filename, FileMode.Create))) // BinaryWriter is little endian
@@ -84,8 +84,8 @@ namespace LBPLibrary
         /// Save float array.
         /// </summary>
         /// <param name="array">Array to be saved.</param>
-        public void SaveLBPFeatures(float[,] array)
-        {   // Float overload for SaveLBPFeatures
+        public void SaveBinary(float[,] array)
+        {   // Float overload for SaveBinary
             w = array.GetLength(0); l = array.GetLength(1);
             using (var writer = new BinaryWriter(File.Open(filename, FileMode.Create))) // BinaryWriter is little endian
             {
@@ -105,8 +105,8 @@ namespace LBPLibrary
         /// Save double array.
         /// </summary>
         /// <param name="array">Array to be saved.</param>
-        public void SaveLBPFeatures(double[,] array)
-        {   // Double overload for SaveLBPFeatures
+        public void SaveBinary(double[,] array)
+        {   // Double overload for SaveBinary
             long w = array.GetLength(0);
             l = array.GetLength(1);
             using (var writer = new BinaryWriter(File.Open(filename, FileMode.Create))) // BinaryWriter is little endian
