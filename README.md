@@ -9,8 +9,6 @@ Current build status and code coverage:
 [![Build status](https://ci.appveyor.com/api/projects/status/d0c6874wheduojbe?svg=true "Build status")](https://ci.appveyor.com/project/sarytky/localbinarypattern-g7kbi)
 [![codecov](https://codecov.io/gh/MIPT-Oulu/LocalBinaryPattern/branch/master/graph/badge.svg "Code coverage")](https://codecov.io/gh/MIPT-Oulu/LocalBinaryPattern)
 
-[![codecov](https://codecov.io/gh/MIPT-Oulu/LocalBinaryPattern/branch/master/graphs/icicle.svg "Code coverage graph. Top section represents entire project, middle section folders and bottom section individual files.")](https://codecov.io/gh/MIPT-Oulu/LocalBinaryPattern/tree/master/LBP/LBPLibrary)
-
 ## Prerequisites
 Demo software can be run using windows without additional installations.
 Unit tests and class library are recommended to use through MS Visual Studio.
