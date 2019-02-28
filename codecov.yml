@@ -1,6 +1,6 @@
 ignore:
   - "LBP/LBP"
-  - "LBP/LBP/RunLBP.cs$"
+  - "LBP/LBPLibrary/RunLBP.cs$"
   
 coverage:
   precision: 2
