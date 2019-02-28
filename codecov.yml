@@ -1,0 +1,8 @@
+ignore:
+  - "LBP/LBP"
+  - "LBP/LBP/RunLBP.cs$"
+  
+coverage:
+  precision: 2
+  round: down
+  range: "30...100"
